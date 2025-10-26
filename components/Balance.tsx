@@ -37,12 +37,12 @@ export default function Balance() {
                             image: <Icon type="crypto" width={90} height={60} />
                         },
                         {
-                            title: "sbp",
+                            title: "sbp+",
                             percent: 10,
                             image: <Icon type="sbp" width={80} height={50} />
                         },
                         {
-                            title: "sbp",
+                            title: "sbp++",
                             percent: 15,
                             image: <Icon type="sbp" width={80} height={50} />
                         },
