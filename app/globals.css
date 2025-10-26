@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --background: #182535;
+  --foreground: #171717;
+  --blue: #0698D6;
+  --green: #50EA90;
+  --black: #0A0F19;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #182535;
+    --foreground: #ededed;
+  }
+}
+
+  .animate-fill-up {
+    animation: fillUp 2s cubic-bezier(0.2, 0.6, 0.8, 0.4) forwards;
+  }
+  .animate-fill-down {
+    animation: fillDown 2s cubic-bezier(0.2, 0.6, 0.8, 0.4) forwards;
+  }
+
+  .animate-wave {
+    animation: wave 0.6s linear infinite
+  }
+
+  @keyframes fillUp {
+    0%   { transform: translateY(35px); }
+    100% { transform: translateY(-5px); }
+  }
+  @keyframes fillDown {
+    0%   { transform: translateY(-5px); }
+    100% { transform: translateY(35px); }
+  }
+
+  @keyframes wave {
+    0% { transform: translateX(-250px); }
+    100% { transform: translateX(0); }
+  }
+
+  .thumb {
+  @apply absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#2D2D2D] transition-all duration-300;
+  transform: translateX(-50%);
+  left: 51%;
+}
+.thumb.on {
+  left: 49%;
+}
+
+/* «половинчатые» border у thumb-а */
+.thumb::before,
+.thumb::after {
+  content: '';
+  @apply absolute top-0 w-1/2 h-full transition-all duration-300;
+}
+.thumb::before        { left: 0;  border-radius: 9999px 0 0 9999px; }
+.thumb::after         { right: 0; border-radius: 0 9999px 9999px 0; }
+
+/* цвета border (зависят от состояния) */
+.thumb.on::before     { border: 2px solid transparent; border-right: none; }
+.thumb.on::after      { border: 2px solid white; border-left: none;  }
+.thumb:not(.on)::before { border: 2px solid white; border-right: none; }
+.thumb:not(.on)::after  { border: 2px solid transparent; border-left: none;  }
+
+body {
+  background: #182535;
+  color: var(--foreground);
+  font-family: var(--font-inter);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+button {
+  cursor: pointer;
+}
