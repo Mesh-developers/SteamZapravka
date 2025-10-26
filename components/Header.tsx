@@ -7,7 +7,7 @@ export default function Header() {
     return (
         <header className="rounded-b-xl w-[85%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
             <BurgerMenu />
-            <Switcher />
+            <Switcher leftText="Игры" rightText="Работа" />
             <Icon type="logo" />
             <div className="flex gap-10 font-light">
                 <span>О нас</span>
