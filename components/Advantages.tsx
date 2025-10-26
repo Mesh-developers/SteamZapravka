@@ -26,7 +26,7 @@ export default function Advantages() {
     const items = [
         {
             title: "Мгновенное пополнение",
-            image: "/images/rocket.webp",
+            image: "/images/rocket.png",
             text: <span><span className="text-[#50EA90]">Залей за 60 секунд!</span> Ни секунды <br/>
             промедления – только любимая <br/>
             игра и твои новые победы!</span>,
@@ -34,7 +34,7 @@ export default function Advantages() {
         },
         {
             title: "Надежные партнеры",
-            image: "/images/lock.webp",
+            image: "/images/lock.png",
             text: <span>Официальное пополнене счета <br/>
             <span className="text-[#50EA90]">Гарантия безопасности</span> ваших <br/>
             данных и платежей!
@@ -43,7 +43,7 @@ export default function Advantages() {
         },
         {
             title: "Выгодные цены",
-            image: "/images/box.webp",
+            image: "/images/box.png",
             text: <span><span className="text-[#50EA90]">Самая низкая комиссия!</span><br/>
             Никаких скрытых платежей, <br/>
             только прозрачные условия.
@@ -52,7 +52,7 @@ export default function Advantages() {
         },
         {
             title: "Розыгрыши и бонусы",
-            image: "/images/gift.webp",
+            image: "/images/gift.png",
             text: <span>Пополняйте баланс через нас <br/>
             и <span className="text-[#50EA90]">участвуйте в розыгрышах</span><br/>
             в нашем Telegram-канале!
