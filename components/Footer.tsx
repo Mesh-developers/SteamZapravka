@@ -9,7 +9,7 @@ export default function Footer() {
                 <Link href={""}>Политика конфиденциальности</Link>
                 <span className="text-[#515151]">© 2025 Все права защищены.</span>
             </div>
-            <div className="justify-self-center"><Icon type="logo" height={82} width={194} /></div>
+            <div className="justify-self-center"><Icon type="logo" height={82} width={174} /></div>
             <div className="flex flex-col items-end">
                 <div className="flex flex-col gap-5 items-start">
                     <h4 className="text-xl">Помощь и обратная связь</h4>

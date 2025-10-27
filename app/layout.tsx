@@ -18,13 +18,13 @@ const boundedRegular = localFont({
 
 const ManropeSemibold = localFont({
   src: "../public/fonts/Manrope-Semibold.woff2",
-  variable: "--monrope-semibold",
+  variable: "--manrope-semibold",
   display: "swap"
 });
 
 const ManropeRegular = localFont({
   src: "../public/fonts/Manrope-Regular.woff2",
-  variable: "--monrope-regular",
+  variable: "--manrope-regular",
   display: "swap"
 });
 

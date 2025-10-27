@@ -11,15 +11,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
   const gradientId = useId()
 
   return (
-    <label className="relative inline-flex items-center cursor-pointer select-none">
-      {/* hidden checkbox */}
-      <input
-        type="checkbox"
-        className="sr-only"
-        checked={on}
-        onChange={() => setOn((v) => !v)}
-      />
-
+    <div className="relative inline-flex items-center cursor-pointer select-none">
       {/* track + wave + текст */}
       <span
         className={`
@@ -33,6 +25,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
         <span className="absolute inset-0 grid grid-cols-2 justify-between text-white font-normal text-sm">
           {/* левый текст */}
           <span
+          onClick={() => setOn(false)}
             className={`
               relative transition-all duration-300 ease-out border-1 border-solid rounded-s-4xl rounded-e-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-l from-[#2D2D2D] to-[#141414]
               ${on ? "border-black" : "border-white"}
@@ -70,6 +63,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
 
           {/* правый текст */}
           <span
+            onClick={() => setOn(true)}
             className={`
               relative overflow-hidden transition-all duration-300 ease-out border-1 border-solid rounded-e-4xl rounded-s-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-r from-[#2D2D2D] to-[#141414]
               ${on ? "border-white" : "border-black"}
@@ -108,6 +102,6 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
         {/* <span className="w-4 h-4 bg-red-100 absolute left-[50%] mix-blend-difference" /> */}
         <span className={`thumb ${on ? 'on' : ''}`} />
       </span>
-    </label>
+    </div>
   );
 }

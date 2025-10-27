@@ -53,9 +53,8 @@
 
 }
 .thumb.on {
-  left: 49.6%;
-  clip-path: polygon(54% 0, 100% 0, 100% 100%, 54% 100%);
-
+  left: 49.2%;
+  clip-path: polygon(58% 0, 100% 0, 100% 100%, 58% 100%);
 }
 
 /* «половинчатые» border у thumb-а */
@@ -68,7 +67,7 @@
 .thumb::after         { right: 0; border-radius: 0 9999px 9999px 0; }
 
 /* цвета border (зависят от состояния) */
-.thumb.on::before     { border: 1px solid transparent; border-right: none; }
+/* .thumb.on::before     { border: 1px solid transparent; border-right: none; } */
 .thumb.on::after      { border: 1px solid white; border-left: none;  }
 .thumb:not(.on)::before { border: 1px solid white; border-right: none; }
 /* .thumb:not(.on)::after  { border: 1px solid transparent; border-left: none;  } */
@@ -80,7 +79,7 @@
 body {
   background: #182535;
   color: var(--foreground);
-  font-family: var(--font-inter);
+  font-family: var(--manrope-regular);
 }
 
 input::-webkit-outer-spin-button,
