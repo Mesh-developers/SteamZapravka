@@ -23,8 +23,8 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
       {/* track + wave + текст */}
       <span
         className={`
-          w-86 h-8 rounded-full
-          relative overflow-hidden
+          w-86 h-8
+          relative
           transition-colors duration-500 ease-in-out
         `}
       >
@@ -34,11 +34,16 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
           {/* левый текст */}
           <span
             className={`
-              relative transition-all duration-300 ease-out border-2 border-solid rounded-s-full rounded-tr-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-l from-[#2D2D2D] to-[#141414]
+              relative transition-all duration-300 ease-out border-1 border-solid rounded-s-4xl rounded-e-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-l from-[#2D2D2D] to-[#141414]
               ${on ? "border-black" : "border-white"}
             `}
           >
-            {/* вода blue */}
+            <span
+            className={`
+              absolute top-0 left-0 w-full h-full z-10 transition-all duration-600 rounded-e-4xl rounded-s-lg bg-linear-to-l from-[#1414140] to-[rgba(20,_20,_20,_0.9)]
+            `}
+            />
+            {/* вода left */}
             <div
             className={`
                 absolute inset-0
@@ -66,11 +71,16 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
           {/* правый текст */}
           <span
             className={`
-              relative overflow-hidden transition-all duration-300 ease-out border-2 border-solid rounded-e-full rounded-l-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-r from-[#2D2D2D] to-[#141414]
+              relative overflow-hidden transition-all duration-300 ease-out border-1 border-solid rounded-e-4xl rounded-s-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-r from-[#2D2D2D] to-[#141414]
               ${on ? "border-white" : "border-black"}
             `}
           >
-            {/* вода green */}
+          <span
+            className={`
+              absolute top-0 left-0 w-full h-full z-10 transition-all duration-600 rounded-e-4xl rounded-s-lg bg-linear-to-r from-[#19A9DE0] to-[rgba(20,_20,_20,_0.9)]
+            `}
+          />
+            {/* вода right */}
             <div
             className={`
                 absolute inset-0
