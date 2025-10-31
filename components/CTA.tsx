@@ -10,7 +10,7 @@ export default function CTA() {
                     Мгновенное пополнение, низкая комиссия <br/>
                     и 100% гарантия зачисления на ваш счет
                 </h2>
-                <button className="w-96 h-20 bg-linear-to-r from-[#2D8451] to-[#2A78FF] rounded-2xl text-xl shadow-lg/30">
+                <button className="w-96 h-20 bg-radial from-[rgba(69,_196,_126,_1)] from-40% to-[rgba(45,_132,_81,_1)] rounded-2xl text-xl shadow-lg/30">
                     Пополнить
                 </button>
             </div>

@@ -12,7 +12,7 @@ export default function Balance() {
     const [price, setPrice] = useState("1000")
     const [system, setSystem] = useState("sbp")
     return (
-        <section className="w-full h-76 bg-[#0A0E1480] rounded-2xl px-8 py-8 flex flex-col gap-4">
+        <section className="w-full h-76 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-4">
             <h1 className="text-4xl">Пополни баланс <span className="text-(--blue)">STEAM</span> в СНГ</h1>
             <div className="grid grid-cols-[2fr_1fr_1fr] h-full gap-5">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
@@ -49,7 +49,7 @@ export default function Balance() {
                     ]}
                     />
                 </div>
-                <button className="bg-linear-to-r from-[#2A78FF] to-[#2D8451] rounded-2xl font-medium text-xl">
+                <button className="bg-radial from-[rgba(69,_196,_126,_1)] from-40% to-[rgba(45,_132,_81,_1)] rounded-2xl font-medium text-xl">
                     Пополнить баланс <br/> +{price} ₽
                 </button>
             </div>

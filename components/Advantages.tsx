@@ -10,7 +10,9 @@ interface AdvantageItemProps {
 
 function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
   return (
-    <div className="border border-white rounded-2xl flex flex-col bg-[rgba(10,_14,_20,_0.5)] justify-between h-full">
+    <div className="relative">
+    <div className="absolute top-0 left-0 w-full h-full bg-radial from-[rgba(44,_125,_195,_1)] from-0% via-[rgba(44,_125,_195,_0.4)] via-1% to-[rgba(69,_196,_126,_0)] to-100%" />
+    <div className="relative border border-white rounded-2xl flex flex-col bg-[rgba(10,_14,_20,_0.5)] justify-between h-full">
       {/* верхняя часть */}
       <div className="flex items-start justify-between p-4">
         <div className="relative w-[9rem] h-[8rem] shrink-0">
@@ -31,6 +33,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
       <div className="pl-6 pb-4 text-[clamp(1.2rem,1.5vw,1.2rem)] leading-[1.5] relative -top-8">
         {children}
       </div>
+    </div>
     </div>
   );
 }
@@ -75,7 +78,7 @@ export default function Advantages() {
   ];
 
   return (
-    <section className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <section className="relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {items.map((item, i) => (
         <AdvantageItem
           key={i}

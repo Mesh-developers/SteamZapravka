@@ -11,11 +11,11 @@ export default function Header() {
             <Icon type="logo" />
             <div className="flex gap-10 font-light">
                 <span>О нас</span>
-                <span>FAQ</span>
+                <a href="#faq">FAQ</a>
             </div>
             <div className="flex items-center gap-2">
                 <Link href={""}>
-                    <Icon type="instagram" size={17} />
+                    <Icon type="instagram" size={17} strokeWidth={8} />
                 </Link>
                 <Link href={""}>
                     <Icon type="telegram" size={18} />

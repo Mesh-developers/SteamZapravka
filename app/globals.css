@@ -67,19 +67,16 @@
 .thumb::after         { right: 0; border-radius: 0 9999px 9999px 0; }
 
 /* цвета border (зависят от состояния) */
-/* .thumb.on::before     { border: 1px solid transparent; border-right: none; } */
 .thumb.on::after      { border: 1px solid white; border-left: none;  }
 .thumb:not(.on)::before { border: 1px solid white; border-right: none; }
-/* .thumb:not(.on)::after  { border: 1px solid transparent; border-left: none;  } */
 
-.mask {
-  mask: linear-gradient(#000 0 0);
-  mask-composite: intersect;
-}
 body {
   background: #182535;
   color: var(--foreground);
   font-family: var(--manrope-regular);
+}
+html {
+  scroll-behavior: smooth;
 }
 
 input::-webkit-outer-spin-button,
@@ -92,3 +89,6 @@ input::-webkit-inner-spin-button {
 button {
   cursor: pointer;
 }
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
