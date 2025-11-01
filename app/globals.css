@@ -75,6 +75,7 @@ body {
   color: var(--foreground);
   font-family: var(--manrope-regular);
 }
+
 html {
   scroll-behavior: smooth;
 }
