@@ -1,5 +1,8 @@
+"use client"
+
 import { ReactNode } from "react"
 import Icon from "./Icon"
+import { useSiteType } from "./SiteTypeContext"
 
 function LinkItem({children}:{ children: ReactNode }) {
     return (
@@ -10,6 +13,7 @@ function LinkItem({children}:{ children: ReactNode }) {
 }
 
 export default function SteamDrop() {
+    const { siteType } = useSiteType()
     const medias = [
         <Icon key={0} type="youtube2" size={82} />,
         <Icon key={1} type="telegram2" size={82} />,
@@ -23,8 +27,8 @@ export default function SteamDrop() {
     return (
         <div className="w-full h-80 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 grid grid-cols-2">
             <div className="flex flex-col gap-6">
-                <h1 className="text-4xl font-(family-name:--manrope-semibold)">Не пропусти лучший шанс <br/>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></h1>
-                <h2 className="text-xl">Подпишись, чтобы забирать <span className="text-(--blue)">бонусы первым!</span></h2>
+                <h1 className="text-4xl font-(family-name:--manrope-semibold)">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
+                <h2 className="text-xl">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
                 <span className="tracking-wide">Преврати пополнение кошелька в твой постоянный профит. <br/>Мы разыгрываем ценные призы, Steam-гифты и промокоды <br/>только для наших подписчиков. Все новости о самых низких <br/>
                 комиссиях и специальных акциях — мгновенно в ленте!</span>
             </div>

@@ -5,9 +5,9 @@ import Switcher from "./Switcher";
 
 export default function Header() {
     return (
-        <header className="relative z-2 rounded-b-xl w-[85%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
+        <header className="relative z-2 rounded-b-3xl w-[85%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
             <BurgerMenu />
-            <Switcher leftText="Игры" rightText="Работа" />
+            <Switcher leftText="Игры" rightText="Telegram" />
             <Icon type="logo" />
             <div className="flex gap-10 font-light">
                 <span>О нас</span>

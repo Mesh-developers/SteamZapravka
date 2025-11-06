@@ -1,12 +1,17 @@
+"use client"
+
 import Advantages from "@/components/Advantages";
 import Backlight from "@/components/Backlight";
 import Balance from "@/components/Balance";
 import CTA from "@/components/CTA";
 import FAQ from "@/components/FAQ";
+import Gallery from "@/components/Gallery";
 import Hexagon from "@/components/Hexagon";
+import { useSiteType } from "@/components/SiteTypeContext";
 import SteamDrop from "@/components/SteamDrop";
 
 export default function Home() {
+  const { siteType } = useSiteType()
   return (
     <>
       <Hexagon />
@@ -16,6 +21,7 @@ export default function Home() {
        <CTA />
        <Advantages />
        <Balance />
+       {siteType === "game" && <Gallery />}
        <SteamDrop />
        <FAQ />
       </main>

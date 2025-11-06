@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,9 +44,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeRegular.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

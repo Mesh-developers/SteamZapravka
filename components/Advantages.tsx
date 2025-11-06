@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image";
 import { CSSProperties, ReactNode } from "react";
+import { useSiteType } from "./SiteTypeContext";
 
 interface AdvantageItemProps {
   title: string;
@@ -39,11 +42,13 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
 }
 
 export default function Advantages() {
+  const { siteType } = useSiteType()
+
   const items = [
     {
       title: "Мгновенное пополнение",
       image: "/images/rocket.png",
-      text: <span><span className="text-[#50EA90]">Залей за 60 секунд!</span> Ни секунды <br/>
+      text: <span><span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Залей за 60 секунд!</span> Ни секунды <br/>
         промедления – только любимая <br/>
         игра и твои новые победы!</span>,
       style: { top: "-1.9em", left: "-2.2em" },
@@ -52,7 +57,7 @@ export default function Advantages() {
       title: "Надежные партнеры",
       image: "/images/lock.png",
       text: <span>Официальное пополнене счета <br/>
-        <span className="text-[#50EA90]">Гарантия безопасности</span> ваших <br/>
+        <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Гарантия безопасности</span> ваших <br/>
         данных и платежей!
         </span>,
       style: { top: "-2.6em", left: "-2.72em" },
@@ -60,7 +65,7 @@ export default function Advantages() {
     {
       title: "Выгодные цены",
       image: "/images/box.png",
-      text: <span><span className="text-[#50EA90]">Самая низкая комиссия!</span><br/>
+      text: <span><span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Самая низкая комиссия!</span><br/>
         Никаких скрытых платежей, <br/>
         только прозрачные условия.
         </span>,
@@ -70,7 +75,7 @@ export default function Advantages() {
       title: "Розыгрыши и бонусы",
       image: "/images/gift.png",
       text: <span>Пополняйте баланс через нас <br/>
-        и <span className="text-[#50EA90]">участвуйте в розыгрышах</span><br/>
+        и <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>участвуйте в розыгрышах</span><br/>
         в нашем Telegram-канале!
         </span>,
       style: { top: "-1.8em", left: "-2.3em" },

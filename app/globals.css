@@ -6,6 +6,7 @@
   --blue: #0698D6;
   --green: #50EA90;
   --black: #0A0F19;
+  --white: #EEEEEE;
 }
 
 @theme inline {
@@ -87,9 +88,10 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-button {
+button, a {
   cursor: pointer;
+  outline: none;
 }
 
-details > summary { list-style: none; }
+details > summary { list-style: none; outline: none; }
 details > summary::-webkit-details-marker { display: none; }
