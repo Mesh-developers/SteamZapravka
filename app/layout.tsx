@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeRegular.variable} antialiased`}
+        className={`${inter.variable} ${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeRegular.variable} !bg-[url('/images/background.png')] !bg-center !bg-no-repeat !bg-cover antialiased`}
       >
         <Providers>
           <Header />

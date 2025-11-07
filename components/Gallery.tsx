@@ -11,8 +11,7 @@ export default function Gallery() {
         "/images/mobileLegends.png",
         "/images/honkai.png",
         "/images/genshin.png",
-        "/images/zzz.png",
-        "/images/arenaBrt.png",
+        "/images/zzz.png"
     ]
     return (
         <div className="w-full h-85 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-2">
@@ -20,11 +19,11 @@ export default function Gallery() {
                 <Icon type="grid" />
                 <h1 className="text-4xl">Все игры</h1>
             </div>
-            <div className="flex gap-4 justify-center items-center h-full">
+            <div className="flex gap-4 justify-between items-center h-full">
                 <div className="cursor-pointer select-none" onClick={()=>setCurrent(state=>state-1 < 0 ? paths.length-1 : state-1)}>
                     <Icon type="arrow" />
                 </div>
-                <div className="flex gap-2 h-full">
+                <div className="flex gap-2 w-full h-full justify-between">
                     {paths.map((path, i)=>
                     <div
                     key={i}

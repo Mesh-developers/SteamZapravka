@@ -18,7 +18,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
     <div className="relative border border-white rounded-2xl flex flex-col bg-[rgba(10,_14,_20,_0.5)] justify-between h-full">
       {/* верхняя часть */}
       <div className="flex items-start justify-between p-4">
-        <div className="relative w-[9rem] h-[8rem] shrink-0">
+        <div className="relative w-[8rem] h-[8rem] shrink-0">
           <Image
             fill
             src={image}
@@ -27,13 +27,13 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
             style={style}
           />
         </div>
-        <h3 className="text-[clamp(1.5rem,2.7vw,1.7rem)] font-(--manrope-semibold) leading-tight px-4">
+        <h3 className="text-[clamp(1.5rem,2.7vw,1.7rem)] font-(--manrope-semibold) leading-tight pr-4">
             <div dangerouslySetInnerHTML={{ __html: title.replace(" ", "<br/>") }} />
         </h3>
       </div>
 
       {/* текст */}
-      <div className="pl-6 pb-4 text-[clamp(1.2rem,1.5vw,1.2rem)] leading-[1.5] relative -top-8">
+      <div className="pl-6 pb-4 text-[clamp(1.1rem,1.5vw,1.1rem)] leading-[1.5] relative -top-8">
         {children}
       </div>
     </div>
@@ -51,7 +51,7 @@ export default function Advantages() {
       text: <span><span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Залей за 60 секунд!</span> Ни секунды <br/>
         промедления – только любимая <br/>
         игра и твои новые победы!</span>,
-      style: { top: "-1.9em", left: "-2.2em" },
+      style: { top: "-1.9em", left: "-1.7em" },
     },
     {
       title: "Надежные партнеры",
@@ -60,7 +60,7 @@ export default function Advantages() {
         <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Гарантия безопасности</span> ваших <br/>
         данных и платежей!
         </span>,
-      style: { top: "-2.6em", left: "-2.72em" },
+      style: { top: "-2.6em", left: "-2.3em" },
     },
     {
       title: "Выгодные цены",
@@ -69,7 +69,7 @@ export default function Advantages() {
         Никаких скрытых платежей, <br/>
         только прозрачные условия.
         </span>,
-      style: { top: "-2em", left: "-2.45em" },
+      style: { top: "-2em", left: "-1.9em" },
     },
     {
       title: "Розыгрыши и бонусы",
@@ -78,7 +78,7 @@ export default function Advantages() {
         и <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>участвуйте в розыгрышах</span><br/>
         в нашем Telegram-канале!
         </span>,
-      style: { top: "-1.8em", left: "-2.3em" },
+      style: { top: "-1.8em", left: "-1.75em" },
     },
   ];
 

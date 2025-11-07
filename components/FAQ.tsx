@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useSiteType } from "./SiteTypeContext";
 import Modal from "./Modal";
 
-function DetailsRow({ question, answer, show, setShow }: { question: string; answer: string; show: boolean; setShow: Dispatch<SetStateAction<boolean>> }) {
-  const [open, setOpen] = useState(false);
+function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: { question: string; answer: string; index: number; show: boolean; setShow: Dispatch<SetStateAction<boolean>>; open: boolean; setOpen: Dispatch<SetStateAction<boolean[]>> }) {
   const { siteType } = useSiteType()
   useEffect(() => {
     const el = document.getElementById('telegram_tutorial');
@@ -17,6 +16,7 @@ function DetailsRow({ question, answer, show, setShow }: { question: string; ans
 
     return () => el.removeEventListener('click', handler);
   }, [open, show]);
+
   return (
     <details
       className="flex items-start gap-4 text-white outline-none border-b-1 border-[#222B3D] pb-4"
@@ -33,7 +33,12 @@ function DetailsRow({ question, answer, show, setShow }: { question: string; ans
             transition-all duration-600 rounded-full justify-self-end
             ${open ? (`rotate-45 ${siteType === "game" ? "bg-[#2364FC]" : "bg-[#3CAD6B]"}`) : "rotate-0 bg-[#182236]"}
           `}
-        onClick={()=>setOpen(state=>!state)}
+        onClick={()=>setOpen(state=>{
+          const buf = new Array(state.length).fill(false)
+          buf[index] = !open
+
+          return buf
+        })}
         >
           <svg
             width="16"
@@ -112,11 +117,14 @@ export default function FAQ() {
             answer: "Цена на звёзды иногда меняется из-за колебаний курса или обновлений условий. Если вы увидели разницу — это значит, что цена изменилась с момента вашего входа на сайт. Вы можете продолжить оплату по новой цене или обновить страницу, чтобы увидеть актуальное предложение."
         },
     ]
+
+    const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false));
+
     return (
         <div id="faq" className="w-full h-fit border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-4">
             <h1 className="text-4xl">Часто задаваемые вопросы</h1>
-            {items.map(({ question, answer }) => (
-                <DetailsRow key={question} show={show} setShow={setShow} question={question} answer={answer} />
+            {items.map(({ question, answer }, i) => (
+                <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />
             ))}
             <Modal open={show} onClose={()=>setShow(false)}>
               <Image width={340} height={600} src="/images/telegram_tutorial.webp" alt="telegram tutorial" />

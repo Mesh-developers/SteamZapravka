@@ -4,7 +4,7 @@ interface HexagonProps {
 
 export default function Hexagon({ mirror }:HexagonProps) {
     return (
-        <svg width="641" height="2392" viewBox="0 0 641 2392" fill="none" xmlns="http://www.w3.org/2000/svg" className={`absolute !h-max z-0 top-0 ${mirror ? "scale-[-1_1] right-0" : "left-0"}`}>
+        <svg width="390" height="2802" viewBox="0 0 641 2392" fill="none" xmlns="http://www.w3.org/2000/svg" className={`absolute z-0 !h-[300vh] -top-158 ${mirror ? "scale-[-1_1] right-0" : "left-0"}`}>
         <g opacity="0.1">
         <path d="M-218.634 155.914L-84.9999 -3.05176e-05L123.939 32.0182L199.229 219.943L65.5827 375.879L-143.356 343.868L-218.634 155.914Z" fill="url(#paint0_linear_244_931)"/>
         <g opacity="0.7">
