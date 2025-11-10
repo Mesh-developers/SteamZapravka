@@ -3,15 +3,23 @@
 import Image from "next/image";
 import Icon from "./Icon";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Gallery() {
     const [current, setCurrent] = useState(-1)
     const paths = [
         "/images/pubg.png",
-        "/images/mobileLegends.png",
-        "/images/honkai.png",
-        "/images/genshin.png",
-        "/images/zzz.png"
+        "/images/valorant.png",
+        "/images/roblox.png",
+        "/images/freefire.png",
+        "/images/deltaforce.png"
+    ]
+    const links = [
+        "/pubg",
+        "/valorant",
+        "/pubg",
+        "/pubg",
+        "/pubg",
     ]
     return (
         <div className="w-full h-85 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-2">
@@ -25,13 +33,14 @@ export default function Gallery() {
                 </div>
                 <div className="flex gap-2 w-full h-full justify-between">
                     {paths.map((path, i)=>
-                    <div
+                    <Link
                     key={i}
+                    href={links[i]}
                     onClick={()=>setCurrent(i)}
                     className={`relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden ${current === i ? "border-2 border-(--green)" : "border-1 border-white"}`}
                     >
                         <Image src={path} className="object-cover pointer-events-none" alt="image" fill />
-                    </div>)}
+                    </Link>)}
                 </div>
                 <div className="rotate-180 cursor-pointer select-none" onClick={()=>setCurrent(state=>state+1 === paths.length ? 0 : state+1)}>
                     <Icon type="arrow" />

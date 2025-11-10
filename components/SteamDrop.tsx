@@ -6,7 +6,7 @@ import { useSiteType } from "./SiteTypeContext"
 
 function LinkItem({children}:{ children: ReactNode }) {
     return (
-        <div className="relative max-w-[126px] max-w-[126px] min-w-[126px] flex items-center justify-center rounded-3xl shadow-[rgba(2,_3,_5,_0.34)] shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D]" style={{ boxShadow: "inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12;" }}>
+        <div className="relative max-w-[126px] max-w-[126px] min-w-[126px] flex items-center justify-center rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D]" style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12;" }}>
             {children}
         </div>
     )
