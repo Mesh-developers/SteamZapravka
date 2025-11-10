@@ -17,7 +17,7 @@ export default function Input({ type, hint, placeholder, value, setValue }:Input
             <input
             type={type}
             placeholder={placeholder}
-            className="placeholder:text-[#686868] text-white outline-none h-16"
+            className="placeholder:text-[#686868] text-white outline-none h-16 !font-(family-name:--manrope-regular)"
             value={value}
             onChange={(e)=>setValue(e.target.value)}
             />

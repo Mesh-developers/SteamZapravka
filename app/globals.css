@@ -93,5 +93,15 @@ button, a {
   outline: none;
 }
 
+input {
+  outline: none;
+}
+
 details > summary { list-style: none; outline: none; }
 details > summary::-webkit-details-marker { display: none; }
+
+@layer base {
+  ul, ol {
+    list-style: revert;
+  }
+}

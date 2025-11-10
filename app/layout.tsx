@@ -23,6 +23,12 @@ const ManropeSemibold = localFont({
   display: "swap"
 });
 
+const ManropeMedium = localFont({
+  src: "../public/fonts/Manrope-Medium.woff2",
+  variable: "--manrope-medium",
+  display: "swap"
+});
+
 const ManropeRegular = localFont({
   src: "../public/fonts/Manrope-Regular.woff2",
   variable: "--manrope-regular",
@@ -42,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeRegular.variable} !bg-[url('/images/background.png')] !bg-center !bg-no-repeat !bg-cover antialiased`}
+        className={`${inter.variable} ${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeMedium.variable} ${ManropeRegular.variable} !bg-[url('/images/background.png')] !bg-center !bg-no-repeat !bg-cover antialiased`}
       >
         <Providers>
           <Header />

@@ -19,7 +19,7 @@ export default function PaymentSystems({ system, setSystem, systems }:PaymentSys
     return systems.map((sys, i)=>(
         <button
         key={i}
-        className={`relative flex items-center place-content-center bg-(--black) rounded-3xl border-1 ${siteType === "telegram" && i === 1 ? "order-3 col-span-2" : ""}`}
+        className={`relative w-full flex items-center place-content-center bg-(--black) rounded-3xl border-1 ${siteType === "telegram" && i === 1 ? "order-3 col-span-2" : ""}`}
         style={{ borderColor: colors[i] }}
         onClick={()=>setSystem(sys.title)}
         >
