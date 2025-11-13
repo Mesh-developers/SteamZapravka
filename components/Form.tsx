@@ -35,6 +35,7 @@ interface FormProps {
 }
 
 function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentIndex }:CardProps) {
+    if (!coin) return <div />
     return (
         <div className={`border-1 ${currentIndex !== index ? "border-white" : "border-(--green)"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`}>
             <div className={`flex bg-center bg-no-repeat bg-cover w-full h-full shadow-[inset_0_-10px_15px_-5px_#0E131E]`} style={{ backgroundImage: `url('/images/${image}')` }}>
@@ -135,7 +136,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                         </div>
                         <span className="text-lg mt-2">Инструкция</span>
                         <ol className="!font-(family-name:--manrope-regular) ml-5">
-                            {instructions.map((item, i)=><li key={i}>{item}</li>)}
+                            {instructions.map((item, i)=><li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
                         </ol>
                     </form>
                     {pathname === "/valorant" ?
