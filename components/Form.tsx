@@ -66,6 +66,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
     const [email, setEmail] = useState("")
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
+    const coinArray = boxes[currentIndex].coin.split(" ")
     return (
         <div className="w-full flex flex-col gap-4">
             <div className={`w-full h-50 rounded-2xl bg-left bg-no-repeat bg-contain`} style={{ backgroundImage: `url('/images/${cover}')` }} />
@@ -83,7 +84,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                                         coin={box.coin}
                                         />
                     )}
-                    <div style={{ backgroundImage: `url('/images/${uniqueCard.image}')` }} className={`flex flex-col ${boxes.length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover gap-6 border-1 border-white overflow-hidden rounded-2xl h-60 text-white pl-10 pr-5 py-10`}>
+                    <div style={{ backgroundImage: `url('/images/${uniqueCard.image}')` }} className={`flex flex-col ${boxes.length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover gap-6 border-1 border-white overflow-hidden rounded-2xl h-60 text-white pl-8 pr-5 py-7`}>
                         <h3 className="text-xl">{uniqueCard.title}</h3>
                         <p className="text-[13px]">{uniqueCard.text}</p>
                     </div>
@@ -119,7 +120,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                         <Input type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
                         <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 bg-radial from-[#45C47E] from-40% to-[#2D8451] rounded-2xl text-xl shadow-lg/30">
                             <span>
-                                Купить {boxes[currentIndex].coin.split(" ")[1]}<br />{boxes[currentIndex].price * count} ₽
+                                Купить {(Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]}<br />+{boxes[currentIndex].price * count} ₽
                             </span>
                         </button>
                         <div className="mt-4 flex flex-col gap-2">

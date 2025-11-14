@@ -4,7 +4,7 @@ import Form from "@/components/Form";
 export default function Roblox() {
     return (
         <>
-        <Backlight count={4} gap={200} />
+        <Backlight count={3} gap={200} />
         <main className="relative z-2 mt-10 w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <Form
             cover="roblox_cover.png"

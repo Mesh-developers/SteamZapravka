@@ -17,9 +17,9 @@ export default function Gallery() {
     const links = [
         "/pubg",
         "/valorant",
-        "/pubg",
-        "/pubg",
-        "/pubg",
+        "/roblox",
+        "/freefire",
+        "/deltaforce",
     ]
     return (
         <div className="w-full h-85 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-2">
@@ -37,7 +37,7 @@ export default function Gallery() {
                     key={i}
                     href={links[i]}
                     onClick={()=>setCurrent(i)}
-                    className={`relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden ${current === i ? "border-2 border-(--green)" : "border-1 border-white"}`}
+                    className={`hover:translate-y-[-10px] transition-all delay-400 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden ${current === i ? "border-2 border-(--green)" : "border-1 border-white"}`}
                     >
                         <Image src={path} className="object-cover pointer-events-none" alt="image" fill />
                     </Link>)}
