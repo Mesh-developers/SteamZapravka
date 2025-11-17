@@ -37,7 +37,7 @@ interface FormProps {
 function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentIndex }:CardProps) {
     if (!coin) return <div />
     return (
-        <div className={`border-1 ${currentIndex !== index ? "border-white" : "border-(--green)"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`}>
+        <div className={`cursor-pointer border-1 ${currentIndex !== index ? "border-white" : "border-(--green)"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`} onClick={()=>setCurrentIndex(index)}>
             <div className={`flex bg-center bg-no-repeat bg-cover w-full h-full shadow-[inset_0_-10px_15px_-5px_#0E131E]`} style={{ backgroundImage: `url('/images/${image}')` }}>
                 <span className="text-[13px] relative self-end ml-2">{coin}</span>
             </div>
@@ -47,7 +47,6 @@ function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentInd
                     <span className="text-[#999999] line-through text-[8px]">{altPrice} ₽</span>
                 </div>
                 <button
-                onClick={()=>setCurrentIndex(index)}
                 className="border-1 border-[#2D8451] bg-radial from-[#45C47E] from-5% to-[#2D8451] rounded-2xl shadow-lg/30 text-[8px] px-2 py-1"
                 >
                     ВЫБРАТЬ
@@ -59,7 +58,6 @@ function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentInd
 
 export default function Form({ cover, boxes, uniqueCard, instructions }:FormProps) {
     const pathname = usePathname()
-    console.log(pathname)
     const [count, setCount] = useState(1)
     const [currentIndex, setCurrentIndex] = useState(1)
     const [system, setSystem] = useState("sbp")
@@ -105,11 +103,6 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                                     title: "crypto",
                                     percent: 5,
                                     image: <Icon type="crypto" width={90} height={60} />
-                                },
-                                {
-                                    title: "sbp+",
-                                    percent: 10,
-                                    image: <Icon type="sbp" width={80} height={50} />
                                 }
                             ]}
                             system={system}

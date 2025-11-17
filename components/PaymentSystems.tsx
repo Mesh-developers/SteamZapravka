@@ -15,11 +15,11 @@ interface PaymentSystemsProps {
 
 export default function PaymentSystems({ system, setSystem, systems }:PaymentSystemsProps) {
     const { siteType } = useSiteType()
-    const colors = ["var(--green)", "#F7931A", "#3EAFF7", "#8F4794"]
+    const colors = ["var(--green)", "#F7931A"]
     return systems.map((sys, i)=>(
         <button
         key={i}
-        className={`relative w-full flex items-center place-content-center bg-(--black) rounded-3xl border-1 ${siteType === "telegram" && i === 1 ? "order-3 col-span-2" : ""}`}
+        className={`relative w-full flex items-center place-content-center bg-(--black) rounded-3xl border-1 col-span-2`}
         style={{ borderColor: colors[i] }}
         onClick={()=>setSystem(sys.title)}
         >

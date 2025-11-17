@@ -6,11 +6,9 @@ import Balance from "@/components/Balance";
 import CTA from "@/components/CTA";
 import FAQ from "@/components/FAQ";
 import Gallery from "@/components/Gallery";
-import { useSiteType } from "@/components/SiteTypeContext";
 import SteamDrop from "@/components/SteamDrop";
 
 export default function Home() {
-  const { siteType } = useSiteType()
   return (
     <>
       <Backlight count={4} />
@@ -18,7 +16,7 @@ export default function Home() {
        <CTA />
        <Advantages />
        <Balance />
-       {siteType === "game" && <Gallery />}
+       <Gallery />
        <SteamDrop />
        <FAQ />
       </main>

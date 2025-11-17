@@ -1,5 +1,5 @@
 interface IconProps {
-    type: "instagram"|"telegram"|"youtube"|"tiktok"|"discord"|"dtf"|"telegram2"|"youtube2"|"discord2"|"dtf2"|"question"|"logo"|"mail"|"sbp"|"crypto"|"grid"|"arrow";
+    type: "instagram"|"telegram"|"youtube"|"tiktok"|"discord"|"dtf"|"telegram2"|"youtube2"|"discord2"|"dtf2"|"question"|"logo"|"mail"|"sbp"|"crypto"|"grid"|"arrow"|"star";
     size?: number;
     width?: number;
     height?: number;
@@ -213,6 +213,12 @@ export default function Icon({ type, size, width, height, color, strokeWidth }:I
             return (
                 <svg width={size||width||26} height={size||height||15} viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.292892 6.65666C-0.0976315 7.04719 -0.0976315 7.68035 0.292892 8.07088L6.65685 14.4348C7.04738 14.8254 7.68054 14.8254 8.07107 14.4348C8.46159 14.0443 8.46159 13.4111 8.07107 13.0206L2.41421 7.36377L8.07107 1.70692C8.46159 1.31639 8.46159 0.683226 8.07107 0.292702C7.68054 -0.0978227 7.04738 -0.0978227 6.65685 0.292702L0.292892 6.65666ZM26 7.36377V6.36377L1 6.36377V7.36377V8.36377L26 8.36377V7.36377Z" fill={color||"#EEEEEE"} />
+                </svg>
+            )
+        case "star":
+            return (
+                <svg width={size||width||10} height={size||height||10} viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.92452 0.641846C5.58251 -0.213949 4.41749 -0.213949 4.07548 0.641846L3.19846 2.83502L0.92241 3.02502C0.0348902 3.0987 -0.325118 4.25187 0.351397 4.85503L2.08544 6.40083L1.55542 8.71242C1.34892 9.614 2.29144 10.3266 3.05146 9.84348L5 8.60505L6.94854 9.844C7.70856 10.3272 8.65108 9.61453 8.44458 8.71242L7.91456 6.40188L9.6486 4.85555C10.3251 4.25239 9.96511 3.09975 9.07759 3.02554L6.80154 2.83607L5.92452 0.641846Z" fill={color||"#EEEEEE"} />
                 </svg>
             )
     }

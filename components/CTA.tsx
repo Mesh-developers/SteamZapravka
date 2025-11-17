@@ -24,15 +24,16 @@ export default function CTA() {
                 :
                 <>
                     <h1 className="font-(family-name:--bounded-regular) text-6xl">
-                        Блистай в <span className="text-(--blue)">Telegram</span><br/>
-                        звезды на максимум!
+                        Доступ к <span className="text-(--blue)">сервисам</span><br/>
+                        звёзд на максимум!
                     </h1>
                     <h2 className="text-2xl">
                         Мгновенное пополнение, низкая комиссия<br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
                     <button className="w-96 h-20 bg-radial from-[#0698D6] from-40% to-[#035070] rounded-2xl text-xl shadow-lg/30">
-                        Пополнить
+                        Купить <br />
+                        Telegram Stars
                     </button>
                 </>
                 }
