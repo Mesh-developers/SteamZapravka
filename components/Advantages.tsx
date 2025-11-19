@@ -14,7 +14,7 @@ interface AdvantageItemProps {
 function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
   return (
     <div className="relative">
-    <div className="absolute top-0 left-0 w-full h-full bg-radial from-[rgba(44,_125,_195,_1)] from-0% via-[rgba(44,_125,_195,_0.4)] via-1% to-[rgba(69,_196,_126,_0)] to-100%" />
+    <div className="absolute top-0 left-0 w-full h-full bg-radial from-[rgba(44,_125,_195,_0.5)] from-0% via-[rgba(44,_125,_195,_0.4)] via-1% to-[rgba(69,_196,_126,_0)] to-100%" />
     <div className="relative border border-white rounded-2xl flex flex-col bg-[rgba(10,_14,_20,_0.5)] justify-between h-full">
       {/* верхняя часть */}
       <div className="flex items-start justify-between p-4">

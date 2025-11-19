@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Backlight count={4} />
-      <main className="relative z-2 mt-10 w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+      <main className="relative z-2 mt-10 max-w-[1400px] w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
        <CTA />
        <Advantages />
        <Balance />
