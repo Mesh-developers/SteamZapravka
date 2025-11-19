@@ -3,7 +3,7 @@ import Icon from "./Icon";
 
 export default function Footer() {
     return (
-        <footer className="relative z-2 border-1 border-(--border) max-w-[1400px] w-[75%] bg-(--section-back) rounded-3xl m-auto mt-10 px-5 py-5 grid grid-cols-3 items-center justify-between text-[#EEEEEE]">
+        <footer className="relative z-2 border-1 border-(--border) max-w-[1500px] w-[76%] bg-(--section-back) rounded-3xl m-auto mt-10 px-5 py-5 grid grid-cols-3 items-center justify-between text-[#EEEEEE]">
             <div className="flex flex-col gap-5">
                 <Link href={""}>Пользовательское соглашение</Link>
                 <Link href={""}>Политика конфиденциальности</Link>

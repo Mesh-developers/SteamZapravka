@@ -58,7 +58,7 @@ export default function Gallery() {
                     key={i}
                     href={links[i]}
                     onClick={()=>setCurrent(i)}
-                    className={`hover:translate-y-[-10px] transition-all delay-200 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden ${current === i ? "border-2 border-(--green)" : "border-1 border-white"}`}
+                    className={`hover:translate-y-[-10px] transition-all delay-200 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden border-1 border-(--border) hover:shadow-[0_-5px_20px_1px_rgba(70,249,215,0.5),0_5px_20px_1px_rgba(21,181,237,0.5)]`}
                     >
                         <Image src={`/images/${path}`} className="object-cover pointer-events-none" alt="image" fill />
                     </Link>)}

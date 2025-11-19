@@ -24,7 +24,7 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: {
     >
       {/* вопрос + иконка */}
       <summary className="flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10">
-        <h2 className="text-lg text-(--white) select-none">{question}</h2>
+        <h2 className="text-lg text-(--white) select-none self-center">{question}</h2>
         {open ? <p className="relative w-100 flex-1 text-sm text-(--white)" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
         {/* плюс → крестик */}
         <div

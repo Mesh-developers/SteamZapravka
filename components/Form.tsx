@@ -38,13 +38,14 @@ function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentInd
     if (!coin) return <div />
     return (
         <div className={`cursor-pointer border-1 ${currentIndex !== index ? "border-white" : "border-(--green)"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`} onClick={()=>setCurrentIndex(index)}>
-            <div className={`flex bg-center bg-no-repeat bg-cover w-full h-full shadow-[inset_0_-10px_15px_-5px_#0E131E]`} style={{ backgroundImage: `url('/images/${image}')` }}>
-                <span className="text-[13px] relative self-end ml-2">{coin}</span>
+            <div className={`relative flex bg-center bg-no-repeat bg-cover w-full h-full`} style={{ backgroundImage: `url('/images/${image}')` }}>
+                <span className="z-2 relative text-[13px] relative self-end ml-3">{coin}</span>
+                <div className="absolute bg-linear-to-b from-[#00000000] to-[#0E131E] left-0 bottom-0 w-full h-8" />
             </div>
-            <div className="flex justify-between items-center bg-[#171D25] px-2">
-                <div className="flex flex-col">
+            <div className="flex justify-between items-center bg-[#171D25] px-3">
+                <div className="flex flex-col gap-0">
                     <span className="text-[17px]">{price} ₽</span>
-                    <span className="text-[#999999] line-through text-[8px]">{altPrice} ₽</span>
+                    <span className="text-[#999999] line-through text-[10px] relative -top-1.5">{altPrice} ₽</span>
                 </div>
                 <button
                 className="border-1 border-[#2D8451] bg-radial from-[#45C47E] from-5% to-[#2D8451] rounded-2xl shadow-lg/30 text-[8px] px-2 py-1"
@@ -69,7 +70,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
         <div className="w-full flex flex-col gap-4">
             <div className={`w-full h-50 rounded-2xl bg-left bg-no-repeat bg-contain`} style={{ backgroundImage: `url('/images/${cover}')` }} />
 
-            <div className="grid grid-cols-2 w-full h-fit gap-6">
+            <div className="grid grid-cols-[60%_40%] w-full h-fit">
                 <div className="grid grid-cols-2 w-full h-fit gap-6">
                     {boxes.map((box, i)=><Card
                                         key={i}
@@ -87,11 +88,11 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                         <p className="text-[13px]">{uniqueCard.text}</p>
                     </div>
                 </div>
-                <div className="h-full overflow-hidden flex flex-col">
-                    <form onSubmit={(e)=>e.preventDefault()} className="min-h-[768px] flex flex-col gap-2 bg-[#171D25] font-(family-name:--bounded-regular) px-15 pt-15 rounded-xl border-1 border-white overflow-hidden">
+                <div className="w-full h-full overflow-hidden flex flex-col pl-6">
+                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] flex flex-col gap-2 bg-[#171D25] font-(family-name:--bounded-regular) px-15 pt-15 rounded-xl border-1 border-(--border) overflow-hidden">
                         <span className="text-lg">Товар</span>
                         <InputNumber count={count} setCount={setCount} value={boxes[currentIndex].coin} image={boxes[currentIndex].image} />
-                        <div className="flex gap-6 w-full h-20 mt-4">
+                        <div className="flex gap-3 w-full h-20 mt-4">
                             <PaymentSystems
                             systems={[
                                 {
@@ -118,18 +119,18 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                         </button>
                         <div className="mt-4 flex flex-col gap-2">
                             <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
-                                <span className="!font-(family-name:--manrope-regular)">
+                                <span className="!font-(family-name:--manrope-regular) text-[12px]">
                                     Я согласен с условиями <Link href={""} className="underline">Пользовательского соглашения</Link>.
                                 </span>
                             </Checkbox>
                             <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
-                                <span className="!font-(family-name:--manrope-regular)">
+                                <span className="!font-(family-name:--manrope-regular) text-[12px]">
                                     Я согласен с условиями <Link href={""} className="underline">Политики конфиденциальности</Link>.
                                 </span>
                             </Checkbox>
                         </div>
                         <span className="text-lg mt-2">Инструкция</span>
-                        <ol className="!font-(family-name:--manrope-regular) ml-5">
+                        <ol className="!font-(family-name:--manrope-regular) ml-5 text-[13px]">
                             {instructions.map((item, i)=><li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
                         </ol>
                     </form>

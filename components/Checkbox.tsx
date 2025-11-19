@@ -22,12 +22,12 @@ export default function Checkbox({ children, checked, setChecked }:CheckboxProps
       />
         <span
         className={`
-          w-6 h-6 rounded-lg border-2 border-[#33475D] p-1 flex items-center justify-center
+          w-5 h-5 rounded-lg border-2 border-[#33475D] bg-(--black) p-1 flex items-center justify-center
           transition-all duration-200 ease-in-out
 
         `}
         >
-            <div className={`w-full h-full rounded-sm ${checked ? 'bg-(--green)' : 'bg-transparent'}`} />
+            <div className={`w-full h-full rounded-[2px] ${checked ? 'bg-(--green)' : 'bg-transparent'}`} />
       </span>
       <span className="ml-3 text-white">
         {children}
