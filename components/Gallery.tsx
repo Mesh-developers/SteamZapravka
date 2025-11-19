@@ -58,7 +58,7 @@ export default function Gallery() {
                     key={i}
                     href={links[i]}
                     onClick={()=>setCurrent(i)}
-                    className={`hover:translate-y-[-10px] transition-all delay-400 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden ${current === i ? "border-2 border-(--green)" : "border-1 border-white"}`}
+                    className={`hover:translate-y-[-10px] transition-all delay-200 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden ${current === i ? "border-2 border-(--green)" : "border-1 border-white"}`}
                     >
                         <Image src={`/images/${path}`} className="object-cover pointer-events-none" alt="image" fill />
                     </Link>)}
