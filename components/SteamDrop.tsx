@@ -25,7 +25,7 @@ export default function SteamDrop() {
         <Icon key={7} type="dtf2" size={82} />,
     ]
     return (
-        <div className="w-full h-80 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 grid grid-cols-2">
+        <section className="w-full h-80 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 grid grid-cols-2">
             <div className="flex flex-col gap-6">
                 <h1 className="text-4xl font-(family-name:--manrope-semibold)">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
                 <h2 className="text-xl">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
@@ -35,6 +35,6 @@ export default function SteamDrop() {
             <div className="w-full grid grid-cols-[repeat(4,126px)] grid-rows-2 gap-x-3 gap-y-4 justify-end justify-items-end">
                 {medias.map((item, i)=><LinkItem key={i}>{item}</LinkItem>)}
             </div>
-        </div>
+        </section>
     )
 }

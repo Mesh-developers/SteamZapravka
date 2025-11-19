@@ -1,7 +1,6 @@
 "use clients"
 
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { useSiteType } from "./SiteTypeContext";
 
 interface PaymentSystemsProps {
     system: string;
@@ -14,13 +13,12 @@ interface PaymentSystemsProps {
 }
 
 export default function PaymentSystems({ system, setSystem, systems }:PaymentSystemsProps) {
-    const { siteType } = useSiteType()
     const colors = ["var(--green)", "#F7931A"]
     return systems.map((sys, i)=>(
         <button
         key={i}
         className={`relative w-full flex items-center place-content-center bg-(--black) rounded-3xl border-1 col-span-2`}
-        style={{ borderColor: colors[i] }}
+        style={{ borderColor: system === sys.title ? colors[i] : "var(--black)" }}
         onClick={()=>setSystem(sys.title)}
         >
             {sys.image}

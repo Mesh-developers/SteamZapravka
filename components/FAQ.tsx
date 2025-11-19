@@ -121,7 +121,7 @@ export default function FAQ() {
     const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false));
 
     return (
-        <div id="faq" className="w-full h-fit border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-4">
+        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-4">
             <h1 className="text-4xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
                 <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />
@@ -129,6 +129,6 @@ export default function FAQ() {
             <Modal open={show} onClose={()=>setShow(false)}>
               <Image width={340} height={600} src="/images/telegram_tutorial.webp" alt="telegram tutorial" />
             </Modal>
-        </div>
+        </section>
     )
 }

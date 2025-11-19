@@ -43,7 +43,7 @@ export default function Gallery() {
         "nintendo.png",
     ]
     return (
-        <div className="w-full h-85 border-1 border-white bg-[rgba(10,15,25,0.5)] rounded-2xl px-8 py-8 flex flex-col gap-2">
+        <section className="w-full h-85 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-2">
             <div className="flex gap-2 items-center">
                 <Icon type="grid" />
                 <h1 className="text-4xl">Все игры</h1>
@@ -67,6 +67,6 @@ export default function Gallery() {
                     <Icon type="arrow" />
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

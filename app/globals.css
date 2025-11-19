@@ -7,6 +7,8 @@
   --green: #50EA90;
   --black: #0A0F19;
   --white: #EEEEEE;
+  --border: #363636;
+  --section-back: #101723;
 }
 
 @theme inline {
