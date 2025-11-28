@@ -6,7 +6,14 @@ import Icon from "./Icon"
 export default function Slider() {
     const [currentImage, setCurrentImage] = useState("arc_raiders_slider.png")
     const [currentIndex, setCurrentIndex] = useState(0)
-    const data = [
+    const data: {
+        title: string;
+        mainImage: string;
+        images: string[];
+        genres: string[];
+        platforms: Array<"windows"|"mac">;
+        price: number;
+    }[] = [
         {
             title: "АRC Raiders",
             mainImage: "arc_raiders_slider.png",
