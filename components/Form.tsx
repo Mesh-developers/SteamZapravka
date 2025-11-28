@@ -37,7 +37,7 @@ interface FormProps {
 function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentIndex }:CardProps) {
     if (!coin) return <div />
     return (
-        <div className={`cursor-pointer border-1 ${currentIndex !== index ? "border-white" : "border-(--green)"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`} onClick={()=>setCurrentIndex(index)}>
+        <div className={`cursor-pointer border-1 ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`} onClick={()=>setCurrentIndex(index)}>
             <div className={`relative flex bg-center bg-no-repeat bg-cover w-full h-full`} style={{ backgroundImage: `url('/images/${image}')` }}>
                 <span className="z-2 relative text-[13px] relative self-end ml-3">{coin}</span>
                 <div className="absolute bg-linear-to-b from-[#00000000] to-[#0E131E] left-0 bottom-0 w-full h-8" />
