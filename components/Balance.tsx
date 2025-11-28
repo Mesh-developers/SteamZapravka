@@ -20,7 +20,7 @@ export default function Balance() {
     return (
         <section className="w-full h-84 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-4">
             <div className="flex justify-between">
-                <h1 className="text-4xl">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>} в СНГ</h1>
+                <h1 className="text-4xl">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
                 <button className="w-48 h-9 rounded-full border-2 border-[#3EAFF7]">
                     <span className="p-2 flex items-center justify-center gap-1 w-full h-full rounded-full text-sm">
                         <svg width="10" height="16" viewBox="0 0 3 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,9 +30,9 @@ export default function Balance() {
                     </span>
                 </button>
             </div>
-            <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-5">
+            <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
-                    <Input placeholder="Ваш логин Steam" value={login} setValue={setLogin} hintWrap hint={siteType === "game" ? "ГДЕ НАЙТИ ЛОГИН?" : "ГДЕ НАЙТИ?"} />
+                    <Input placeholder="Ваш логин Steam" value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" />
                     <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? "~12.24 $ / 8728.42 ₸" : "~12.24 TON / 1728.42 ₽"} />
                     <Input placeholder="Промокод" value={promocode} setValue={setPromocode} />
                     <Chips value={price} values={["150", "500", "1000", "2000"]} setValue={setPrice} />

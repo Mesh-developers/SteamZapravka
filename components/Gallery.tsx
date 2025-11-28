@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image";
 import Icon from "./Icon";
 import { useState } from "react";
 import Link from "next/link";
@@ -12,10 +11,11 @@ export default function Gallery() {
     const [current, setCurrent] = useState(-1)
     const paths = siteType === "game" ? [
         "pubg.png",
-        "valorant.png",
+        "genshin.png",
+        "honkai.png",
+        "zzz.png",
+        "state_survival.png",
         "roblox.png",
-        "freefire.png",
-        "deltaforce.png"
     ]
     :
     [
@@ -28,10 +28,11 @@ export default function Gallery() {
     ]
     const links = siteType === "game" ? [
         "/pubg",
-        "/valorant",
+        "/genshin",
+        "/honkai",
+        "/zzz",
+        "/state-survival",
         "/roblox",
-        "/freefire",
-        "/deltaforce",
     ]
     :
     [
@@ -43,7 +44,7 @@ export default function Gallery() {
         "nintendo.png",
     ]
     return (
-        <section className="w-full h-85 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-2">
+        <section className="w-full h-95 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-8">
             <div className="flex gap-2 items-center">
                 <Icon type="grid" />
                 <h1 className="text-4xl">Все игры</h1>
@@ -58,10 +59,9 @@ export default function Gallery() {
                     key={i}
                     href={links[i]}
                     onClick={()=>setCurrent(i)}
-                    className={`hover:translate-y-[-10px] transition-all delay-200 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden border-1 border-(--border) hover:shadow-[0_-5px_20px_1px_rgba(70,249,215,0.5),0_5px_20px_1px_rgba(21,181,237,0.5)]`}
-                    >
-                        <Image src={`/images/${path}`} className="object-cover pointer-events-none" alt="image" fill />
-                    </Link>)}
+                    style={{ backgroundImage: `url('/images/${path}')` }}
+                    className={`hover:translate-y-[-10px] bg-cover bg-no-repeat bg-center transition-all delay-100 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden border-1 border-(--border) hover:shadow-[3px_-3px_10px_0_#46F9D7,-3px_-3px_10px_0px_#46F9D7,3px_3px_10px_0_#15B5ED,-3px_3px_10px_0_#15B5ED]`}
+                    />)}
                 </div>
                 <div className="rotate-180 cursor-pointer select-none" onClick={()=>setCurrent(state=>state+1 === paths.length ? 0 : state+1)}>
                     <Icon type="arrow" />

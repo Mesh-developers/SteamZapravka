@@ -1,5 +1,5 @@
 interface IconProps {
-    type: "instagram"|"telegram"|"youtube"|"tiktok"|"discord"|"dtf"|"telegram2"|"youtube2"|"discord2"|"dtf2"|"question"|"logo"|"mail"|"sbp"|"crypto"|"grid"|"arrow"|"star";
+    type: "instagram"|"telegram"|"youtube"|"tiktok"|"discord"|"dtf"|"telegram2"|"youtube2"|"discord2"|"dtf2"|"question"|"logo"|"mail"|"sbp"|"crypto"|"grid"|"arrow"|"star"|"windows"|"mac";
     size?: number;
     width?: number;
     height?: number;
@@ -211,14 +211,44 @@ export default function Icon({ type, size, width, height, color, strokeWidth }:I
             )
         case "arrow":
             return (
-                <svg width={size||width||26} height={size||height||15} viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.292892 6.65666C-0.0976315 7.04719 -0.0976315 7.68035 0.292892 8.07088L6.65685 14.4348C7.04738 14.8254 7.68054 14.8254 8.07107 14.4348C8.46159 14.0443 8.46159 13.4111 8.07107 13.0206L2.41421 7.36377L8.07107 1.70692C8.46159 1.31639 8.46159 0.683226 8.07107 0.292702C7.68054 -0.0978227 7.04738 -0.0978227 6.65685 0.292702L0.292892 6.65666ZM26 7.36377V6.36377L1 6.36377V7.36377V8.36377L26 8.36377V7.36377Z" fill={color||"#EEEEEE"} />
+                <svg width={size||width||22} height={size||height||36} viewBox="0 0 22 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.9591 0L0 18.0002L17.9591 36L22 31.95L8.08175 17.9998L22 4.05003L17.9591 0Z" fill="white"/>
                 </svg>
             )
         case "star":
             return (
                 <svg width={size||width||10} height={size||height||10} viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.92452 0.641846C5.58251 -0.213949 4.41749 -0.213949 4.07548 0.641846L3.19846 2.83502L0.92241 3.02502C0.0348902 3.0987 -0.325118 4.25187 0.351397 4.85503L2.08544 6.40083L1.55542 8.71242C1.34892 9.614 2.29144 10.3266 3.05146 9.84348L5 8.60505L6.94854 9.844C7.70856 10.3272 8.65108 9.61453 8.44458 8.71242L7.91456 6.40188L9.6486 4.85555C10.3251 4.25239 9.96511 3.09975 9.07759 3.02554L6.80154 2.83607L5.92452 0.641846Z" fill={color||"#EEEEEE"} />
+                </svg>
+            )
+        case "windows":
+            return (
+                <svg width={size||width||21} height={size||height||21} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_722_360)">
+                <path d="M9.98058 0H0V9.98074H9.98058V0Z" fill="#EEEEEE"/>
+                <path d="M21.0003 0H11.0195V9.98074H21.0003V0Z" fill="#EEEEEE"/>
+                <path d="M9.98058 11.0195H0V21.0004H9.98058V11.0195Z" fill="#EEEEEE"/>
+                <path d="M21.0003 11.0195H11.0195V21.0004H21.0003V11.0195Z" fill="#EEEEEE"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_722_360">
+                <rect width={size||width||21} height={size||height||21} fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+            )
+        case "mac":
+            return (
+                <svg width={size||width||18} height={size||height||22} viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_755_526)">
+                <path d="M9.89067 2.28231C11.2776 0.45425 13.206 0.445312 13.206 0.445312C13.206 0.445312 13.4927 2.16398 12.1149 3.81973C10.6437 5.58764 8.97131 5.29838 8.97131 5.29838C8.97131 5.29838 8.65721 3.90791 9.89067 2.28231Z" fill="white"/>
+                <path d="M9.14692 6.50229C9.86063 6.50229 11.1848 5.52148 12.9085 5.52148C15.8757 5.52148 17.0429 7.63263 17.0429 7.63263C17.0429 7.63263 14.7599 8.79991 14.7599 11.6322C14.7599 14.8272 17.6039 15.9283 17.6039 15.9283C17.6039 15.9283 15.6158 21.5238 12.9306 21.5238C11.6971 21.5238 10.7384 20.6926 9.43885 20.6926C8.11455 20.6926 6.8004 21.5548 5.94446 21.5548C3.49241 21.5548 0.394531 16.2468 0.394531 11.9801C0.394531 7.78216 3.01666 5.58001 5.47602 5.58001C7.07505 5.58027 8.31573 6.50229 9.14692 6.50229Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_755_526">
+                <rect width={size||width||18} height={size||height||22} fill="white"/>
+                </clipPath>
+                </defs>
                 </svg>
             )
     }

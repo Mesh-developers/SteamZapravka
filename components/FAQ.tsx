@@ -64,10 +64,10 @@ export default function FAQ() {
     const items = [
         {
             question: "Где найти имя пользователя в Telegram?",
-            answer: `1. Откройте Telegram <br/>
-                    2. Перейдите в настройки <br/>
-                    3. Откройте раздел "Мой профиль" <br/>
-                    4. Посмотрите поле "Имя пользователя" <br/><br/>
+            answer: `1. Откройте Telegram <br>
+                    2. Перейдите в настройки <br>
+                    3. Откройте раздел "Мой профиль" <br>
+                    4. Посмотрите поле "Имя пользователя" <br><br>
                     <div id='telegram_tutorial' class="absolute cursor-pointer left-75 top-0 rounded-2xl w-30 h-20 gap-2 flex flex-col justify-center items-center ${siteType === "game" ? "bg-[#27837E]" : "bg-[#0698D6]"}">
                       <svg width="40" height="30" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <mask id="path-1-inside-1_1335_6" fill="white">
@@ -118,7 +118,7 @@ export default function FAQ() {
         },
     ]
 
-    const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false));
+    const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false).map((_, i)=>i===0 ? true : false ));
 
     return (
         <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-4">

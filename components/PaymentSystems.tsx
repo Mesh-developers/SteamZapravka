@@ -13,12 +13,10 @@ interface PaymentSystemsProps {
 }
 
 export default function PaymentSystems({ system, setSystem, systems }:PaymentSystemsProps) {
-    const colors = ["var(--green)", "#F7931A"]
     return systems.map((sys, i)=>(
         <button
         key={i}
-        className={`relative w-full flex items-center place-content-center bg-(--black) rounded-3xl border-1 col-span-2 ${sys.title === "crypto" ? "opacity-70" : "" }`}
-        style={{ borderColor: system === sys.title ? colors[i] : "var(--black)" }}
+        className={`relative w-full min-h-[42px] flex items-center place-content-center bg-(--black) rounded-2xl col-span-2 ${system === sys.title ? "shadow-[3px_-3px_3px_-1px_#46F9D7,-3px_-3px_3px_-1px_#46F9D7,3px_3px_3px_-1px_#15B5ED,-3px_3px_3px_-1px_#15B5ED]" : "brightness-50"}`}
         onClick={()=>setSystem(sys.title)}
         disabled={sys.title === "crypto"}
         >
