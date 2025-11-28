@@ -224,7 +224,7 @@ export default function Icon({ type, size, width, height, color, strokeWidth }:I
         case "windows":
             return (
                 <svg width={size||width||21} height={size||height||21} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_722_360)">
+                <g clipPath="url(#clip0_722_360)">
                 <path d="M9.98058 0H0V9.98074H9.98058V0Z" fill="#EEEEEE"/>
                 <path d="M21.0003 0H11.0195V9.98074H21.0003V0Z" fill="#EEEEEE"/>
                 <path d="M9.98058 11.0195H0V21.0004H9.98058V11.0195Z" fill="#EEEEEE"/>
@@ -240,7 +240,7 @@ export default function Icon({ type, size, width, height, color, strokeWidth }:I
         case "mac":
             return (
                 <svg width={size||width||18} height={size||height||22} viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_755_526)">
+                <g clipPath="url(#clip0_755_526)">
                 <path d="M9.89067 2.28231C11.2776 0.45425 13.206 0.445312 13.206 0.445312C13.206 0.445312 13.4927 2.16398 12.1149 3.81973C10.6437 5.58764 8.97131 5.29838 8.97131 5.29838C8.97131 5.29838 8.65721 3.90791 9.89067 2.28231Z" fill="white"/>
                 <path d="M9.14692 6.50229C9.86063 6.50229 11.1848 5.52148 12.9085 5.52148C15.8757 5.52148 17.0429 7.63263 17.0429 7.63263C17.0429 7.63263 14.7599 8.79991 14.7599 11.6322C14.7599 14.8272 17.6039 15.9283 17.6039 15.9283C17.6039 15.9283 15.6158 21.5238 12.9306 21.5238C11.6971 21.5238 10.7384 20.6926 9.43885 20.6926C8.11455 20.6926 6.8004 21.5548 5.94446 21.5548C3.49241 21.5548 0.394531 16.2468 0.394531 11.9801C0.394531 7.78216 3.01666 5.58001 5.47602 5.58001C7.07505 5.58027 8.31573 6.50229 9.14692 6.50229Z" fill="white"/>
                 </g>

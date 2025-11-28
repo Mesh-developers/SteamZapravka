@@ -118,7 +118,10 @@ export default function FAQ() {
         },
     ]
 
-    const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false).map((_, i)=>i===0 ? true : false ));
+    const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false));
+    useEffect(()=>{
+      queueMicrotask(()=>setOpen(state=>state.map((_, i)=>i===0 ? true : false )))
+    }, [])
 
     return (
         <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-4">
