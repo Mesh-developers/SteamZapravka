@@ -2,56 +2,21 @@
 
 import { useEffect, useState } from "react"
 import Icon from "./Icon"
+import { arcRaiders, dayZ, farmingSimulator, GameInfo } from "@/constants"
+import Link from "next/link"
 
 export default function Slider() {
     const [currentImage, setCurrentImage] = useState("arc_raiders_slider.png")
     const [currentIndex, setCurrentIndex] = useState(0)
-    const data: {
-        title: string;
-        mainImage: string;
-        images: string[];
-        genres: string[];
-        platforms: Array<"windows"|"mac">;
-        price: number;
-    }[] = [
+    const data: GameInfo[] = [
         {
-            title: "АRC Raiders",
-            mainImage: "arc_raiders_slider.png",
-            images: [
-                "arc_raiders_slider1.png",
-                "arc_raiders_slider2.png",
-                "arc_raiders_slider3.png",
-                "arc_raiders_slider4.png",
-            ],
-            genres: ["Выживание", "Шутер"],
-            platforms: ["windows"],
-            price: 2799
+           ...arcRaiders
         },
         {
-            title: "DAYZ",
-            mainImage: "dayz_slider.png",
-            images: [
-                "dayz_slider1.png",
-                "dayz_slider2.png",
-                "dayz_slider3.png",
-                "dayz_slider4.png",
-            ],
-            genres: ["Выживание", "Шутер"],
-            platforms: ["windows"],
-            price: 2799
+            ...dayZ
         },
         {
-            title: "Farming Simulator",
-            mainImage: "farming_simulator_slider.png",
-            images: [
-                "farming_simulator_slider1.png",
-                "farming_simulator_slider2.png",
-                "farming_simulator_slider3.png",
-                "farming_simulator_slider4.png",
-            ],
-            genres: ["Выживание", "Шутер"],
-            platforms: ["windows", "mac"],
-            price: 2799
+            ...farmingSimulator
         },
     ]
 
@@ -69,9 +34,9 @@ export default function Slider() {
                     <Icon type="arrow" />
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                    <div className="grid grid-cols-[2fr_1fr]">
+                    <Link href="/arc-raiders" className="grid grid-cols-[2fr_1fr] cursor-pointer">
                         <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className="relative bg-cover bg-no-repeat bg-center h-[473px] rounded-l-2xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]" />
-                        <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl flex flex-col cursor-pointer border-1 border-[#0A141D] gap-7">
+                        <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl flex flex-col border-1 border-[#0A141D] gap-7">
                             <div className="flex justify-between mr-3">
                                 <h1 className="text-2xl ml-5">{data[currentIndex].title}</h1>
                                 <div className="flex gap-1">
@@ -102,7 +67,7 @@ export default function Slider() {
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                     <div className="w-full flex justify-center items-center gap-4">
                         {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[15px] w-[60px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
                     </div>

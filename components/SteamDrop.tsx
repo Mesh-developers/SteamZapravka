@@ -1,5 +1,3 @@
-"use client"
-
 import { ReactNode } from "react"
 import Icon from "./Icon"
 import { useSiteType } from "./SiteTypeContext"

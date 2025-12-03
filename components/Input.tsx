@@ -14,7 +14,7 @@ interface InputProps {
 export default function Input({ type, hint, placeholder, value, setValue, hintWrap=false }:InputProps) {
 
     return (
-        <div className="w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-5 items-center justify-between min-h-[42px]">
+        <div className="w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[52px]">
             <input
             type={type}
             placeholder={placeholder}
