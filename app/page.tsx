@@ -14,7 +14,7 @@ export default function Home() {
   const { siteType } = useSiteType()
   return (
     <>
-      <Backlight count={10} gap={68} />
+      <Backlight count={9} gap={68} />
       <main className="relative z-2 mt-10 max-w-[1400px] w-[75%] m-auto flex min-h-screen flex-col gap-15 items-start justify-items-start bg-transparent">
        <CTA />
        <Advantages />

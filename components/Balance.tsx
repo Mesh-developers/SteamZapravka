@@ -32,7 +32,7 @@ export default function Balance() {
             </div>
             <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
-                    <Input placeholder="Ваш логин Steam" value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" />
+                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" />
                     <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? "~12.24 $ / 8728.42 ₸" : "~12.24 TON / 1728.42 ₽"} />
                     <Input placeholder="Промокод" value={promocode} setValue={setPromocode} />
                     <Chips value={price} values={["150", "500", "1000", "2000"]} setValue={setPrice} />

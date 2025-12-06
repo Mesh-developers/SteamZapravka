@@ -117,10 +117,12 @@ export default function GamePage({ mainImage, images, video, description, minima
                             setValue={setEdition}
                             />
                         </div>
-                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 bg-radial from-[#45C47E] from-40% to-[#2D8451] rounded-4xl text-3xl shadow-lg/30">
-                            <span>
-                                Купить игру<br />{price} ₽
-                            </span>
+                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 bg-radial from-[#45C47E] from-40% to-[#2D8451] rounded-[25px] text-3xl shadow-lg/30">
+                            {edition ?
+                            <span>Купить за {price} ₽</span>
+                            :
+                            <span>Купить</span>
+                            }
                         </button>
                         <div className="mt-4 flex flex-col gap-2">
                             <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
