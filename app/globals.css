@@ -48,6 +48,10 @@
     100% { transform: translateX(0); }
   }
 
+.btn {
+  @apply shadow-lg/30 bg-radial from-[#45C47E] from-0% to-[#2D8451] rounded-xl;
+}
+
 .thumb {
   @apply absolute top-1/2 -translate-y-1/2 w-5 h-4 rounded-full bg-[#2D2D2D];
   transform: translateX(-50%);

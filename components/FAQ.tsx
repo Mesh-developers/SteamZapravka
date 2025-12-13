@@ -9,7 +9,7 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: {
   const { siteType } = useSiteType()
   useEffect(() => {
     const el = document.getElementById('telegram_tutorial');
-    console.log(el)
+
     if (!el) return;
     const handler = ()=>{ setShow(true) }
     el.addEventListener('click', handler);

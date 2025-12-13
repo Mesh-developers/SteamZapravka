@@ -1,4 +1,4 @@
-import { Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react"
+import { ChangeEvent, Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react"
 import Icon from "./Icon";
 import Link from "next/link";
 
@@ -8,10 +8,28 @@ interface InputProps {
     hintWrap?: boolean;
     placeholder?: string;
     value: string | number | readonly string[];
-    setValue: Dispatch<SetStateAction<string>>
+    setValue: Dispatch<SetStateAction<string>>|Dispatch<SetStateAction<number>>
 }
 
 export default function Input({ type, hint, placeholder, value, setValue, hintWrap=false }:InputProps) {
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+
+        // Проверяем, является ли ввод числом
+        if (type === "number") {
+        const numValue = inputValue === '' ? 0 : parseInt(inputValue, 10);
+
+        // Проверяем лимит
+            if (numValue <= 10000) {
+                setValue(Number(inputValue));
+            } else {
+                // setError('Максимальное значение: 100000');
+            }
+        } else {
+            setValue(inputValue)
+        }
+    };
 
     return (
         <div className="w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[52px]">
@@ -20,7 +38,7 @@ export default function Input({ type, hint, placeholder, value, setValue, hintWr
             placeholder={placeholder}
             className="placeholder:text-[#686868] text-white outline-none h-full !font-(family-name:--manrope-regular)"
             value={value}
-            onChange={(e)=>setValue(e.target.value)}
+            onChange={(e)=>handleChange(e)}
             />
             {hint &&
             (!hintWrap ?

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import Image from "next/image";
 import PaymentSystems from "./PaymentSystems";
@@ -27,13 +27,33 @@ export default function GamePage({ mainImage, images, video, description, minima
     const [isPrivacy, setIsPrivacy] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(-1)
     const [email, setEmail] = useState("")
-    const [system, setSystem] = useState("sbp")
+    const [system, setSystem] = useState("Sbp")
+
+    const leftArrowHandler = () => setCurrentIndex(state=>state-1 < -1 ? images.length-1 : state-1)
+    const rightArrowHandler = () => setCurrentIndex(state=>state+1 === images.length ? -1 : state+1)
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'ArrowLeft') {
+            leftArrowHandler()
+        } else if (event.key === 'ArrowRight') {
+            rightArrowHandler()
+        }
+    };
+
+    useEffect(()=>{
+        window.addEventListener('keydown', handleKeyDown);
+
+        // Очистка при размонтировании
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [])
 
     return (
         <div className="w-full flex flex-col gap-6">
             <div className="flex gap-4 h-180">
                 <div className="flex flex-col gap-2">
-                    <div className="w-[848px] h-full flex relative justify-between items-center">
+                    <div className="w-[848px] h-full flex relative justify-between items-center overflow-hidden group">
                         {currentIndex === -1 ?
                         <iframe src={video} className="w-full h-full absolute rounded-3xl" frameBorder="0" allowFullScreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture"/>
                         :
@@ -44,15 +64,15 @@ export default function GamePage({ mainImage, images, video, description, minima
                         alt="game image"
                         />
                         }
-                        <div className="relative ml-5 cursor-pointer select-none" onClick={()=>setCurrentIndex(state=>state-1 < -1 ? images.length-1 : state-1)}>
+                        <div className="transition-all delay-200 relative group-hover:ml-5 -ml-7 cursor-pointer select-none" onClick={leftArrowHandler}>
                             <Icon type="arrow" />
                         </div>
-                        <div className="relative mr-5 rotate-180 cursor-pointer select-none" onClick={()=>setCurrentIndex(state=>state+1 === images.length ? -1 : state+1)}>
+                        <div className="transition-all delay-200 relative group-hover:mr-5 -mr-7 rotate-180 cursor-pointer select-none" onClick={rightArrowHandler}>
                             <Icon type="arrow" />
                         </div>
-                        <div className="absolute top-[92%] w-full flex justify-center items-center gap-4">
+                        {/* <div className="absolute top-[92%] w-full flex justify-center items-center gap-4">
                             {[...images, ""].map((_, i)=><div onClick={()=>setCurrentIndex(i-1)} key={i} className={`cursor-pointer w-[40px] h-[10px] rounded-sm opacity-60 ${i-1 === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flex gap-3 justify-between">
                         <div
@@ -94,7 +114,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                             <PaymentSystems
                             systems={[
                                 {
-                                    title: "sbp",
+                                    title: "Sbp",
                                     percent: 8,
                                     image: <Icon type="sbp" width={80} height={50} />
                                 },
@@ -117,7 +137,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                             setValue={setEdition}
                             />
                         </div>
-                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 bg-radial from-[#45C47E] from-40% to-[#2D8451] rounded-[25px] text-3xl shadow-lg/30">
+                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 btn !rounded-[25px] text-3xl">
                             {edition ?
                             <span>Купить за {price} ₽</span>
                             :

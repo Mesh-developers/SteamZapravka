@@ -17,10 +17,10 @@ export const arcRaiders: GameInfo = {
     title: "АRC Raiders",
     mainImage: "arc_raiders_slider.png",
     images: [
-        "arc_raiders_slider1.png",
-        "arc_raiders_slider2.png",
-        "arc_raiders_slider3.png",
-        "arc_raiders_slider4.png",
+        "arc_raiders_slider1.jpg",
+        "arc_raiders_slider2.jpg",
+        "arc_raiders_slider3.jpg",
+        "arc_raiders_slider4.jpg",
     ],
     video: "https://vk.com/video_ext.php?oid=-212496568&id=456249267&hash=20271acdbce58623",
     description: `

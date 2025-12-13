@@ -39,30 +39,30 @@ export default function Slider() {
                         <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl flex flex-col border-1 border-[#0A141D] gap-7">
                             <div className="flex justify-between mr-3">
                                 <h1 className="text-2xl ml-5">{data[currentIndex].title}</h1>
-                                <div className="flex gap-1">
-                                    {data[currentIndex].genres.map((genre, i)=><span className="text-[12px] font-(family-name:--manrope-light) rounded-lg bg-[#0698D6] p-1 px-2 flex items-center" key={i}>{genre}</span>)}
-                                </div>
                             </div>
                             <div className="w-[94%] grid grid-cols-[40%_60%] h-40 grid-rows-[99px_99px] gap-4 h-fit" onMouseLeave={()=>setCurrentImage(data[currentIndex].mainImage)}>
                                 {data[currentIndex].images.map((path, i)=><div key={i} onMouseEnter={()=>setCurrentImage(path)} style={{ backgroundImage: `url('/images/${path}')` }} className={`w-full h-full bg-cover bg-no-repeat bg-center ${i % 2 === 0 ? "rounded-r-2xl" : "rounded-2xl"}`} />)}
                             </div>
                             <div className="flex justify-between mr-3">
-                                <span className="text-2xl ml-5">
-                                    Уже доступна! <br/>
-                                    <span className="relative top-2 bg-[#666666] text-[12px] rounded-lg w-fit py-1 px-2">Лидер продаж в STEAM</span>
+                                <span className="text-sm ml-5">
+                                    <span className="text-(--green)">Рекомендует!</span> <br/>
+                                    Steam Zapravka <br/>
+                                    <span className="text-2xl relative top-3">
+                                        Уже доступна!
+                                    </span>
                                 </span>
                                 <div className="flex flex-col">
-                                    <span className="text-sm">
-                                        <span className="text-(--green)">Рекомендует!</span> <br/>
-                                        Steam Zapravka
-                                    </span>
+                                    <span className="relative top-2 bg-[#666666] text-[12px] rounded-lg w-fit py-1 px-2">Лидер продаж в STEAM</span>
+                                    <div className="flex gap-1 justify-end relative top-3">
+                                        {data[currentIndex].genres.map((genre, i)=><span className="text-[12px] font-(family-name:--manrope-light) rounded-lg bg-[#666666] p-1 px-2 flex items-center" key={i}>{genre}</span>)}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex justify-between items-center mr-3 mt-1">
+                            <div className="flex justify-between items-center mr-3">
                                 <div className="flex gap-2 ml-5">
                                     {data[currentIndex].platforms.map((platform, i)=><Icon key={i} type={platform} />)}
                                 </div>
-                                <button className="shadow-[0_3px_3px_0_rgba(0,0,0,0.20),0_5px_5px_0_rgba(0,0,0,0.17),0_12px_7px_0_rgba(0,0,0,0.10),0_21px_8px_0_rgba(0,0,0,0.03),0_32px_9px_0_rgba(0,0,0,0)] bg-radial from-[#45C47E] from-0% to-[#2D8451] rounded-xl text-sm px-5 py-2">
+                                <button className="btn text-sm px-5 py-2">
                                     {data[currentIndex].price} ₽
                                 </button>
                             </div>

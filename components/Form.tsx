@@ -37,7 +37,7 @@ interface FormProps {
 function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentIndex }:CardProps) {
     if (!coin) return <div />
     return (
-        <div className={`cursor-pointer border-1 ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`} onClick={()=>setCurrentIndex(index)}>
+        <div className={`cursor-pointer border-1 border-(--border) ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl h-60 font-(family-name:--bounded-regular)`} onClick={()=>setCurrentIndex(index)}>
             <div className={`relative flex bg-center bg-no-repeat bg-cover w-full h-full`} style={{ backgroundImage: `url('/images/${image}')` }}>
                 <span className="z-2 relative text-[13px] relative self-end ml-3">{coin}</span>
                 <div className="absolute bg-linear-to-b from-[#00000000] to-[#0E131E] left-0 bottom-0 w-full h-8" />
@@ -61,7 +61,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
     const pathname = usePathname()
     const [count, setCount] = useState(1)
     const [currentIndex, setCurrentIndex] = useState(1)
-    const [system, setSystem] = useState("sbp")
+    const [system, setSystem] = useState("Sbp")
     const [email, setEmail] = useState("")
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
@@ -83,20 +83,20 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                                         coin={box.coin}
                                         />
                     )}
-                    <div style={{ backgroundImage: `url('/images/${uniqueCard.image}')` }} className={`flex flex-col ${boxes.length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover gap-6 border-1 border-white overflow-hidden rounded-2xl h-60 text-white pl-8 pr-5 py-7`}>
+                    <div style={{ backgroundImage: `url('/images/${uniqueCard.image}')` }} className={`flex flex-col ${boxes.length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover gap-6 border-1 border-(--border) overflow-hidden rounded-2xl h-60 text-white pl-8 pr-5 py-7`}>
                         <h3 className="text-xl">{uniqueCard.title}</h3>
                         <p className="text-[13px]">{uniqueCard.text}</p>
                     </div>
                 </div>
                 <div className="w-full h-full overflow-hidden flex flex-col pl-6">
-                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] flex flex-col gap-2 bg-[#171D25] font-(family-name:--bounded-regular) px-15 pt-15 rounded-xl border-1 border-(--border) overflow-hidden">
+                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-15 pt-15 rounded-xl border-1 border-(--border) overflow-hidden">
                         <span className="text-lg">Товар</span>
-                        <InputNumber count={count} setCount={setCount} value={boxes[currentIndex].coin} image={boxes[currentIndex].image} />
+                        <InputNumber withoutCounter count={count} setCount={setCount} value={boxes[currentIndex].coin} image={boxes[currentIndex].image} />
                         <div className="flex gap-3 w-full h-20 mt-4">
                             <PaymentSystems
                             systems={[
                                 {
-                                    title: "sbp",
+                                    title: "Sbp",
                                     percent: 8,
                                     image: <Icon type="sbp" width={80} height={50} />
                                 },
@@ -112,9 +112,9 @@ export default function Form({ cover, boxes, uniqueCard, instructions }:FormProp
                         </div>
                         <span className="text-lg mt-2">E-mail</span>
                         <Input type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
-                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 bg-radial from-[#45C47E] from-40% to-[#2D8451] rounded-2xl text-xl shadow-lg/30">
+                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 btn !rounded-3xl text-xl">
                             <span>
-                                Купить {(Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]}<br />+{boxes[currentIndex].price * count} ₽
+                                Купить {(Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]}<br />{boxes[currentIndex].price * count} ₽
                             </span>
                         </button>
                         <div className="mt-4 flex flex-col gap-2">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Input from "./Input"
 import Chips from "./Chips"
 import PaymentSystems from "./PaymentSystems"
@@ -8,14 +8,53 @@ import Icon from "./Icon"
 import Checkbox from "./Checkbox"
 import Link from "next/link"
 import { useSiteType } from "./SiteTypeContext"
+import { ExchangeResponse, TopupResponse } from "@/typings"
+import { redirect, RedirectType } from "next/navigation"
+import Modal from "./Modal"
 
 export default function Balance() {
+    const [resMessage, setResMessage] = useState("")
     const [login, setLogin] = useState("")
     const [promocode, setPromocode] = useState("")
-    const [price, setPrice] = useState("1000")
-    const [system, setSystem] = useState("sbp")
+    const [price, setPrice] = useState(1000)
+    const [system, setSystem] = useState("Sbp")
     const [isAgree, setIsAgree] = useState(false)
     const { siteType } = useSiteType()
+    const [exchange, setExchange] = useState<ExchangeResponse>();
+
+    const topupRequest = async () => {
+        const req = await fetch("https://api.steamzapravka.io/steam/topup", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                paymentMethod: system,
+                amountRub: price,
+                steamLogin: login,
+                couponCode: promocode
+            })
+        })
+
+        if (req.status === 200) {
+            const res = await req.json() as TopupResponse
+            redirect(res.sbpPaymentUrl, RedirectType.push)
+        } else if (req.status === 400) {
+            setResMessage((await req.json()).message)
+        }
+    }
+
+    useEffect(()=>{
+        const getExchange = async () => {
+            const res = await fetch("https://api.steamzapravka.io/steam/exchange")
+
+            if (res.status === 200) {
+                const data = await res.json() as ExchangeResponse
+                setExchange(data)
+            }
+        }
+        getExchange()
+    }, [])
 
     return (
         <section className="w-full h-84 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-4">
@@ -33,7 +72,7 @@ export default function Balance() {
             <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
                     <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" />
-                    <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? "~12.24 $ / 8728.42 ₸" : "~12.24 TON / 1728.42 ₽"} />
+                    <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
                     <Input placeholder="Промокод" value={promocode} setValue={setPromocode} />
                     <Chips value={price} values={["150", "500", "1000", "2000"]} setValue={setPrice} />
                 </div>
@@ -43,7 +82,7 @@ export default function Balance() {
                     setSystem={setSystem}
                     systems={[
                         {
-                            title: "sbp",
+                            title: "Sbp",
                             percent: 8,
                             image: <Icon type="sbp" width={80} height={50} />
                         },
@@ -55,7 +94,7 @@ export default function Balance() {
                     ]}
                     />
                 </div>
-                <button className={`bg-radial from-[${siteType === "game" ? "#45C47E" : "#0698D6"}] from-40% to-[${siteType === "game" ? "#2D8451" : "#035070"}] rounded-2xl font-medium text-xl`}>
+                <button onClick={topupRequest} className={`bg-radial from-[${siteType === "game" ? "#45C47E" : "#0698D6"}] from-40% to-[${siteType === "game" ? "#2D8451" : "#035070"}] rounded-2xl font-medium text-xl`}>
                     Пополнить баланс <br/> +{price} ₽
                 </button>
             </div>
@@ -64,6 +103,11 @@ export default function Balance() {
                     Я согласен с условиями <Link href={""} className="underline">Пользовательского соглашения</Link> и <Link href={""} className="underline">Политики конфиденциальности</Link>.
                 </span>
             </Checkbox>
+            <Modal open={!!resMessage} onClose={()=>setResMessage("")}>
+                <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2">
+                    {resMessage}
+                </div>
+            </Modal>
         </section>
     )
 }
