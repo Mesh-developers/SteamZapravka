@@ -22,12 +22,12 @@ export default function Input({ type, hint, placeholder, value, setValue, hintWr
 
         // Проверяем лимит
             if (numValue <= 10000) {
-                setValue(Number(inputValue));
+                (setValue as Dispatch<SetStateAction<number>>)(Number(inputValue));
             } else {
                 // setError('Максимальное значение: 100000');
             }
         } else {
-            setValue(inputValue)
+            (setValue as Dispatch<SetStateAction<string>>)(inputValue)
         }
     };
 

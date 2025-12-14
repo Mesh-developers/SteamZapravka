@@ -32,7 +32,7 @@ export default function GamePage({ mainImage, images, video, description, minima
     const leftArrowHandler = () => setCurrentIndex(state=>state-1 < -1 ? images.length-1 : state-1)
     const rightArrowHandler = () => setCurrentIndex(state=>state+1 === images.length ? -1 : state+1)
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'ArrowLeft') {
             leftArrowHandler()
         } else if (event.key === 'ArrowRight') {
