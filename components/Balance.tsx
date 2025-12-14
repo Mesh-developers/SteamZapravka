@@ -8,7 +8,7 @@ import Icon from "./Icon"
 import Checkbox from "./Checkbox"
 import Link from "next/link"
 import { useSiteType } from "./SiteTypeContext"
-import { ExchangeResponse, TopupResponse } from "@/typings"
+import { ExchangeResponse, TopupRequest, TopupResponse } from "@/typings"
 import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
 
@@ -23,24 +23,27 @@ export default function Balance() {
     const [exchange, setExchange] = useState<ExchangeResponse>();
 
     const topupRequest = async () => {
-        const req = await fetch("https://api.steamzapravka.io/steam/topup", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
+        if (isAgree) {
+            const body: TopupRequest = {
                 paymentMethod: system,
                 amountRub: price,
                 steamLogin: login,
                 couponCode: promocode
+            }
+            const req = await fetch("https://api.steamzapravka.io/steam/topup", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(body)
             })
-        })
 
-        if (req.status === 200) {
-            const res = await req.json() as TopupResponse
-            redirect(res.sbpPaymentUrl, RedirectType.push)
-        } else if (req.status === 400) {
-            setResMessage((await req.json()).message)
+            if (req.status === 200) {
+                const res: TopupResponse = await req.json()
+                redirect(res.sbpPaymentUrl, RedirectType.push)
+            } else if (req.status === 400) {
+                setResMessage((await req.json()).message)
+            }
         }
     }
 
@@ -49,7 +52,7 @@ export default function Balance() {
             const res = await fetch("https://api.steamzapravka.io/steam/exchange")
 
             if (res.status === 200) {
-                const data = await res.json() as ExchangeResponse
+                const data: ExchangeResponse = await res.json()
                 setExchange(data)
             }
         }

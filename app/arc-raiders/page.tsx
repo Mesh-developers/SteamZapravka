@@ -6,7 +6,7 @@ export default function ArcRaiders() {
 
     return (
         <>
-        <Backlight count={5} />
+        <Backlight count={6} gap={30} />
         <main className="relative z-2 mt-10 w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <GamePage
             price={arcRaiders.price}

@@ -5,8 +5,12 @@ import Icon from "./Icon"
 import { arcRaiders, dayZ, farmingSimulator, GameInfo } from "@/constants"
 import Link from "next/link"
 
-export default function Slider() {
-    const [currentImage, setCurrentImage] = useState("arc_raiders_slider.png")
+type SliderProps = {
+    mainImage?: string
+}
+
+export default function Slider({ mainImage="" }:SliderProps) {
+    const [currentImage, setCurrentImage] = useState(mainImage||"arc_raiders_slider.png")
     const [currentIndex, setCurrentIndex] = useState(0)
     const data: GameInfo[] = [
         {
@@ -18,7 +22,7 @@ export default function Slider() {
         {
             ...farmingSimulator
         },
-    ]
+    ].filter((val)=>val.mainImage !== mainImage)
 
     useEffect(()=>{
         if (data[currentIndex].mainImage !== currentImage)
@@ -34,8 +38,11 @@ export default function Slider() {
                     <Icon type="arrow" />
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                    <Link href="/arc-raiders" className="grid grid-cols-[2fr_1fr] cursor-pointer">
-                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className="relative bg-cover bg-no-repeat bg-center h-[473px] rounded-l-2xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]" />
+                    <Link href="/arc-raiders" className={`${mainImage ? "grid grid-cols-1" : "grid-cols-[2fr_1fr]"} grid cursor-pointer`}>
+                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-center h-[473px]`} />
+                        {mainImage ?
+                        <></>
+                        :
                         <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl flex flex-col border-1 border-[#0A141D] gap-7">
                             <div className="flex justify-between mr-3">
                                 <h1 className="text-2xl ml-5">{data[currentIndex].title}</h1>
@@ -67,6 +74,7 @@ export default function Slider() {
                                 </button>
                             </div>
                         </div>
+                        }
                     </Link>
                     <div className="w-full flex justify-center items-center gap-4">
                         {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[15px] w-[60px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}

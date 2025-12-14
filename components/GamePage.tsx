@@ -9,6 +9,7 @@ import Select from "./Select";
 import Checkbox from "./Checkbox";
 import Link from "next/link";
 import { Platforms } from "@/constants";
+import Slider from "./Slider";
 
 type GamePageProps = {
     mainImage: string;
@@ -181,6 +182,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                 </div>
             </div>
             )}
+            <Slider mainImage={mainImage} />
             <div className="mt-5" />
         </div>
     )

@@ -15,3 +15,10 @@ export type TopupResponse = {
     steamUsername: string;
     transactionId: string;
 }
+
+export type TopupRequest = {
+    paymentMethod: string,
+    amountRub: number,
+    steamLogin: string,
+    couponCode: string
+}
