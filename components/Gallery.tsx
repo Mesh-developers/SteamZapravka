@@ -70,7 +70,7 @@ export default function Gallery() {
                     {paths.slice(0 + current, CARD_COUNT + current).map((path, i)=>
                     <Link
                     key={i}
-                    href={links[i]}
+                    href={links.slice(0 + current, CARD_COUNT + current)[i]}
                     onClick={()=>setCurrent(i)}
                     style={{ backgroundImage: `url('/images/${path}')` }}
                     className={`hover:translate-y-[-10px] bg-cover bg-no-repeat bg-center transition-all delay-50 relative cursor-pointer w-48 h-full rounded-2xl overflow-hidden border-1 border-(--border) hover:shadow-[3px_-3px_10px_0_#46F9D7,-3px_-3px_10px_0px_#46F9D7,3px_3px_10px_0_#15B5ED,-3px_3px_10px_0_#15B5ED]`}
