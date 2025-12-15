@@ -31,15 +31,23 @@ export default function Slider({ mainImage="" }:SliderProps) {
             });
     }, [currentIndex])
 
+    useEffect(()=>{
+        let timer: NodeJS.Timeout;
+        if (mainImage) {
+            timer = setInterval(()=>setCurrentIndex(state=>state+1 < data.length ? state+1 : 0 ), 5000)
+            return ()=>clearInterval(timer)
+        }
+    })
+
     return (
         <section className="w-full h-130 flex">
             <div className="self-start w-full flex items-center gap-4">
-                <div className="cursor-pointer select-none" onClick={()=>setCurrentIndex(state=>state-1 < 0 ? data.length-1 : state-1)}>
+                <div className={`cursor-pointer select-none ${mainImage ? "relative z-1 left-3" : ""}`} onClick={()=>setCurrentIndex(state=>state-1 < 0 ? data.length-1 : state-1)}>
                     <Icon type="arrow" />
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                    <Link href="/arc-raiders" className={`${mainImage ? "grid grid-cols-1" : "grid-cols-[2fr_1fr]"} grid cursor-pointer`}>
-                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-center h-[473px]`} />
+                    <Link href="/arc-raiders" className={`${mainImage ? "grid grid-cols-1 relative -left-10 w-[106%]" : "grid-cols-[2fr_1fr]"} grid cursor-pointer`}>
+                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-center h-[473px]`} />
                         {mainImage ?
                         <></>
                         :
@@ -77,10 +85,10 @@ export default function Slider({ mainImage="" }:SliderProps) {
                         }
                     </Link>
                     <div className="w-full flex justify-center items-center gap-4">
-                        {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[15px] w-[60px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
+                        {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[10px] w-[40px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
                     </div>
                 </div>
-                <div className="rotate-180 cursor-pointer select-none" onClick={()=>setCurrentIndex(state=>state+1 === data.length ? 0 : state+1)}>
+                <div className={`rotate-180 cursor-pointer select-none ${mainImage ? "relative right-3" : ""}`} onClick={()=>setCurrentIndex(state=>state+1 === data.length ? 0 : state+1)}>
                     <Icon type="arrow" />
                 </div>
             </div>

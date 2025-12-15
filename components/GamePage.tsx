@@ -182,8 +182,9 @@ export default function GamePage({ mainImage, images, video, description, minima
                 </div>
             </div>
             )}
-            <Slider mainImage={mainImage} />
             <div className="mt-5" />
+            <Slider mainImage={mainImage} />
+            <div className="mt-15" />
         </div>
     )
 }

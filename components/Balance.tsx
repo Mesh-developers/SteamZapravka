@@ -8,9 +8,10 @@ import Icon from "./Icon"
 import Checkbox from "./Checkbox"
 import Link from "next/link"
 import { useSiteType } from "./SiteTypeContext"
-import { ExchangeResponse, TopupRequest, TopupResponse } from "@/typings"
+import { ExchangeResponse, LoginResponse, PromocodeResponse, TopupRequest, TopupResponse } from "@/typings"
 import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
+import useDebounce from "@/hooks/useDebounce"
 
 export default function Balance() {
     const [resMessage, setResMessage] = useState("")
@@ -21,6 +22,10 @@ export default function Balance() {
     const [isAgree, setIsAgree] = useState(false)
     const { siteType } = useSiteType()
     const [exchange, setExchange] = useState<ExchangeResponse>();
+    const debouncedLogin = useDebounce(login, 1000)
+    const debouncedPromocode = useDebounce(promocode, 1000)
+    const [promocodeResult, setPromocodeResult] = useState<PromocodeResponse>()
+    const [loginResult, setLoginResult] = useState<LoginResponse>()
 
     const topupRequest = async () => {
         if (isAgree) {
@@ -59,6 +64,52 @@ export default function Balance() {
         getExchange()
     }, [])
 
+    useEffect(()=>{
+        const checkLogin = async () => {
+            if (debouncedLogin) {
+                const res = await fetch("https://api.steamzapravka.io/steam/login", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        steamLogin: debouncedLogin
+                    })
+                })
+
+                if (res.ok) {
+                    const data: LoginResponse = await res.json()
+                    setLoginResult(data)
+                }
+            } else {
+                setLoginResult(undefined)
+            }
+        }
+        checkLogin()
+    }, [debouncedLogin])
+
+    useEffect(()=>{
+        const checkPromocode = async () => {
+            if (debouncedPromocode) {
+                const res = await fetch("https://api.steamzapravka.io/steam/coupon", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        couponCode: debouncedPromocode
+                    })
+                })
+
+                if (res.ok) {
+                    const data: PromocodeResponse = await res.json()
+                    setPromocodeResult(data)
+                }
+            }
+        }
+        checkPromocode()
+    }, [debouncedPromocode])
+
     return (
         <section className="w-full h-84 border-1 border-(--border) bg-(--section-back) rounded-2xl px-8 py-8 flex flex-col gap-4">
             <div className="flex justify-between">
@@ -74,9 +125,9 @@ export default function Balance() {
             </div>
             <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
-                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" />
+                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={loginResult && !loginResult.usernameExists} isSuccess={loginResult && loginResult.usernameExists} renderHint={loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                     <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
-                    <Input placeholder="Промокод" value={promocode} setValue={setPromocode} />
+                    <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
                     <Chips value={price} values={["150", "500", "1000", "2000"]} setValue={setPrice} />
                 </div>
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">

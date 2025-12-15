@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react"
+import { ChangeEvent, Dispatch, HTMLInputTypeAttribute, ReactNode, SetStateAction } from "react"
 import Icon from "./Icon";
 import Link from "next/link";
 
@@ -9,22 +9,21 @@ interface InputProps {
     placeholder?: string;
     value: string | number | readonly string[];
     setValue: Dispatch<SetStateAction<string>>|Dispatch<SetStateAction<number>>
+    renderHint?: ReactNode;
+    isWarning?: boolean;
+    isSuccess?: boolean;
 }
 
-export default function Input({ type, hint, placeholder, value, setValue, hintWrap=false }:InputProps) {
+export default function Input({ type, hint, placeholder, value, setValue, renderHint, isWarning=false, isSuccess=false, hintWrap=false }:InputProps) {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
 
-        // Проверяем, является ли ввод числом
         if (type === "number") {
         const numValue = inputValue === '' ? 0 : parseInt(inputValue, 10);
 
-        // Проверяем лимит
             if (numValue <= 10000) {
                 (setValue as Dispatch<SetStateAction<number>>)(Number(inputValue));
-            } else {
-                // setError('Максимальное значение: 100000');
             }
         } else {
             (setValue as Dispatch<SetStateAction<string>>)(inputValue)
@@ -32,7 +31,7 @@ export default function Input({ type, hint, placeholder, value, setValue, hintWr
     };
 
     return (
-        <div className="w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[52px]">
+        <div className={`w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[52px] ${isWarning ? "shadow-[2px_2px_4px_0px_#D40101,-2px_2px_4px_0px_#D40101,2px_-2px_4px_0px_#D44001,-2px_-2px_4px_0px_#D44001]" : ""} ${isSuccess ? "shadow-[2px_2px_4px_0px_#15B5ED,-2px_2px_4px_0px_#15B5ED,2px_-2px_4px_0px_#46F9D7,-2px_-2px_4px_0px_#46F9D7]" : ""}`}>
             <input
             type={type}
             placeholder={placeholder}
@@ -40,7 +39,8 @@ export default function Input({ type, hint, placeholder, value, setValue, hintWr
             value={value}
             onChange={(e)=>handleChange(e)}
             />
-            {hint &&
+            {renderHint}
+            {hint && !renderHint &&
             (!hintWrap ?
             <span className="justify-self-end mr-5 text-[#686868] text-[10px]">{hint}</span>
             :

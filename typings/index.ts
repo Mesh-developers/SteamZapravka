@@ -22,3 +22,12 @@ export type TopupRequest = {
     steamLogin: string,
     couponCode: string
 }
+
+export type LoginResponse = {
+    usernameExists: boolean
+}
+
+export type PromocodeResponse = {
+    isValid: boolean,
+    discountPercentage: number
+}
