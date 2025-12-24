@@ -8,7 +8,7 @@ export default function Header() {
         <header className="relative z-2 rounded-b-3xl max-w-[1500px] w-[80%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
             <BurgerMenu />
             <Switcher leftText="Игры" rightText="Telegram" />
-            <Icon type="logo" />
+            <Link href="/"><Icon type="logo" /></Link>
             <div className="flex gap-10 font-light">
                 <span>О НАС</span>
                 <a href="#faq">FAQ</a>

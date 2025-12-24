@@ -7,50 +7,34 @@ export default function DeltaForce() {
         <Backlight count={3} gap={100} />
         <main className="relative z-2 mt-10 w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <Form
+            type="topup"
             cover="deltaforce_cover.png"
-            boxes={[
-                {
-                    coin: "60 Delta Coins",
-                    price: 99,
-                    altPrice: 100,
-                    image: "1delta.png",
-                },
-                {
-                    coin: "120 Delta Coins",
-                    price: 99,
-                    altPrice: 100,
-                    image: "2delta.png"
-                },
-                {
-                    coin: "300 + 21 Delta Coins",
-                    price: 99,
-                    altPrice: 100,
-                    image: "3delta.png"
-                },
-                {
-                    coin: "660 + 68 Delta Coins",
-                    price: 99,
-                    altPrice: 100,
-                    image: "4delta.png"
-                },
-                {
-                    coin: "1320 + 27 Delta Coins",
-                    price: 99,
-                    altPrice: 100,
-                    image: "5delta.png"
-                }
-            ]}
-            uniqueCard={{ title: "Delta Force", text: `
-            Подарочная карта Delta Force — это цифровой ключ, пополняющий ваш игровой баланс. С его помощью вы получите Delta Coins, которые можно использовать для покупки скинов, премиум-боевого пропуска и других уникальных предметов.
-            `,
+            boxes={[]}
+            uniqueCard={{ title: "Delta Force", text: ["", `
+            Прямое пополнение Delta Force — это самый простой, быстрый и надежный способ пополнить счет Delta Coins. Вам не нужно передавать данные от аккаунта, достаточно указать свой ID для мгновенного зачисления валюты. С её помощью игроки могут приобретать, эксклюзивный контент, скины, аксессуары, анимации, премиум подписку и другие внутриигровые предметы.
+            `],
             image: "deltaforce_card.png"
             }}
-            instructions={[
-                "Войдите в аккаунт на сайте или в приложении.",
-                "Перейдите в раздел Аккаунт → Активация ваучера.",
-                "Введите код с подарочной карты.",
-                "Подтвердите ввод подарочной карты."
+            instructions={[[], [
+                "Введите ID от вашего аккаунта.",
+                "Выберите регион.",
+                "Выберите желаемый товар.",
+                "Выберите способ оплаты.",
+                "Примите условия  оферты и оплатить товар."
+            ]]}
+            products={[
+                { id: 5938, name: "Delta Force: 18 Delta Coins", price: 25, region: "Любой", image: "1delta.png" },
+                { id: 5940, name: "Delta Force: 30 Delta Coins", price: 40, region: "Любой", image: "2delta.png" },
+                { id: 5942, name: "Delta Force: 60 Delta Coins", price: 80, region: "Любой", image: "3delta.png" },
+                { id: 5939, name: "Delta Force: 300 + 20 Delta Coins", price: 380, region: "Любой" },
+                { id: 5941, name: "Delta Force: 420 + 40 Delta Coins", price: 545, region: "Любой" },
+                { id: 5850, name: "Delta Force: 680 + 70 Delta Coins", price: 755, region: "Любой" },
+                { id: 5851, name: "Delta Force: 1280 + 200 Delta Coins", price: 1505, region: "Любой" },
+                { id: 5852, name: "Delta Force: 1680 + 300 Delta Coins", price: 1885, region: "Любой" },
+                { id: 5853, name: "Delta Force: 3280 + 670 Delta Coins", price: 3765, region: "Любой" },
+                { id: 5854, name: "Delta Force: 6480 +1620 Delta Coins", price: 7525, region: "Любой" },
             ]}
+            prefix="Delta Force"
             />
         </main>
     </>

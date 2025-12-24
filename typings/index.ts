@@ -31,3 +31,21 @@ export type PromocodeResponse = {
     isValid: boolean,
     discountPercentage: number
 }
+
+export type VouchersResponse = {
+    productId: number,
+    orderId: string,
+    productName: string,
+    inStock: boolean,
+    qrSbpTransactionId: string,
+    paymentUrl: string,
+    amountToBeSoldFor: number
+}
+
+export type VouchersBatch = {
+    productId: number,
+    inStock: boolean,
+    priceInRub: number,
+    region: string,
+    name: string
+}

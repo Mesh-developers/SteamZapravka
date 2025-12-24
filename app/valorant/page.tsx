@@ -4,83 +4,56 @@ import Form from "@/components/Form";
 export default function Valorant() {
     return (
         <>
-        <Backlight count={4} gap={200} />
+        <Backlight count={3} gap={100} />
         <main className="relative z-2 mt-10 w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <Form
+            type="vauchers"
             cover="valorant_cover.png"
             boxes={[
                 {
-                    coin: "240 VP",
-                    price: 99,
-                    altPrice: 100,
-                    image: "1vp.png"
-                },
-                {
+                    id: 1973,
                     coin: "475 VP",
-                    price: 99,
-                    altPrice: 100,
+                    price: 450,
                     image: "2vp.png"
                 },
                 {
+                    id: 1974,
                     coin: "1000 VP",
-                    price: 99,
-                    altPrice: 100,
+                    price: 895,
                     image: "3vp.png"
                 },
                 {
+                    id: 1975,
                     coin: "1520 VP",
-                    price: 99,
-                    altPrice: 100,
+                    price: 1360,
                     image: "4vp.png"
                 },
                 {
-                    coin: "2050 VP",
-                    price: 99,
-                    altPrice: 100,
-                    image: "5vp.png"
-                },
-                {
+                    id: 1976,
                     coin: "2575 VP",
-                    price: 99,
-                    altPrice: 100,
+                    price: 2240,
                     image: "6vp.png"
                 },
                 {
-                    coin: "3650 VP",
-                    price: 99,
-                    altPrice: 100,
-                    image: "7vp.png"
-                },
-                {
+                    id: 1977,
                     coin: "5350 VP",
-                    price: 99,
-                    altPrice: 100,
+                    price: 4475,
                     image: "8vp.png"
                 },
-                {
-                    coin: "8700 VP",
-                    price: 99,
-                    altPrice: 100,
-                    image: "9vp.png"
-                },
-                {
-                    coin: "11000 VP",
-                    price: 99,
-                    altPrice: 100,
-                    image: "10vp.png"
-                },
             ]}
-            uniqueCard={{ title: "Valorant", text: `
+            uniqueCard={{ title: "Valorant", text: [`
             Подарочная карта VALORANT — это удобный способ пополнить счёт в игре без привязки банковской карты. С её помощью можно получить VALORANT Points и использовать их для покупки скинов оружия, боевых пропусков и других внутриигровых предметов в регионе Europe (EU).
-            `,
+            `],
             image: "valorant_card.png"
             }}
-            instructions={[
+            instructions={[[
                 "Перейдите на сайт redeem.playvalorant.com",
                 "Войдите в свою учётную запись Riot Games.",
                 "Введите код с подарочной карты и подтвердите.",
                 "VALORANT Points сразу будут зачислены на ваш аккаунт."
-            ]}
+            ]]}
+            prefix=""
+            products={[]}
             />
         </main>
     </>
