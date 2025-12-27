@@ -1,5 +1,5 @@
 interface IconProps {
-    type: "instagram"|"telegram"|"youtube"|"tiktok"|"discord"|"dtf"|"telegram2"|"youtube2"|"discord2"|"dtf2"|"question"|"logo"|"mail"|"sbp"|"crypto"|"grid"|"arrow"|"star"|"windows"|"mac";
+    type: "instagram"|"telegram"|"youtube"|"tiktok"|"discord"|"dtf"|"telegram2"|"youtube2"|"discord2"|"dtf2"|"question"|"logo"|"mail"|"sbp"|"crypto"|"grid"|"arrow"|"star"|"windows"|"mac"|"checkMark"|"failCross";
     size?: number;
     width?: number;
     height?: number;
@@ -248,6 +248,48 @@ export default function Icon({ type, size, width, height, color, strokeWidth }:I
                 <clipPath id="clip0_755_526">
                 <rect width={size||width||18} height={size||height||22} fill="white"/>
                 </clipPath>
+                </defs>
+                </svg>
+            )
+        case "checkMark":
+            return (
+                <svg width={size||width||136} height={size||width||136} viewBox="0 0 136 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_1241_622)">
+                <path d="M108 68C108 90.0915 90.0914 108 68.0004 108C45.9087 108 28 90.0916 28 68C28 45.9084 45.9086 28 68.0004 28C90.0914 28 108 45.9085 108 68Z" fill="#2ECC71"/>
+                <path d="M68 32C48.1178 32 32 48.1178 32 68C32 87.8822 48.1178 104 68 104C87.8823 104 104 87.8822 104 68C104 48.1178 87.8822 32 68 32ZM65.2994 82.4319C63.9661 83.7652 63.2994 84.4319 62.471 84.4319C61.6425 84.4319 60.9759 83.7652 59.6425 82.4319L48.8676 71.657C47.5343 70.3236 46.8676 69.657 46.8676 68.8285C46.8676 68.0001 47.5343 67.3335 48.8676 66.0001L50.2414 64.6263C51.5748 63.293 52.2414 62.6263 53.0699 62.6263C53.8983 62.6263 54.565 63.293 55.8983 64.6263L59.6425 68.3705C60.9759 69.7039 61.6425 70.3705 62.471 70.3705C63.2994 70.3705 63.966 69.7039 65.2994 68.3705L80.1017 53.5682C81.435 52.2349 82.1017 51.5682 82.9301 51.5682C83.7586 51.5682 84.4252 52.2349 85.7586 53.5682L87.1324 54.942C88.4657 56.2754 89.1324 56.942 89.1324 57.7705C89.1324 58.5989 88.4657 59.2656 87.1324 60.5989L65.2994 82.4319Z" fill="white"/>
+                </g>
+                <defs>
+                <filter id="filter0_d_1241_622" x="0" y="0" width="136" height="136" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset/>
+                <feGaussianBlur stdDeviation="14"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0.180392 0 0 0 0 0.8 0 0 0 0 0.443137 0 0 0 0.6 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1241_622"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1241_622" result="shape"/>
+                </filter>
+                </defs>
+                </svg>
+            )
+        case "failCross":
+            return (
+                <svg width={size||width||136} height={size||width||136} viewBox="0 0 136 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_1275_946)">
+                <path d="M108 68C108 90.0915 90.0914 108 68.0004 108C45.9087 108 28 90.0916 28 68C28 45.9084 45.9086 28 68.0004 28C90.0913 28 108 45.9085 108 68Z" fill="#C93636"/>
+                </g>
+                <path d="M68 32C48.1178 32 32 48.1178 32 68C32 87.8822 48.1178 104 68 104C87.8822 104 104 87.8822 104 68C104 48.1178 87.8821 32 68 32ZM85.2602 78.2296L78.2295 85.2603L68 75.0307L57.7704 85.2603L50.7397 78.2296L60.9693 68L50.7397 57.7704L57.7704 50.7397L68 60.9693L78.2296 50.7397L85.2603 57.7704L75.0307 68L85.2602 78.2296Z" fill="white"/>
+                <defs>
+                <filter id="filter0_d_1275_946" x="0" y="0" width="136" height="136" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset/>
+                <feGaussianBlur stdDeviation="14"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0.788235 0 0 0 0 0.211765 0 0 0 0 0.211765 0 0 0 0.6 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1275_946"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1275_946" result="shape"/>
+                </filter>
                 </defs>
                 </svg>
             )

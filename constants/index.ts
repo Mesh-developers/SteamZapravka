@@ -1,3 +1,5 @@
+import { OrderData } from "@/typings";
+
 export type Platforms = Array<"windows"|"mac">
 
 export type GameInfo = {
@@ -123,3 +125,9 @@ export const farmingSimulator: GameInfo = {
     platforms: ["windows", "mac"],
     price: 2799
 }
+
+const APP_PREFIX = "zapravka"
+
+export const ORDER_STORAGE_KEY = `${APP_PREFIX}_order_data`
+
+export const initialOrder: OrderData = {id: "00000000000", name: "Какой-то заказ", amount: 0, email: "support@steamzapravka.io", paymentSystem: "SBP", href: "" }

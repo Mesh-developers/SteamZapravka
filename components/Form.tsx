@@ -9,8 +9,10 @@ import Checkbox from "./Checkbox";
 import Link from "next/link";
 import Select from "./Select";
 import Image from "next/image";
-import { VouchersBatch, VouchersResponse } from "@/typings";
+import { PaymentSystem, VouchersBatch, VouchersResponse } from "@/typings";
 import { redirect, RedirectType, usePathname } from "next/navigation";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
 
 type Box = {
     id: number;
@@ -79,10 +81,11 @@ function UniqueCard({ image, title, text, length=0 }:Omit<UniqueCard, "text"> & 
 
 export default function Form({ cover, boxes, uniqueCard, instructions, type, products, prefix }:FormProps) {
     const pathname = usePathname()
+    const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
     const [isTopup, setIsTopup] = useState(type === "topup")
     const [count, setCount] = useState(1)
     const [currentIndex, setCurrentIndex] = useState(1)
-    const [system, setSystem] = useState("Sbp")
+    const [system, setSystem] = useState<PaymentSystem>("SBP")
     const [email, setEmail] = useState("")
     const [id, setId] = useState("")
     const [region, setRegion] = useState("")
@@ -114,9 +117,18 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
             })
             if (res.ok) {
                 const data: VouchersResponse = await res.json()
-                console.log(data.amountToBeSoldFor)
-                if (data.inStock && (data.amountToBeSoldFor === boxesData[currentIndex].priceInRub || data.amountToBeSoldFor === productPrice))
+
+                if (data.inStock && (data.amountToBeSoldFor === boxesData[currentIndex].priceInRub || data.amountToBeSoldFor === productPrice)) {
+                    setOrder({
+                        id: data.orderId,
+                        name: data.productName,
+                        amount: data.amountToBeSoldFor,
+                        paymentSystem: system,
+                        href: data.paymentUrl,
+                        email
+                    })
                     redirect(data.paymentUrl, RedirectType.push)
+                }
             }
         }
     }
@@ -136,7 +148,6 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
 
             //     if (res.ok) {
             //         const data: VouchersBatch[] = await res.json()
-            //         console.log(data)
             //         setProductsData(data.filter(d=>d.name !== "NOT_FOUND"))
             //     }
             // }
@@ -273,12 +284,12 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             <PaymentSystems
                             systems={[
                                 {
-                                    title: "Sbp",
+                                    title: "SBP",
                                     percent: 8,
                                     image: <Icon type="sbp" width={80} height={50} />
                                 },
                                 {
-                                    title: "crypto",
+                                    title: "CRYPTOCURRENCY",
                                     percent: 5,
                                     image: <Icon type="crypto" width={90} height={60} />
                                 }

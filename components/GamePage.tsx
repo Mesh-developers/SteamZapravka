@@ -10,6 +10,7 @@ import Checkbox from "./Checkbox";
 import Link from "next/link";
 import { Platforms } from "@/constants";
 import Slider from "./Slider";
+import { PaymentSystem } from "@/typings";
 
 type GamePageProps = {
     mainImage: string;
@@ -28,7 +29,7 @@ export default function GamePage({ mainImage, images, video, description, minima
     const [isPrivacy, setIsPrivacy] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(-1)
     const [email, setEmail] = useState("")
-    const [system, setSystem] = useState("Sbp")
+    const [system, setSystem] = useState<PaymentSystem>("SBP")
 
     const leftArrowHandler = () => setCurrentIndex(state=>state-1 < -1 ? images.length-1 : state-1)
     const rightArrowHandler = () => setCurrentIndex(state=>state+1 === images.length ? -1 : state+1)
@@ -115,12 +116,12 @@ export default function GamePage({ mainImage, images, video, description, minima
                             <PaymentSystems
                             systems={[
                                 {
-                                    title: "Sbp",
+                                    title: "SBP",
                                     percent: 8,
                                     image: <Icon type="sbp" width={80} height={50} />
                                 },
                                 {
-                                    title: "crypto",
+                                    title: "CRYPTOCURRENCY",
                                     percent: 5,
                                     image: <Icon type="crypto" width={90} height={60} />
                                 }

@@ -1,3 +1,5 @@
+export type PaymentSystem = "SBP"|"CRYPTOCURRENCY"
+
 export type ExchangeResponse = {
     usdToRub: number;
     rubToKzt: number;
@@ -48,4 +50,13 @@ export type VouchersBatch = {
     priceInRub: number,
     region: string,
     name: string
+}
+
+export type OrderData = {
+    id: string;
+    name: string;
+    amount: number;
+    email: string;
+    paymentSystem: PaymentSystem;
+    href: string;
 }

@@ -8,7 +8,7 @@ import Icon from "./Icon"
 import Checkbox from "./Checkbox"
 import Link from "next/link"
 import { useSiteType } from "./SiteTypeContext"
-import { ExchangeResponse, LoginResponse, PromocodeResponse, TopupRequest, TopupResponse } from "@/typings"
+import { ExchangeResponse, LoginResponse, PaymentSystem, PromocodeResponse, TopupRequest, TopupResponse } from "@/typings"
 import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
 import useDebounce from "@/hooks/useDebounce"
@@ -18,7 +18,7 @@ export default function Balance() {
     const [login, setLogin] = useState("")
     const [promocode, setPromocode] = useState("")
     const [price, setPrice] = useState(1000)
-    const [system, setSystem] = useState("Sbp")
+    const [system, setSystem] = useState<PaymentSystem>("SBP")
     const [isAgree, setIsAgree] = useState(false)
     const { siteType } = useSiteType()
     const [exchange, setExchange] = useState<ExchangeResponse>();
@@ -136,12 +136,12 @@ export default function Balance() {
                     setSystem={setSystem}
                     systems={[
                         {
-                            title: "Sbp",
+                            title: "SBP",
                             percent: 8,
                             image: <Icon type="sbp" width={80} height={50} />
                         },
                         {
-                            title: "crypto",
+                            title: "CRYPTOCURRENCY",
                             percent: 5,
                             image: <Icon type="crypto" width={90} height={60} />
                         },
