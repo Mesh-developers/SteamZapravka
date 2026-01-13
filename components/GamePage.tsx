@@ -8,9 +8,12 @@ import Input from "./Input";
 import Select from "./Select";
 import Checkbox from "./Checkbox";
 import Link from "next/link";
-import { Platforms } from "@/constants";
+import { initialOrder, ORDER_STORAGE_KEY, Platforms } from "@/constants";
 import Slider from "./Slider";
-import { PaymentSystem } from "@/typings";
+import { PaymentSystem, VouchersResponse } from "@/typings";
+import useData from "@/hooks/useData";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { redirect, RedirectType, usePathname } from "next/navigation";
 
 type GamePageProps = {
     mainImage: string;
@@ -21,15 +24,25 @@ type GamePageProps = {
     recommended: string[];
     platforms: Platforms;
     price: number;
+    editions: {
+        id: number;
+        name: string;
+        price: number;
+        region: string;
+    }[]
 }
 
-export default function GamePage({ mainImage, images, video, description, minimal, recommended, platforms, price }:GamePageProps) {
+export default function GamePage({ mainImage, images, video, description, minimal, recommended, platforms, price, editions }:GamePageProps) {
+    const pathname = usePathname()
+    const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
     const [edition, setEdition] = useState("")
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(-1)
+    const [currentEditionIndex, setCurrentEditionIndex] = useState(0)
     const [email, setEmail] = useState("")
     const [system, setSystem] = useState<PaymentSystem>("SBP")
+    const { data: editionsData } = useData(pathname, editions.map(edit=>edit.id), (data)=>data.filter(d=>d.inStock))
 
     const leftArrowHandler = () => setCurrentIndex(state=>state-1 < -1 ? images.length-1 : state-1)
     const rightArrowHandler = () => setCurrentIndex(state=>state+1 === images.length ? -1 : state+1)
@@ -45,11 +58,41 @@ export default function GamePage({ mainImage, images, video, description, minima
     useEffect(()=>{
         window.addEventListener('keydown', handleKeyDown);
 
-        // Очистка при размонтировании
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [])
+
+    const buy = async () => {
+        if (isPrivacy && isUserTerms && editionsData) {
+            const res = await fetch("https://api.steamzapravka.io/vouchers", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    productId: editionsData[currentEditionIndex].productId,
+                    email,
+                    paymentMethod: system
+                })
+            })
+
+            if (res.ok) {
+                const data: VouchersResponse = await res.json()
+                if (data.inStock && (data.amountToBeSoldFor === editionsData[currentEditionIndex].priceInRub)) {
+                    setOrder({
+                        id: data.orderId,
+                        name: data.productName,
+                        amount: data.amountToBeSoldFor,
+                        paymentSystem: system,
+                        href: data.paymentUrl,
+                        email
+                    })
+                    redirect(data.paymentUrl, RedirectType.push)
+                }
+            }
+        }
+    }
 
     return (
         <div className="w-full flex flex-col gap-6">
@@ -63,7 +106,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                         fill
                         src={`/images/${images[currentIndex]}`}
                         className="w-full h-full absolute object-cover rounded-3xl border-1 border-(--border)"
-                        alt="game image"
+                        alt="edit image"
                         />
                         }
                         <div className="transition-all delay-200 relative group-hover:ml-5 -ml-7 cursor-pointer select-none" onClick={leftArrowHandler}>
@@ -100,7 +143,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                         fill
                         src={`/images/${mainImage}`}
                         className="object-cover w-full h-full rounded-4xl border-1 border-(--border)"
-                        alt="game cover"
+                        alt="edit cover"
                         />
                     </div>
                     <form onSubmit={(e)=>e.preventDefault()} className="flex flex-col gap-4 px-8 pt-6 border-1 border-(--border) bg-(--section-back) w-full h-full rounded-4xl">
@@ -134,14 +177,15 @@ export default function GamePage({ mainImage, images, video, description, minima
                             <h3 className="text-lg">Выберите издание</h3>
                             <Select
                             placeholder="Ваше издание"
-                            options={["Standart - RU+CIS", "Standart - UA", "Standart - ROW", "Deluxe Edition - RU + CIS"]}
+                            options={editionsData?.map(edit=>edit.name) || editions.map(edit=>edit.name)}
                             value={edition}
                             setValue={setEdition}
+                            callback={(opt)=>setCurrentEditionIndex(editions.findIndex(edit=>edit.name === opt))}
                             />
                         </div>
-                        <button className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 btn !rounded-[25px] text-3xl">
+                        <button onClick={buy} className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 btn !rounded-[25px] text-3xl">
                             {edition ?
-                            <span>Купить за {price} ₽</span>
+                            <span>Купить за {(editionsData && editionsData[currentEditionIndex].priceInRub) || price} ₽</span>
                             :
                             <span>Купить</span>
                             }

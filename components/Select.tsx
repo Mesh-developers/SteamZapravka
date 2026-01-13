@@ -7,9 +7,10 @@ type SelectProps = {
     options: string[];
     value: string;
     setValue: Dispatch<SetStateAction<string>>;
+    callback?: (opt: string)=>void;
 }
 
-export default function Select({ placeholder, options, value, setValue }:SelectProps) {
+export default function Select({ placeholder, options, value, setValue, callback }:SelectProps) {
     const [show, setShow] = useState(false)
     return (
         <div className="w-full relative">
@@ -21,7 +22,7 @@ export default function Select({ placeholder, options, value, setValue }:SelectP
             </div>
             {show &&
             <div className={`z-1000 flex flex-col w-full absolute bg-(--black) rounded-2xl mt-[5px] ${options.length > 8 ? "overflow-y-scroll h-[360px]" : ""}`}>
-                {options.map((option, i)=><div key={i} onClick={()=>{setValue(option);setShow(false)}} className={`w-full flex items-center ${option === value ? "bg-radial" : "bg-(--black)"} rounded-2xl min-h-[45px] pl-3 cursor-pointer hover:bg-radial from-[#45C47E] from-10% to-[#2D8451]`}>{option}</div>)}
+                {options.map((option, i)=><div key={i} onClick={()=>{setValue(option);setShow(false); if (callback) callback(option)}} className={`w-full flex items-center ${option === value ? "bg-radial" : "bg-(--black)"} rounded-2xl min-h-[45px] pl-3 cursor-pointer hover:bg-radial from-[#45C47E] from-10% to-[#2D8451]`}>{option}</div>)}
             </div>
             }
         </div>

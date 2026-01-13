@@ -44,7 +44,7 @@ export type VouchersResponse = {
     amountToBeSoldFor: number
 }
 
-export type VouchersBatch = {
+export type Batch = {
     productId: number,
     inStock: boolean,
     priceInRub: number,
@@ -59,4 +59,38 @@ export type OrderData = {
     email: string;
     paymentSystem: PaymentSystem;
     href: string;
+}
+
+type ExtraDataTelegram = {
+    telegramLogin: string;
+    amountOfStars: number;
+}
+
+type ExtraDataVoucher = {
+    email: string;
+}
+
+type ExtraDataTopupGame = {
+    accountId: string;
+}
+
+type ExtraDataRoblox = {
+    accountLoginOrEmail: string;
+    nickname: string;
+}
+
+type ExtraDataSteamTopup = {
+    steamUsername: string;
+    amountToReceive: number;
+    amountToPay: number;
+}
+
+export type OrderDataResponse = {
+    orderId: string;
+    serviceType: string;
+    productName: string;
+    amount: number;
+    currency: string;
+    paymentMethod: PaymentSystem;
+    extraData: ExtraDataTelegram | ExtraDataVoucher | ExtraDataTopupGame | ExtraDataRoblox | ExtraDataSteamTopup
 }

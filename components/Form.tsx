@@ -1,6 +1,6 @@
 "use client"
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import InputNumber from "./InputNumber";
 import PaymentSystems from "./PaymentSystems";
 import Icon from "./Icon";
@@ -9,10 +9,13 @@ import Checkbox from "./Checkbox";
 import Link from "next/link";
 import Select from "./Select";
 import Image from "next/image";
-import { PaymentSystem, VouchersBatch, VouchersResponse } from "@/typings";
+import { PaymentSystem, VouchersResponse } from "@/typings";
 import { redirect, RedirectType, usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
+import { truncateString } from "@/utils";
+import useData from "@/hooks/useData";
+import { useSiteType } from "./SiteTypeContext";
 
 type Box = {
     id: number;
@@ -57,7 +60,7 @@ function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentInd
             </div>
             <div className="flex justify-between items-center bg-[#171D25] px-3">
                 <div className="flex flex-col gap-0">
-                    <span className={`${isTopup ? "text-[12px]" : "text-[17px]"} ${disabled ? "text-[#717274]" : ""}`}>{isTopup ? coin : price + " ₽"}</span>
+                    <span className={`${isTopup ? "text-[12px]" : "text-[17px]"} ${disabled ? "text-[#717274]" : ""}`}>{truncateString(isTopup ? coin : price + " ₽", 20)}</span>
                     {!isTopup && <span className={`text-[#999999] line-through text-[10px] relative -top-1.5 ${disabled ? "text-[#717274]" : ""}`}>{altPrice?.toFixed(0)} ₽</span>}
                 </div>
                 <button
@@ -74,13 +77,16 @@ function UniqueCard({ image, title, text, length=0 }:Omit<UniqueCard, "text"> & 
     return (
         <div style={{ backgroundImage: `url('/images/${image}')` }} className={`flex flex-col ${length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover gap-6 border-1 border-(--border) overflow-hidden rounded-2xl h-60 text-white pl-8 pr-5 pt-10`}>
             <h3 className="text-xl">{title}</h3>
-            <p className="text-[13px]">{text}</p>
+            <p className="text-[14px]">{text}</p>
         </div>
     )
 }
 
 export default function Form({ cover, boxes, uniqueCard, instructions, type, products, prefix }:FormProps) {
+    const { siteType } = useSiteType()
     const pathname = usePathname()
+    const isRoblox = pathname === "/roblox"
+    const isApple = pathname === "/apple"
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
     const [isTopup, setIsTopup] = useState(type === "topup")
     const [count, setCount] = useState(1)
@@ -95,15 +101,18 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     const [backup, setBackup] = useState("")
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
-    const [productsData, setProductsData] = useState<VouchersBatch[]>()
-    const [boxesData, setBoxesData] = useState<VouchersBatch[]>()
     const coinArray = boxes[currentIndex]?.coin?.split(" ") || [""]
     const getPureName = (prod: string) => prod.replaceAll(":", "").replaceAll(prefix, "")
     const productPrice = products.find(prod=>prod.name === product)?.price
+    const { data: productsData } = useData(
+    [pathname, isTopup],
+    isTopup ? products.map(prod=>prod.id) : boxes.map(box=>box.id),
+    (data)=>isTopup ? data.filter(d=>d.inStock) : data,
+    isApple || !isTopup)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const buy = async () =>{
-        if (isPrivacy && isUserTerms && boxesData) {
+    const buyBox = async () =>{
+        if (isPrivacy && isUserTerms && productsData) {
             const res = await fetch("https://api.steamzapravka.io/vouchers", {
                 method: "POST",
                 headers: {
@@ -112,13 +121,13 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 body: JSON.stringify({
                     productId: boxes[currentIndex].id,
                     email,
-                    paymentMethod: system.toUpperCase()
+                    paymentMethod: system
                 })
             })
             if (res.ok) {
                 const data: VouchersResponse = await res.json()
 
-                if (data.inStock && (data.amountToBeSoldFor === boxesData[currentIndex].priceInRub || data.amountToBeSoldFor === productPrice)) {
+                if (data.inStock && (data.amountToBeSoldFor === productsData[currentIndex].priceInRub || data.amountToBeSoldFor === productPrice)) {
                     setOrder({
                         id: data.orderId,
                         name: data.productName,
@@ -133,45 +142,55 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
         }
     }
 
-    useEffect(()=>{
-        const getProductsData = async () => {
-            // if (products.length) {
-            //     const res = await fetch("https://api.steamzapravka.io/vouchers/batch", {
-            //         method: "POST",
-            //         headers: {
-            //             'Content-Type': 'application/json;charset=utf-8'
-            //         },
-            //         body: JSON.stringify({
-            //             productIds: products.map(prod=>prod.id)
-            //         })
-            //     })
+    const buyProduct = async () => {
+        if (isPrivacy && isUserTerms && productsData) {
+            const body = {
+                productId: productsData[currentIndex].productId,
+                accountId: id,
+                region: region === "Любой" ? "Any" : region,
+                paymentMethod: system
+            }
+            const {region: reg, accountId, ...robloxBody} = body
+            const res = await fetch(isRoblox ? "https://api.steamzapravka.io/topup/roblox " : (isApple ? "https://api.steamzapravka.io/vouchers" : "https://api.steamzapravka.io/topup"), {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(isRoblox ?
+                {
+                    ...robloxBody,
+                    loginOrEmail: email,
+                    password,
+                    nickname: nick,
+                    backupCode: backup,
 
-            //     if (res.ok) {
-            //         const data: VouchersBatch[] = await res.json()
-            //         setProductsData(data.filter(d=>d.name !== "NOT_FOUND"))
-            //     }
-            // }
+                }
+                :
+                (isApple ?
+                {
+                    ...robloxBody,
+                    email
+                }
+                :
+                body))
+            })
 
-            if (boxes.length) {
-                const res = await fetch("https://api.steamzapravka.io/vouchers/batch", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify({
-                        productIds: boxes.map(box=>box.id)
+            if (res.ok) {
+                const data: VouchersResponse = await res.json()
+                if (data.inStock && (data.amountToBeSoldFor === productsData[currentIndex].priceInRub || data.amountToBeSoldFor === productPrice)) {
+                    setOrder({
+                        id: data.orderId,
+                        name: data.productName,
+                        amount: data.amountToBeSoldFor,
+                        paymentSystem: system,
+                        href: data.paymentUrl,
+                        email
                     })
-                })
-
-                if (res.ok) {
-                    const data: VouchersBatch[] = await res.json()
-                    setBoxesData(data)
+                    redirect(data.paymentUrl, RedirectType.push)
                 }
             }
         }
-
-        getProductsData()
-    }, [])
+    }
 
     return (
         <div className="w-full flex flex-col gap-4">
@@ -180,17 +199,17 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
             <div className="grid grid-cols-[60%_40%] w-full h-fit">
                 {!isTopup ?
                 <div className="grid grid-cols-2 w-full h-fit gap-6">
-                    {boxesData && boxes.map((box, i)=>
+                    {productsData && boxes.map((box, i)=>
                                         <Card
                                         key={i}
                                         index={i}
                                         currentIndex={currentIndex}
                                         setCurrentIndex={setCurrentIndex}
-                                        price={boxesData[i].priceInRub}
+                                        price={productsData[i]?.priceInRub || box.price}
                                         image={box.image}
-                                        altPrice={boxesData[i].priceInRub * 0.8}
+                                        altPrice={(productsData[i]?.priceInRub || box.price) * 0.8}
                                         coin={box.coin}
-                                        disabled={!boxesData[i].inStock}
+                                        disabled={!productsData[i]?.inStock}
                                         />
                     )}
                     <UniqueCard title={uniqueCard.title} text={uniqueCard.text[Number(isTopup)]} image={uniqueCard.image} length={boxes.length} />
@@ -198,62 +217,72 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 :
                 <div className="flex flex-col gap-5">
                     <div className="relative flex flex-col gap-15 bg-(--section-back) border-1 border-(--border) rounded-3xl py-10 px-6">
-                        <Image src="/images/gamepad.png" width={400} height={200} alt="gamepad" className="absolute top-7 -right-2" />
+                        {isApple  || siteType === "telegram" ?
+                        <Image src={"/images/cloud_tech.png"} width={400} height={200} alt="cloud tech" className="absolute top-7 -right-2" loading="eager" />
+                        :
+                        <Image src={`/images/gamepad.png`} width={400} height={200} alt="gamepad" className="absolute top-7 -right-2" />
+                        }
                         <div className="grid grid-cols-2 grid-rows-2 gap-x-10 gap-y-5">
-                            {pathname === "roblox" ?
+                            {isRoblox ?
                             <>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">E-mail/Login</span>
                                 <Input placeholder="Ваш E-mail/Login" value={email} setValue={setEmail} isWarning={email === ""} />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Пароль</span>
                                 <Input placeholder="Ваш пароль" value={password} setValue={setPassword} />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Nikname в игре</span>
                                 <Input placeholder="Ваш nikname" value={nick} setValue={setNick} />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Backup code</span>
                                 <Input placeholder="Ваш Backup code" value={backup} setValue={setBackup} />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            {/* <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
-                            </div>
+                            </div> */}
                             </>
                             :
                             <>
-                            <div className="flex flex-col gap-1">
-                                <span className="text-lg">ID от аккаунта</span>
-                                <Input placeholder="Ваш ID" value={id} setValue={setId} isWarning={id === ""} />
+                            <div className="flex flex-col gap-1 relative z-2">
+                                <span className="text-lg">{isApple ? "E-mail"  : "ID от аккаунта" }</span>
+                                <Input placeholder={isApple ? "Ваш E-mail" : "Ваш ID"} value={isApple ? email : id} setValue={isApple ? setEmail : setId} isWarning={isApple ? email === "" : id === ""} />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Выберите товар из полного списка</span>
-                                <Select placeholder="Выберите товар " value={product} setValue={setProduct} options={products.filter(prod=>prod.region === region).map(prod=>prod.name)} />
+                                <Select
+                                placeholder="Выберите товар"
+                                value={truncateString(product, 30)}
+                                setValue={setProduct}
+                                options={products.filter(prod=>prod.region === region && productsData?.find(p=>p.productId === prod.id)?.inStock).map(prod=>prod.name)}
+                                callback={(opt: string)=>setCurrentIndex(Number(productsData?.findIndex(p=>p.name === opt)))}
+                                />
                             </div>
                             </>
                             }
                         </div>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 z-1">
                             <span className="text-lg">Быстрый выбор</span>
                             <div className="flex gap-7 w-full justify-between">
-                                {products.sort((a, b) => a.price - b.price).slice(0, 3).map((prod, i)=>
+                                {productsData && productsData.sort((a, b) => a.priceInRub - b.priceInRub).slice(0, 3).map((prod, i)=>
                                 <Card
                                 key={i}
                                 index={i}
                                 isTopup={isTopup}
                                 currentIndex={currentIndex}
                                 setCurrentIndex={setCurrentIndex}
-                                price={prod.price}
-                                image={prod.image || boxes[i]?.image}
+                                price={prod.priceInRub || 0}
+                                image={products[i].image || boxes[i]?.image}
                                 coin={getPureName(prod.name)}
-                                disabled={prod.inStock || false}
+                                disabled={!prod.inStock || false}
                                 callback={()=>setProduct("")}
                                 />)}
                             </div>
@@ -263,7 +292,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 </div>
                 }
                 <div className="w-full h-full overflow-hidden flex flex-col pl-6">
-                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-15 pt-15 rounded-3xl border-1 border-(--border) overflow-hidden">
+                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] h-full flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-15 pt-15 rounded-3xl border-1 border-(--border) overflow-hidden">
                      {type === "all" ?
                         <div className="flex gap-5 justify-between">
                             <div className={`relative w-fit`}>
@@ -279,7 +308,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                      <></>
                      }
                         <span className="text-lg">Товар</span>
-                        <InputNumber withoutCounter count={count} setCount={setCount} value={isTopup ? getPureName(product || products[currentIndex].name) : boxes[currentIndex]?.coin} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image} />
+                        <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[0]?.image || ""} />
                         <div className="flex gap-3 w-full h-20 mt-4">
                             <PaymentSystems
                             systems={[
@@ -303,9 +332,9 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         <span className="text-lg mt-2">E-mail</span>
                         <Input isWarning={!!email && !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
                         </>}
-                        <button onClick={()=>buy()} className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 btn !rounded-3xl text-xl">
+                        <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 btn !rounded-3xl text-xl">
                             <span>
-                                Купить {isTopup ? getPureName(product || products[currentIndex].name) : ((Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1])}<br />{isTopup ? (productPrice || products[currentIndex].price) : (boxesData ? boxesData[currentIndex].priceInRub : boxes[currentIndex]?.price) * count} ₽
+                                Купить {truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : ((Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]), 28)}<br />{isTopup && productsData ? (productPrice || productsData[currentIndex]?.priceInRub) : (productsData ? productsData[currentIndex]?.priceInRub : boxes[currentIndex]?.price) * count} ₽
                             </span>
                         </button>
                         <div className="mt-4 flex flex-col gap-2">

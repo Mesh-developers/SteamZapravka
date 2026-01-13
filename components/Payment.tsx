@@ -1,10 +1,11 @@
 "use client"
 import useLocalStorage from "@/hooks/useLocalStorage"
 import Icon from "./Icon"
-import { OrderData } from "@/typings"
+import { OrderData, OrderDataResponse } from "@/typings"
 import { initialOrder, ORDER_STORAGE_KEY } from "@/constants"
 import Link from "next/link"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
 type PaymentProps = {
     success?: boolean
@@ -12,6 +13,17 @@ type PaymentProps = {
 
 export default function Payment({ success }:PaymentProps) {
     const [order] = useLocalStorage<OrderData>(ORDER_STORAGE_KEY, initialOrder)
+    const [serverOrder, setServerOrder] = useState<OrderDataResponse>()
+
+    useEffect(()=>{
+        const getData = async () => {
+            const res = await fetch(`https://api.steamzapravka.io?orderId=${order.id}`)
+            const data: OrderDataResponse = await res.json()
+            setServerOrder(data)
+        }
+
+        getData()
+    }, [])
     return (
         <section className="relative overflow-hidden w-full flex flex-col gap-5 pl-15 py-10 bg-(--section-back) border-1 border-(--border) rounded-3xl">
             <div className={`absolute rounded-full bg-radial blur-3xl ${success ? "from-[rgba(46,204,113,0.15)] to-[rgba(46,204,113,0)]" : "from-[rgba(201,54,54,0.15)] to-[rgba(201,54,54,0)]"} w-[90%] h-[90%] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]`} />
@@ -26,15 +38,15 @@ export default function Payment({ success }:PaymentProps) {
                     <div className="w-full h-[1px] bg-(--border)" />
                     <div className="flex justify-between">
                         <span className="text-(--gray)">Номер заказа</span>
-                        <span>{order.id}</span>
+                        <span>{serverOrder?.orderId || order.id}</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-(--gray)">Продукт</span>
-                        <span>{order.name}</span>
+                        <span>{serverOrder?.productName || order.name}</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-(--gray)">Сумма</span>
-                        <span>{order.amount} ₽</span>
+                        <span>{serverOrder?.amount || order.amount} ₽</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-(--gray)">E-mail</span>
@@ -42,7 +54,7 @@ export default function Payment({ success }:PaymentProps) {
                     </div>
                     <div className="flex justify-between">
                         <span className="text-(--gray)">Способ оплаты</span>
-                        <span>{order.paymentSystem}</span>
+                        <span>{serverOrder?.paymentMethod || order.paymentSystem}</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-(--gray)">Статус</span>

@@ -22,6 +22,10 @@ module.exports = {
         fillUp: "fillUp 0.7s cubic-bezier(.2,.6,.8,.4) forwards",
         fillDown: "fillDown 0.7s cubic-bezier(.2,.6,.8,.4) forwards",
       },
+      screens: {
+        "xs": "320px",
+        "sm": '480px'
+      }
     },
   },
   plugins: [],

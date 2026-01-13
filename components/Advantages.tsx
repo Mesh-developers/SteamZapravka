@@ -15,7 +15,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
   return (
     <div className="relative">
     <div className="absolute z-1 top-0 left-0 w-[90%] h-[90%] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full bg-radial from-0% from-[#2C7DC3] to-100% to-[rgba(69,196,126,0)] blur-3xl opacity-25" />
-    <div className="relative border border-(--border) rounded-2xl flex flex-col bg-(--section-back) justify-between h-full">
+    <div className="relative border border-(--border) rounded-3xl flex flex-col bg-(--section-back) justify-between h-full">
       {/* верхняя часть */}
       <div className="flex relative z-2 items-start justify-between p-4">
         <div className="relative w-[8rem] h-[8rem] shrink-0">
@@ -27,7 +27,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
             style={style}
           />
         </div>
-        <h3 className="text-[clamp(1.5rem,2.7vw,1.7rem)] font-(--manrope-semibold) leading-tight pr-4">
+        <h3 className="lg:text-[clamp(1.5rem,2.7vw,1.7rem)] md:text-3xl lg:leading-10 md:leading-7 font-(--manrope-semibold) leading-tight pr-4">
             <div dangerouslySetInnerHTML={{ __html: title.replace(" ", "<br/>") }} />
         </h3>
       </div>

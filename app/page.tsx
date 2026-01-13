@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <Backlight count={9} gap={100} />
-      <main className="relative z-2 mt-10 max-w-[1400px] w-[75%] m-auto flex min-h-screen flex-col gap-15 items-start justify-items-start bg-transparent">
+      <main className="relative z-2 lg:mt-10 md:mt-15 max-w-[1400px] lg:w-[75%] lg:px-0 md:px-5 md:w-[100%] md:justify-self-center lg:m-auto flex min-h-screen flex-col gap-15 items-start justify-items-start bg-transparent">
        <CTA />
        <Advantages />
        <Balance />

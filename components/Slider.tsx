@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Icon from "./Icon"
-import { arcRaiders, dayZ, farmingSimulator, GameInfo } from "@/constants"
+import { arcRaiders, warhammer, farmingSimulator, GameInfo, monsterHunter } from "@/constants"
 import Link from "next/link"
 
 type SliderProps = {
@@ -12,16 +12,25 @@ type SliderProps = {
 export default function Slider({ mainImage="" }:SliderProps) {
     const [currentImage, setCurrentImage] = useState(mainImage||"arc_raiders_slider.png")
     const [currentIndex, setCurrentIndex] = useState(0)
+    const links = [
+        "/arc-raiders",
+        "/warhammer",
+        "/farming-simulator",
+        "/monster-hunter"
+    ]
     const data: GameInfo[] = [
         {
            ...arcRaiders
         },
         {
-            ...dayZ
+            ...warhammer
         },
         {
             ...farmingSimulator
         },
+        {
+            ...monsterHunter
+        }
     ].filter((val)=>val.mainImage !== mainImage)
 
     useEffect(()=>{
@@ -46,30 +55,30 @@ export default function Slider({ mainImage="" }:SliderProps) {
                     <Icon type="arrow" />
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                    <Link href="/arc-raiders" className={`${mainImage ? "grid grid-cols-1 relative -left-10 w-[106%]" : "grid-cols-[2fr_1fr]"} grid cursor-pointer`}>
-                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-center h-[473px]`} />
+                    <Link href={links[currentIndex]} className={`${mainImage ? "grid grid-cols-1 relative -left-10 w-[106%]" : "grid-cols-[2fr_1fr]"} grid cursor-pointer`}>
+                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-center lg:h-[473px] md:h-[221px]`} />
                         {mainImage ?
                         <></>
                         :
-                        <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl flex flex-col border-1 border-[#0A141D] gap-7">
+                        <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl flex flex-col border-1 border-[#0A141D] gap-7 lg:h-full md:h-[221px]">
                             <div className="flex justify-between mr-3">
-                                <h1 className="text-2xl ml-5">{data[currentIndex].title}</h1>
+                                <h1 className="lg:text-2xl md:text-xl ml-5">{data[currentIndex].title}</h1>
                             </div>
-                            <div className="w-[94%] grid grid-cols-[40%_60%] h-40 grid-rows-[99px_99px] gap-4 h-fit" onMouseLeave={()=>setCurrentImage(data[currentIndex].mainImage)}>
-                                {data[currentIndex].images.map((path, i)=><div key={i} onMouseEnter={()=>setCurrentImage(path)} style={{ backgroundImage: `url('/images/${path}')` }} className={`w-full h-full bg-cover bg-no-repeat bg-center ${i % 2 === 0 ? "rounded-r-2xl" : "rounded-2xl"}`} />)}
+                            <div className="w-[94%] grid grid-cols-[40%_60%] h-40 lg:grid-rows-[99px_99px] md:grid-rows-[63px_63px] gap-4 h-fit" onMouseLeave={()=>setCurrentImage(data[currentIndex].mainImage)}>
+                                {data[currentIndex].images.map((path, i)=><div key={i} onMouseEnter={()=>setCurrentImage(path)} style={{ backgroundImage: `url('/images/${path}')` }} className={`w-full h-full bg-cover bg-no-repeat bg-center ${i % 2 === 0 ? "lg:rounded-r-2xl md:rounded-r-lg" : "lg:rounded-2xl md:rounded-lg"}`} />)}
                             </div>
                             <div className="flex justify-between mr-3">
                                 <span className="text-sm ml-5">
-                                    <span className="text-(--green)">Рекомендует!</span> <br/>
+                                    <span className="text-(--green)">Рекомендует</span> <br/>
                                     Steam Zapravka <br/>
-                                    <span className="text-2xl relative top-3">
+                                    <span className="lg:text-2xl md:text-base relative top-3">
                                         Уже доступна!
                                     </span>
                                 </span>
                                 <div className="flex flex-col">
-                                    <span className="relative top-2 bg-[#666666] text-[12px] rounded-lg w-fit py-1 px-2">Лидер продаж в STEAM</span>
+                                    <span className="relative top-2 bg-[#666666] lg:text-[12px] md:text-[9px] lg:rounded-lg md:rounded-md w-fit py-1 px-2 self-end">Лидер продаж в STEAM</span>
                                     <div className="flex gap-1 justify-end relative top-3">
-                                        {data[currentIndex].genres.map((genre, i)=><span className="text-[12px] font-(family-name:--manrope-light) rounded-lg bg-[#666666] p-1 px-2 flex items-center" key={i}>{genre}</span>)}
+                                        {data[currentIndex].genres.map((genre, i)=><span className="lg:text-[12px] md:text-[9px] font-(family-name:--manrope-light) lg:rounded-lg md:rounded-md bg-[#666666] p-1 px-2 flex items-center" key={i}>{genre}</span>)}
                                     </div>
                                 </div>
                             </div>

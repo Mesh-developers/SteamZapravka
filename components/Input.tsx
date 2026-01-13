@@ -31,20 +31,20 @@ export default function Input({ type, hint, placeholder, value, setValue, render
     };
 
     return (
-        <div className={`w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[52px] ${isWarning ? "shadow-[2px_2px_4px_0px_#D40101,-2px_2px_4px_0px_#D40101,2px_-2px_4px_0px_#D44001,-2px_-2px_4px_0px_#D44001]" : ""} ${isSuccess ? "shadow-[2px_2px_4px_0px_#15B5ED,-2px_2px_4px_0px_#15B5ED,2px_-2px_4px_0px_#46F9D7,-2px_-2px_4px_0px_#46F9D7]" : ""}`}>
+        <div className={`w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between md:min-h-[42px] lg:min-h-[52px] ${isWarning ? "shadow-[2px_2px_4px_0px_#D40101,-2px_2px_4px_0px_#D40101,2px_-2px_4px_0px_#D44001,-2px_-2px_4px_0px_#D44001]" : ""} ${isSuccess ? "shadow-[2px_2px_4px_0px_#15B5ED,-2px_2px_4px_0px_#15B5ED,2px_-2px_4px_0px_#46F9D7,-2px_-2px_4px_0px_#46F9D7]" : ""}`}>
             <input
             type={type}
             placeholder={placeholder}
-            className="placeholder:text-[#686868] text-white outline-none h-full !font-(family-name:--manrope-regular)"
+            className="placeholder:text-[#686868] md:placeholder:text-xs lg:placeholder:text-base md:text-xs lg:text-base text-white outline-none h-full !font-(family-name:--manrope-regular)"
             value={value}
             onChange={(e)=>handleChange(e)}
             />
             {renderHint}
             {hint && !renderHint &&
             (!hintWrap ?
-            <span className="justify-self-end mr-5 text-[#686868] text-[10px]">{hint}</span>
+            <span className="justify-self-end lg:mr-5 md:mr-2 text-[#686868] text-[10px]">{hint}</span>
             :
-            <Link href="#faq" className="justify-self-end mr-5 cursor-pointer rounded-full bg-[#8E8E8E] px-2 py-2.5 flex justify-between items-center text-[8px] text-black h-4 gap-1 w-fit"><Icon type="question" size={12} />{hint}</Link>
+            <Link href="#faq" className="justify-self-end lg:mr-5 md:mr-2 cursor-pointer rounded-full bg-[#8E8E8E] px-2 py-2.5 flex justify-between items-center text-[8px] text-black h-4 gap-1 w-fit"><Icon type="question" size={12} />{hint}</Link>
             )}
         </div>
     )

@@ -17,6 +17,11 @@ export default function ArcRaiders() {
             minimal={arcRaiders.minimal}
             recommended={arcRaiders.recommended}
             platforms={arcRaiders.platforms}
+            editions={[
+                { id: 2373, name: "ARC Raiders ROW+RU+CIS", price: 3070, region: "США и Европа и РФ и СНГ" },
+                { id: 2730, name: "ARC Raiders RU+CIS WITHOUT UA", price: 3190, region: "РФ и СНГ без Украины" },
+                { id: 2731, name: "ARC Raiders ROW WITHOUT CN+SEASIA+UA+LATAM", price: 3400, region: "СНГ БЕЗ Украины" },
+            ]}
             />
         </main>
         </>
