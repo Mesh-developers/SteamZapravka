@@ -61,11 +61,11 @@ export default function Slider({ mainImage="" }:SliderProps) {
                             <div className="w-[94%] grid grid-cols-[40%_60%] h-40 lg:grid-rows-[99px_99px] md:grid-rows-[63px_63px] gap-4 h-fit" onMouseLeave={()=>setCurrentImage(data[currentIndex].mainImage)}>
                                 {data[currentIndex].images.map((path, i)=><div key={i} onMouseEnter={()=>setCurrentImage(path)} style={{ backgroundImage: `url('/images/${path}')` }} className={`w-full h-full bg-cover bg-no-repeat bg-center ${i % 2 === 0 ? "lg:rounded-r-2xl md:rounded-r-lg" : "lg:rounded-2xl md:rounded-lg"}`} />)}
                             </div>
-                            <div className="flex justify-between mr-3">
+                            <div className="grid grid-cols-[60%_40%] justify-between mr-3">
                                 <span className="text-sm ml-5">
-                                    <span className="text-(--green)">Рекомендует</span> <br/>
+                                    <span className="text-(--green) lg:text-sm md:text-[10px]">Рекомендует</span> <br/>
                                     Steam Zapravka <br/>
-                                    <span className="lg:text-2xl md:text-base relative top-3">
+                                    <span className="lg:text-2xl md:text-[13px] relative top-3">
                                         Уже доступна!
                                     </span>
                                 </span>

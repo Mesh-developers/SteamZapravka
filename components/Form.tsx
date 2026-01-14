@@ -61,7 +61,7 @@ function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentInd
             </div>
             <div className="flex justify-between items-center bg-[#171D25] px-3">
                 <div className="flex flex-col gap-0">
-                    <span className={`${isTopup ? "text-[12px]" : "text-[17px]"} ${disabled ? "text-[#717274]" : ""}`}>{truncateString(isTopup ? coin : price + " ₽", 20)}</span>
+                    <span className={`${isTopup ? "text-[11px]" : "text-[17px]"} ${disabled ? "text-[#717274]" : ""}`}>{truncateString(isTopup ? coin : price + " ₽", 20)}</span>
                     {!isTopup && <span className={`text-[#999999] line-through text-[10px] relative -top-1.5 ${disabled ? "text-[#717274]" : ""}`}>{altPrice?.toFixed(0)} ₽</span>}
                 </div>
                 <button
@@ -378,7 +378,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                      <></>
                      }
                         <span className="text-lg">Товар</span>
-                        <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[0]?.image || ""} />
+                        <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[2]?.image || ""} />
                         <div className="flex gap-3 w-full h-20 mt-4">
                             <PaymentSystems
                             systems={[
