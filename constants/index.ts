@@ -13,16 +13,18 @@ export type GameInfo = {
     genres: string[];
     platforms: Platforms;
     price: number;
+    link: string;
 }
 
 export const arcRaiders: GameInfo = {
     title: "АRC Raiders",
-    mainImage: "arc_raiders_slider.png",
+    mainImage: "arc_raiders_slider.webp",
+    link: "/arc-raiders",
     images: [
-        "arc_raiders_slider1.jpg",
-        "arc_raiders_slider2.jpg",
-        "arc_raiders_slider3.jpg",
-        "arc_raiders_slider4.jpg",
+        "arc_raiders_slider1.webp",
+        "arc_raiders_slider2.webp",
+        "arc_raiders_slider3.webp",
+        "arc_raiders_slider4.webp",
     ],
     video: "https://vk.com/video_ext.php?oid=-212496568&id=456249267&hash=20271acdbce58623",
     description: `
@@ -54,12 +56,13 @@ export const arcRaiders: GameInfo = {
 
 export const warhammer: GameInfo = {
     title: "Warhammer",
-    mainImage: "warhammer_slider.png",
+    mainImage: "warhammer_slider.webp",
+    link: "/warhammer",
     images: [
-        "warhammer_slider1.png",
-        "warhammer_slider2.png",
-        "warhammer_slider3.png",
-        "warhammer_slider4.png",
+        "warhammer_slider1.webp",
+        "warhammer_slider2.webp",
+        "warhammer_slider3.webp",
+        "warhammer_slider4.webp",
     ],
     video: "https://vk.com/video_ext.php?oid=-192813321&id=456240953&hash=66c657dbf5e6e643",
     description: `
@@ -86,12 +89,13 @@ export const warhammer: GameInfo = {
 
 export const farmingSimulator: GameInfo = {
     title: "Farming Simulator",
-    mainImage: "farming_simulator_slider.png",
+    mainImage: "farming_simulator_slider.webp",
+    link: "/farming-simulator",
     images: [
-        "farming_simulator_slider1.png",
-        "farming_simulator_slider2.png",
-        "farming_simulator_slider3.png",
-        "farming_simulator_slider4.png",
+        "farming_simulator_slider1.webp",
+        "farming_simulator_slider2.webp",
+        "farming_simulator_slider3.webp",
+        "farming_simulator_slider4.webp",
     ],
     video: "https://vk.com/video_ext.php?oid=-145852098&id=456239543&hash=75162782f137f9ee",
     description: `
@@ -136,12 +140,13 @@ export const farmingSimulator: GameInfo = {
 
 export const monsterHunter: GameInfo = {
     title: "Monster Hunter",
-    mainImage: "monster_hunter_slider.png",
+    mainImage: "monster_hunter_slider.webp",
+    link: "/monster-hunter",
     images: [
-        "monster_hunter_slider1.jpg",
-        "monster_hunter_slider2.png",
+        "monster_hunter_slider1.webp",
+        "monster_hunter_slider2.webp",
         "monster_hunter_slider3.webp",
-        "monster_hunter_slider4.png",
+        "monster_hunter_slider4.webp",
     ],
     video: "https://vk.com/video_ext.php?oid=-387766&id=456266656&hash=4160b09299a76c9e",
     description: `

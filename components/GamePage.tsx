@@ -144,6 +144,8 @@ export default function GamePage({ mainImage, images, video, description, minima
                         src={`/images/${mainImage}`}
                         className="object-cover w-full h-full rounded-4xl border-1 border-(--border)"
                         alt="edit cover"
+                        quality={100}
+                        loading="eager"
                         />
                     </div>
                     <form onSubmit={(e)=>e.preventDefault()} className="flex flex-col gap-4 px-8 pt-6 border-1 border-(--border) bg-(--section-back) w-full h-full rounded-4xl">
