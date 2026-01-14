@@ -6,7 +6,7 @@ export default function PUBG() {
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-2 mt-10 w-[75%] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <main className="relative z-2 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <Form
             type="all"
             prefix="PUBG Mobile"

@@ -2,11 +2,11 @@ import { ReactNode, useEffect, useState } from "react"
 import Icon from "./Icon"
 import { useSiteType } from "./SiteTypeContext"
 
-function LinkItem({children}:{ children: ReactNode }) {
+function LinkItem({children, link}:{ children: ReactNode, link: string }) {
     return (
-        <div className="relative lg:max-w-[126px] lg:max-w-[126px] lg:min-w-[126px] lg:w-[126px] lg:h-[126px] md:w-[82px] md:h-[82px] flex items-center justify-center rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D]" style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12;" }}>
+        <a href={link} className="relative lg:max-w-[126px] lg:max-w-[126px] lg:min-w-[126px] lg:w-[126px] lg:h-[126px] md:w-[82px] md:h-[82px] flex items-center justify-center rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D]" style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12;" }}>
             {children}
-        </div>
+        </a>
     )
 }
 
@@ -35,6 +35,16 @@ export default function SteamDrop() {
         <Icon key={6} type="discord2" size={iconSize} />,
         <Icon key={7} type="dtf2" size={iconSize} />,
     ]
+    const links = [
+        "#",
+        "https://t.me/steamzapravka",
+        "https://www.tiktok.com/@steam_zapravka",
+        "#",
+        "#",
+        "#",
+        "#",
+        "https://dtf.ru/id3087606"
+    ]
     return (
         <section className="w-full h-80 border-1 border-(--border) bg-(--section-back) rounded-2xl lg:px-8 md:px-3 py-8 grid grid-cols-2">
             <div className="flex flex-col gap-6">
@@ -44,7 +54,7 @@ export default function SteamDrop() {
                 комиссиях и специальных акциях — мгновенно в ленте!</span>
             </div>
             <div className="w-full grid lg:grid-cols-[repeat(4,126px)] md:grid-cols-4 lg:grid-rows-2 md:auto-rows-min lg:gap-x-3 md:gap-x-6 gap-y-4 justify-end justify-items-end lg:content-start md:content-center">
-                {medias.map((item, i)=><LinkItem key={i}>{item}</LinkItem>)}
+                {medias.map((item, i)=><LinkItem key={i} link={links[i]}>{item}</LinkItem>)}
             </div>
         </section>
     )

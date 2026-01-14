@@ -50,7 +50,7 @@ export default function Slider({ mainImage="" }:SliderProps) {
                 </div>
                 <div className="w-full flex flex-col gap-4">
                     <Link href={data[currentIndex].link} className={`${mainImage ? "grid grid-cols-1 relative -left-10 w-[106%]" : "grid-cols-[2fr_1fr]"} grid cursor-pointer`}>
-                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-center lg:h-[473px] md:h-[221px]`} />
+                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "rounded-l-3xl shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-top lg:h-[473px] md:h-[221px]`} />
                         {mainImage ?
                         <></>
                         :

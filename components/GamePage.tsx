@@ -97,8 +97,8 @@ export default function GamePage({ mainImage, images, video, description, minima
     return (
         <div className="w-full flex flex-col gap-6">
             <div className="flex gap-4 h-180">
-                <div className="flex flex-col gap-2">
-                    <div className="w-[848px] h-full flex relative justify-between items-center overflow-hidden group">
+                <div className="flex flex-[2] flex-col gap-2">
+                    <div className="min-w-[848px] w-full h-full flex relative justify-between items-center overflow-hidden group">
                         {currentIndex === -1 ?
                         <iframe src={video} className="w-full h-full absolute rounded-3xl" frameBorder="0" allowFullScreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture"/>
                         :
@@ -107,6 +107,8 @@ export default function GamePage({ mainImage, images, video, description, minima
                         src={`/images/${images[currentIndex]}`}
                         className="w-full h-full absolute object-cover rounded-3xl border-1 border-(--border)"
                         alt="edit image"
+                        quality={100}
+                        loading="eager"
                         />
                         }
                         <div className="transition-all delay-200 relative group-hover:ml-5 -ml-7 cursor-pointer select-none" onClick={leftArrowHandler}>
@@ -137,15 +139,11 @@ export default function GamePage({ mainImage, images, video, description, minima
                                                 />)}
                     </div>
                 </div>
-                <div className="flex flex-col w-full gap-2">
-                    <div className="relative w-full h-[275px]">
-                        <Image
-                        fill
-                        src={`/images/${mainImage}`}
-                        className="object-cover w-full h-full rounded-4xl border-1 border-(--border)"
-                        alt="edit cover"
-                        quality={100}
-                        loading="eager"
+                <div className="flex flex-1 min-w-[535px] flex-col w-full gap-2">
+                    <div className="relative w-full min-h-[200px]">
+                        <div
+                        style={{backgroundImage: `url('/images/${mainImage}')`}}
+                        className="bg-cover bg-top bg-no-repeat w-full h-full rounded-4xl border-1 border-(--border)"
                         />
                     </div>
                     <form onSubmit={(e)=>e.preventDefault()} className="flex flex-col gap-4 px-8 pt-6 border-1 border-(--border) bg-(--section-back) w-full h-full rounded-4xl">
@@ -185,7 +183,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                             callback={(opt)=>setCurrentEditionIndex(editions.findIndex(edit=>edit.name === opt))}
                             />
                         </div>
-                        <button onClick={buy} className="!font-(family-name:--manrope-medium) mt-5 w-full h-20 btn !rounded-[25px] text-3xl">
+                        <button onClick={buy} className="!font-(family-name:--manrope-medium) w-full h-20 btn !rounded-[25px] text-3xl">
                             {edition ?
                             <span>Купить за {(editionsData && editionsData[currentEditionIndex].priceInRub) || price} ₽</span>
                             :
