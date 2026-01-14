@@ -16,6 +16,7 @@ import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
 import { truncateString } from "@/utils";
 import useData from "@/hooks/useData";
 import { useSiteType } from "./SiteTypeContext";
+import Skeleton from "react-loading-skeleton";
 
 type Box = {
     id: number;
@@ -71,6 +72,66 @@ function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentInd
             </div>
         </div>
     )
+}
+
+function CardSkeleton({ isTopup = false }: { isTopup: boolean }) {
+  return (
+    <div
+      className={`w-full border-1 border-gray-800 ${isTopup ? "h-36" : "h-60"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl font-(family-name:--bounded-regular)`}
+    >
+      {/* Верхняя часть с изображением */}
+      <div className="relative flex bg-gray-900 w-full h-full">
+        {!isTopup && (
+          <div className="z-2 relative self-end ml-3 mb-2">
+            <Skeleton
+              width={60}
+              height={16}
+              baseColor="#1a202c"
+              highlightColor="#2d3748"
+            />
+          </div>
+        )}
+
+        {/* Градиентная подложка (имитация оригинала) */}
+        <div className="absolute bg-linear-to-b from-[#00000000] to-[#0E131E] left-0 bottom-0 w-full h-8" />
+      </div>
+
+      {/* Нижняя часть с информацией */}
+      <div className="flex justify-between items-center bg-[#171D25] px-3 py-2">
+        <div className="flex flex-col gap-1 w-2/3">
+          {/* Основная цена/название */}
+          <Skeleton
+            width={isTopup ? "80%" : "60%"}
+            height={isTopup ? 14 : 20}
+            baseColor="#1a202c"
+            highlightColor="#2d3748"
+          />
+
+          {/* Зачеркнутая цена (только для !isTopup) */}
+          {!isTopup && (
+            <Skeleton
+              width="40%"
+              height={10}
+              baseColor="#1a202c"
+              highlightColor="#2d3748"
+              className="relative -top-1"
+            />
+          )}
+        </div>
+
+        {/* Кнопка */}
+        <div className="w-1/3 flex justify-end">
+          <Skeleton
+            width={55}
+            height={isTopup ? 24 : 28}
+            borderRadius={16}
+            baseColor="#1a202c"
+            highlightColor="#2d3748"
+          />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 function UniqueCard({ image, title, text, length=0 }:Omit<UniqueCard, "text"> & { length?: number, text: string }) {
@@ -199,18 +260,22 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
             <div className="grid grid-cols-[60%_40%] w-full h-fit">
                 {!isTopup ?
                 <div className="grid grid-cols-2 w-full h-fit gap-6">
-                    {productsData && boxes.map((box, i)=>
-                                        <Card
-                                        key={i}
-                                        index={i}
-                                        currentIndex={currentIndex}
-                                        setCurrentIndex={setCurrentIndex}
-                                        price={productsData[i]?.priceInRub || box.price}
-                                        image={box.image}
-                                        altPrice={(productsData[i]?.priceInRub || box.price) * 0.8}
-                                        coin={box.coin}
-                                        disabled={!productsData[i]?.inStock}
-                                        />
+                    {productsData ?
+                    boxes.map((box, i)=>
+                    <Card
+                    key={i}
+                    index={i}
+                    currentIndex={currentIndex}
+                    setCurrentIndex={setCurrentIndex}
+                    price={productsData[i]?.priceInRub || box.price}
+                    image={box.image}
+                    altPrice={(productsData[i]?.priceInRub || box.price) * 0.8}
+                    coin={box.coin}
+                    disabled={!productsData[i]?.inStock}
+                    />)
+                    :
+                    boxes.map((_, i)=>
+                    <CardSkeleton key={i} isTopup={isTopup} />
                     )}
                     <UniqueCard title={uniqueCard.title} text={uniqueCard.text[Number(isTopup)]} image={uniqueCard.image} length={boxes.length} />
                 </div>
@@ -272,7 +337,8 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         <div className="flex flex-col gap-1 z-1">
                             <span className="text-lg">Быстрый выбор</span>
                             <div className="flex gap-7 w-full justify-between">
-                                {productsData && productsData.sort((a, b) => a.priceInRub - b.priceInRub).slice(0, 3).map((prod, i)=>
+                                {productsData ?
+                                productsData.sort((a, b) => a.priceInRub - b.priceInRub).slice(0, 3).map((prod, i)=>
                                 <Card
                                 key={i}
                                 index={i}
@@ -284,7 +350,11 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 coin={getPureName(prod.name)}
                                 disabled={!prod.inStock || false}
                                 callback={()=>setProduct("")}
-                                />)}
+                                />)
+                                :
+                                products.map((prod, i)=>
+                                <CardSkeleton key={i} isTopup={isTopup} />)
+                                }
                             </div>
                         </div>
                     </div>

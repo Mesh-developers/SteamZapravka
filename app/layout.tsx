@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Providers } from "@/components/Providers";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const inter = Inter({
   variable: "--font-inter",
