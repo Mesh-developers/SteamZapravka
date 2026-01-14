@@ -352,7 +352,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 callback={()=>setProduct("")}
                                 />)
                                 :
-                                products.map((prod, i)=>
+                                products.slice(0, 3).map((prod, i)=>
                                 <CardSkeleton key={i} isTopup={isTopup} />)
                                 }
                             </div>
