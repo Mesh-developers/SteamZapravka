@@ -14,24 +14,24 @@ export default function Header() {
                 <a href="#faq">FAQ</a>
             </div>
             <div className="flex items-center gap-2">
-                <Link href={""}>
+                <a href="#">
                     <Icon type="instagram" size={17} strokeWidth={8} />
-                </Link>
-                <Link href={""}>
+                </a>
+                <a href="https://t.me/steamzapravka">
                     <Icon type="telegram" size={18} />
-                </Link>
-                <Link href={""}>
+                </a>
+                <a href="#">
                     <Icon type="youtube" size={18} />
-                </Link>
-                <Link href={""}>
+                </a>
+                <a href="https://www.tiktok.com/@steam_zapravka">
                     <Icon type="tiktok" size={18} />
-                </Link>
-                <Link href={""}>
+                </a>
+                <a href="#">
                     <Icon type="discord" size={19} />
-                </Link>
-                <Link href={""}>
+                </a>
+                <a href="https://dtf.ru/id3087606">
                     <Icon type="dtf" width={20} height={22} />
-                </Link>
+                </a>
             </div>
         </header>
     )
