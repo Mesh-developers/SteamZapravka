@@ -46,7 +46,8 @@ export const metadata: Metadata = {
   title: "Steam zapravka",
   description: "Молниеносное пополнение Steam кошелька за 1-5 минут через СБП (Систему быстрых платежей) и криптовалюту. Поддерживаем BTC, SOL, XRP, USDT с минимальными комиссиями. Работаем 24/7 – получайте игровую валюту в любое время!",
   openGraph: {
-    images: ['https://dfsfe12.vercel.app/images/social_cover.png.png'],
+    title: "Steam zapravka",
+    images: ['https://dfsfe12.vercel.app/images/social_cover.png'],
   }
 };
 
