@@ -3,10 +3,7 @@ import Form from "@/components/Form";
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'State of Survival',
-  openGraph: {
-    images: ['https://dfsfe12.vercel.app/images/state_cover.webp'],
-  }
+  title: 'State of Survival'
 }
 
 
