@@ -328,6 +328,14 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 <span className="text-lg">{isApple ? "E-mail"  : "ID от аккаунта" }</span>
                                 <Input placeholder={isApple ? "Ваш E-mail" : "Ваш ID"} value={isApple ? email : id} setValue={isApple ? setEmail : setId} isWarning={isApple ? email === "" : id === ""} />
                             </div>
+                            {isLegends ?
+                            <div className="flex flex-col gap-1 relative z-2">
+                                <span className="text-lg">Server ID</span>
+                                <Input placeholder="Ваш Server ID" value={serverId} setValue={setServerId} isWarning={serverId === ""} />
+                            </div>
+                            :
+                            <></>
+                            }
                             <div className="flex flex-col gap-1 relative z-2">
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
@@ -342,14 +350,6 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 callback={(opt: string)=>setCurrentIndex(Number(productsData?.findIndex(p=>p.name === opt)))}
                                 />
                             </div>
-                            {isLegends ?
-                            <div className="flex flex-col gap-1 relative z-2">
-                                <span className="text-lg">Server ID</span>
-                                <Input placeholder="Ваш Server ID" value={serverId} setValue={setServerId} isWarning={serverId === ""} />
-                            </div>
-                            :
-                            <></>
-                            }
                             </>
                             }
                         </div>
