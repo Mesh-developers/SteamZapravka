@@ -4,14 +4,8 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'State of Survival',
-  description: 'Прямое пополнение State of Survival — это самый простой, быстрый и надежный способ пополнить счет. Вам не нужно передавать данные от аккаунта, достаточно указать свой ID для мгновенного зачисления валюты. С её помощью игроки могут приобретать, эксклюзивный контент, скины, аксессуары, анимации, премиум подписку и другие внутриигровые предметы.',
   openGraph: {
-    title: 'Steam zapravka',
-    description: 'Steam zapravka - быстрое пополнение баланса Steam 2025 через СБП и Криптовалюту (BTC, SOL, XRP, USDT). Моментально 1–5 минут и с низкой комиссией!',
     images: ['https://dfsfe12.vercel.app/images/state_cover.webp'],
-  },
-  other: {
-    "vk:image": "https://dfsfe12.vercel.app/images/state_cover.webp"
   }
 }
 

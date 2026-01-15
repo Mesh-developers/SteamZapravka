@@ -44,7 +44,7 @@ const ManropeLight = localFont({
 
 export const metadata: Metadata = {
   title: "Steam zapravka",
-  description: "Steam zapravka - быстрое пополнение баланса Steam 2025 через СБП и Криптовалюту (BTC, SOL, XRP, USDT). Моментально 1–5 минут и с низкой комиссией!",
+  description: "Молниеносное пополнение Steam кошелька за 1-5 минут через СБП (Систему быстрых платежей) и криптовалюту. Поддерживаем BTC, SOL, XRP, USDT с минимальными комиссиями. Работаем 24/7 – получайте игровую валюту в любое время!",
 };
 
 export default function RootLayout({
