@@ -8,8 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Steam zapravka',
     description: 'Steam zapravka - быстрое пополнение баланса Steam 2025 через СБП и Криптовалюту (BTC, SOL, XRP, USDT). Моментально 1–5 минут и с низкой комиссией!',
-    images: ['/images/state_cover.webp'],
+    images: ['https://dfsfe12.vercel.app/images/state_cover.webp'],
   },
+  other: {
+    "vk:image": "https://dfsfe12.vercel.app/images/state_cover.webp"
+  }
 }
 
 

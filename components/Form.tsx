@@ -148,6 +148,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     const pathname = usePathname()
     const isRoblox = pathname === "/roblox"
     const isApple = pathname === "/apple"
+    const isLegends = pathname === "/mobile-legends"
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
     const [isTopup, setIsTopup] = useState(type === "topup")
     const [count, setCount] = useState(1)
@@ -155,6 +156,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     const [system, setSystem] = useState<PaymentSystem>("SBP")
     const [email, setEmail] = useState("")
     const [id, setId] = useState("")
+    const [serverId, setServerId] = useState("")
     const [region, setRegion] = useState("")
     const [product, setProduct] = useState("")
     const [password, setPassword] = useState("")
@@ -233,7 +235,16 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     email
                 }
                 :
-                body))
+                (isLegends ?
+                {
+                    ...robloxBody,
+                    region: reg,
+                    accountId,
+                    serverId
+                }
+                :
+                body
+                )))
             })
 
             if (res.ok) {
@@ -331,6 +342,14 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 callback={(opt: string)=>setCurrentIndex(Number(productsData?.findIndex(p=>p.name === opt)))}
                                 />
                             </div>
+                            {isLegends ?
+                            <div className="flex flex-col gap-1 relative z-2">
+                                <span className="text-lg">Server ID</span>
+                                <Input placeholder="Ваш Server ID" value={serverId} setValue={setServerId} isWarning={serverId === ""} />
+                            </div>
+                            :
+                            <></>
+                            }
                             </>
                             }
                         </div>
