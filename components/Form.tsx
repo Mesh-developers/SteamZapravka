@@ -381,7 +381,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 </div>
                 }
                 <div className="w-full h-full overflow-hidden flex flex-col pl-6">
-                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] h-full flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-15 pt-15 rounded-3xl border-1 border-(--border) overflow-hidden">
+                    <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] h-full flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-15 pt-8 rounded-3xl border-1 border-(--border) overflow-hidden">
                      {type === "all" ?
                         <div className="flex gap-5 justify-between">
                             <div className={`relative w-fit`}>
@@ -396,7 +396,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                      :
                      <></>
                      }
-                        <span className="text-lg">Товар</span>
+                        <span className={`text-lg ${type === "all" ? "mt-4" : "mt-2"}`}>Товар</span>
                         <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[2]?.image || ""} />
                         <div className="flex gap-3 w-full h-20 mt-4">
                             <PaymentSystems
