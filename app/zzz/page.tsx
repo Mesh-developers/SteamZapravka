@@ -26,13 +26,13 @@ export default function ZZZ() {
                 "Примите условия  оферты и оплатить товар."
             ]]}
             products={[
-                { id: 1821, name: "Zenless Zone Zero 60 Monochrome", price: 70, region: "Любой", image: "1monochrome.png" },
-                { id: 1819, name: "Zenless Zone Zero 300 + 30 Monochrome", price: 345, region: "Любой", image: "2monochrome.png" },
-                { id: 1830, name: "Zenless Zone Zero Inter-Knot Membership", price: 400, region: "Любой", image: "3monochrome.png" },
-                { id: 1828, name: "Zenless Zone Zero 980 + 110 Monochrome", price: 1035, region: "Любой" },
-                { id: 1818, name: "Zenless Zone Zero 1980 + 260 Monochrome", price: 2070, region: "Любой" },
-                { id: 1820, name: "Zenless Zone Zero 3280 + 600 Monochrome", price: 3435, region: "Любой" },
-                { id: 1822, name: "Zenless Zone Zero 6480 + 1600 Monochrome", price: 6610, region: "Любой" }
+                { id: 1821, name: "Zenless Zone Zero 60 Monochrome", price: 70, region: "Азия", image: "1monochrome.png" },
+                { id: 1819, name: "Zenless Zone Zero 300 + 30 Monochrome", price: 345, region: "Европа", image: "2monochrome.png" },
+                { id: 1830, name: "Zenless Zone Zero Inter-Knot Membership", price: 400, region: "Америка", image: "3monochrome.png" },
+                { id: 1828, name: "Zenless Zone Zero 980 + 110 Monochrome", price: 1035, region: "Америка" },
+                { id: 1818, name: "Zenless Zone Zero 1980 + 260 Monochrome", price: 2070, region: "Америка" },
+                { id: 1820, name: "Zenless Zone Zero 3280 + 600 Monochrome", price: 3435, region: "Америка" },
+                { id: 1822, name: "Zenless Zone Zero 6480 + 1600 Monochrome", price: 6610, region: "Америка" }
             ]}
             />
         </main>
