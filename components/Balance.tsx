@@ -152,7 +152,7 @@ export default function Balance() {
                     ]}
                     />
                 </div>
-                <button onClick={topupRequest} className={`bg-radial from-[${siteType === "game" ? "#45C47E" : "#0698D6"}] from-00% to-[${siteType === "game" ? "#2D8451" : "#035070"}] rounded-2xl font-medium text-xl`}>
+                <button onClick={topupRequest} className={`bg-radial !from-[${siteType === "game" ? "#45C47E" : "#0698D6"}] from-0% !to-[${siteType === "game" ? "#2D8451" : "#035070"}] rounded-2xl font-medium text-xl`}>
                     Пополнить баланс <br/> {price} ₽
                 </button>
             </div>

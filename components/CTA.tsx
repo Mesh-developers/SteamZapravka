@@ -44,7 +44,7 @@ export default function CTA() {
                         Мгновенное пополнение, низкая комиссия<br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
-                    <button className="w-96 h-20 btn !rounded-2xl text-xl">
+                    <button className="w-96 h-20 btn !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl">
                         Купить <br />
                         Telegram Stars
                     </button>
