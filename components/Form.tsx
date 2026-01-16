@@ -13,9 +13,8 @@ import { PaymentSystem, VouchersResponse } from "@/typings";
 import { redirect, RedirectType, usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
-import { truncateString } from "@/utils";
+import { replaceWords, truncateString } from "@/utils";
 import useData from "@/hooks/useData";
-import { useSiteType } from "./SiteTypeContext";
 import Skeleton from "react-loading-skeleton";
 
 type Box = {
@@ -48,13 +47,14 @@ interface FormProps {
     instructions: string[][];
     type: "vauchers"|"topup"|"all";
     products: { id: number; name: string, price: number; region: string; inStock?: boolean; image?: string }[];
-    prefix: string;
+    prefix: string|string[];
+    isService?: boolean
 }
 
 function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentIndex, isTopup, disabled, callback }:CardProps) {
     if (!coin) return <div />
     return (
-        <div className={`w-full cursor-pointer border-1 border-(--border) ${isTopup ? "h-36" : "h-60"} ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl font-(family-name:--bounded-regular)`} onClick={()=>{ if(!disabled) setCurrentIndex(index); if (callback) callback()}}>
+        <div className={`w-full max-w-[250px] cursor-pointer border-1 border-(--border) ${isTopup ? "h-36" : "h-60"} ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl font-(family-name:--bounded-regular)`} onClick={()=>{ if(!disabled) setCurrentIndex(index); if (callback) callback()}}>
             <div className={`relative flex bg-center bg-no-repeat bg-cover w-full h-full`} style={{ backgroundImage: `url('/images/${image}')` }}>
                 {!isTopup && <span className={`z-2 relative text-[13px] relative self-end ml-3 ${disabled ? "text-[#717274]" : ""}`}>{coin}</span>}
                 <div className="absolute bg-linear-to-b from-[#00000000] to-[#0E131E] left-0 bottom-0 w-full h-8" />
@@ -143,11 +143,9 @@ function UniqueCard({ image, title, text, length=0 }:Omit<UniqueCard, "text"> & 
     )
 }
 
-export default function Form({ cover, boxes, uniqueCard, instructions, type, products, prefix }:FormProps) {
-    const { siteType } = useSiteType()
+export default function Form({ cover, boxes, uniqueCard, instructions, type, products, prefix, isService }:FormProps) {
     const pathname = usePathname()
     const isRoblox = pathname === "/roblox"
-    const isApple = pathname === "/apple"
     const isLegends = pathname === "/mobile-legends"
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
     const [isTopup, setIsTopup] = useState(type === "topup")
@@ -165,13 +163,13 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
     const coinArray = boxes[currentIndex]?.coin?.split(" ") || [""]
-    const getPureName = (prod: string) => prod.replaceAll(":", "").replaceAll(prefix, "")
+    const getPureName = (prod: string) => Array.isArray(prefix) ? replaceWords(prod.replaceAll(":", ""), new Map(prefix.map(pre=>[pre, ""]))) : prod.replaceAll(":", "").replaceAll(prefix, "")
     const productPrice = products.find(prod=>prod.name === product)?.price
     const { data: productsData } = useData(
     [pathname, isTopup],
     isTopup ? products.map(prod=>prod.id) : boxes.map(box=>box.id),
     (data)=>isTopup ? data.filter(d=>d.inStock) : data,
-    isApple || !isTopup)
+    isService || !isTopup)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const buyBox = async () =>{
@@ -214,7 +212,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 paymentMethod: system
             }
             const {region: reg, accountId, ...robloxBody} = body
-            const res = await fetch(isRoblox ? "https://api.steamzapravka.io/topup/roblox " : (isApple ? "https://api.steamzapravka.io/vouchers" : "https://api.steamzapravka.io/topup"), {
+            const res = await fetch(isRoblox ? "https://api.steamzapravka.io/topup/roblox " : (isService ? "https://api.steamzapravka.io/vouchers" : "https://api.steamzapravka.io/topup"), {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
@@ -229,7 +227,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
 
                 }
                 :
-                (isApple ?
+                (isService ?
                 {
                     ...robloxBody,
                     email
@@ -293,10 +291,10 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 :
                 <div className="flex flex-col gap-5">
                     <div className="relative flex flex-col gap-15 bg-(--section-back) border-1 border-(--border) rounded-3xl py-10 px-6">
-                        {isApple  || siteType === "telegram" ?
+                        {isService ?
                         <Image src={"/images/cloud_tech.png"} width={400} height={200} alt="cloud tech" className="absolute top-7 -right-2" loading="eager" />
                         :
-                        <Image src={`/images/gamepad.png`} width={400} height={200} alt="gamepad" className="absolute top-7 -right-2" />
+                        <Image src={`/images/gamepad.png`} width={400} height={200} alt="gamepad" className="absolute top-7 -right-2" loading="eager" />
                         }
                         <div className="grid grid-cols-2 grid-rows-2 gap-x-10 gap-y-5">
                             {isRoblox ?
@@ -325,13 +323,13 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             :
                             <>
                             <div className="flex flex-col gap-1 relative z-2">
-                                <span className="text-lg">{isApple ? "E-mail"  : "ID от аккаунта" }</span>
-                                <Input placeholder={isApple ? "Ваш E-mail" : "Ваш ID"} value={isApple ? email : id} setValue={isApple ? setEmail : setId} isWarning={isApple ? email === "" : id === ""} />
+                                <span className="text-lg">{isService ? "E-mail"  : (isLegends ? "UID от аккаунта" : "ID от аккаунта") }</span>
+                                <Input placeholder={isService ? "Ваш E-mail" : (isLegends ? "Ваш UID" : "Ваш ID")} value={isService ? email : id} setValue={isService ? setEmail : setId} isWarning={isService ? email === "" : id === ""} />
                             </div>
                             {isLegends ?
                             <div className="flex flex-col gap-1 relative z-2">
-                                <span className="text-lg">Server ID</span>
-                                <Input placeholder="Ваш Server ID" value={serverId} setValue={setServerId} isWarning={serverId === ""} />
+                                <span className="text-lg">Zone ID от аккаунта</span>
+                                <Input placeholder="Ваш Zone ID" value={serverId} setValue={setServerId} isWarning={serverId === ""} />
                             </div>
                             :
                             <></>
@@ -397,7 +395,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                      <></>
                      }
                         <span className={`text-lg ${type === "all" ? "mt-4" : "mt-2"}`}>Товар</span>
-                        <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[2]?.image || ""} />
+                        <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex]?.name || "") : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[2]?.image || ""} />
                         <div className="flex gap-3 w-full h-20 mt-4">
                             <PaymentSystems
                             systems={[
@@ -423,7 +421,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         </>}
                         <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 btn !rounded-3xl text-xl">
                             <span>
-                                Купить {truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex].name) : ((Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]), 28)}<br />{isTopup && productsData ? (productPrice || productsData[currentIndex]?.priceInRub) : (productsData ? productsData[currentIndex]?.priceInRub : boxes[currentIndex]?.price) * count} ₽
+                                Купить {truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex]?.name || "") : ((Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]), 28)}<br />{isTopup && productsData ? (productPrice || productsData[currentIndex]?.priceInRub) : (productsData ? productsData[currentIndex]?.priceInRub : boxes[currentIndex]?.price) * count} ₽
                             </span>
                         </button>
                         <div className="mt-4 flex flex-col gap-2">

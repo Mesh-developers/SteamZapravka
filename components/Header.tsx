@@ -10,7 +10,7 @@ export default function Header() {
             <Switcher leftText="Игры" rightText="Telegram" />
             <Link href="/"><Icon type="logo" /></Link>
             <div className="flex gap-10 font-light">
-                <span>О НАС</span>
+                <Link href="/">О НАС</Link>
                 <a href="#faq">FAQ</a>
             </div>
             <div className="flex items-center gap-2">

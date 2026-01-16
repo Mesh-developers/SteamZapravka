@@ -16,11 +16,12 @@ export default function Apple() {
             image: "apple_card.png"
             }}
             instructions={[[], [
-                "Введите ID от вашего аккаунта.",
+                "Введите E-mail.",
                 "Выберите регион.",
                 "Выберите желаемый товар.",
                 "Выберите способ оплаты.",
-                "Примите условия  оферты и оплатить товар."
+                "Примите условия  оферты.",
+                "Оплатить товар."
             ]]}
             products={[
             { id: 1837, name: "APPLE ID 10 AUD Australia", price: 650, region: "Австралия", image: "apple_back.png" },
@@ -191,6 +192,7 @@ export default function Apple() {
             { id: 1842, name: "APPLE ID JPY 50000 Japan", price: 37875, region: "Япония" }
             ]}
             prefix="APPLE ID"
+            isService
             />
         </main>
     </>

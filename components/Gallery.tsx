@@ -63,12 +63,12 @@ export default function Gallery() {
     ]
     :
     [
-        "chatGPT.png",
-        "playStation.png",
+        "/chatgpt",
+        "/playstation",
         "/apple",
-        "steam.png",
-        "battle.png",
-        "nintendo.png",
+        "/steam",
+        "/battle",
+        "/nintendo",
     ]
     return (
         <section className="w-full h-95 border-1 border-(--border) bg-(--section-back) rounded-3xl lg:p-8 md:p-4 flex flex-col gap-8">
