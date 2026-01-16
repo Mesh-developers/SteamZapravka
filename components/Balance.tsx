@@ -152,7 +152,7 @@ export default function Balance() {
                     ]}
                     />
                 </div>
-                <button onClick={topupRequest} className={`bg-radial !from-[${siteType === "game" ? "#45C47E" : "#0698D6"}] from-0% !to-[${siteType === "game" ? "#2D8451" : "#035070"}] rounded-2xl font-medium text-xl`}>
+                <button onClick={topupRequest} className={`bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
                     Пополнить баланс <br/> {price} ₽
                 </button>
             </div>
@@ -217,7 +217,7 @@ export default function Balance() {
                             ]}
                             />
                         </div>
-                        <button onClick={topupRequest} className={`leading-7 py-2 bg-radial from-[${siteType === "game" ? "#45C47E" : "#0698D6"}] from-0% to-[${siteType === "game" ? "#2D8451" : "#035070"}] rounded-2xl font-medium text-lg`}>
+                        <button onClick={topupRequest} className={`leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
                             Пополнить баланс <br/> {price} ₽
                         </button>
                         <div className="flex flex-col">
