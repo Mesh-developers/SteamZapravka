@@ -77,8 +77,33 @@ const sections = [
       items: [
         {
           title: 'Chat GPT',
-          image: "chatGPT.png",
+          image: "chatgpt_icon.png",
           href: "/chatgpt"
+        },
+        {
+          title: 'PlayStation',
+          image: "playstation_icon.png",
+          href: "/playstation"
+        },
+        {
+          title: 'Apple',
+          image: "apple_icon.png",
+          href: "/apple"
+        },
+        {
+          title: 'Steam',
+          image: "steam_icon.png",
+          href: "/steam"
+        },
+        {
+          title: 'Battle.net',
+          image: "battle_icon.png",
+          href: "/battle"
+        },
+        {
+          title: 'Nintendo',
+          image: "nintendo_icon.png",
+          href: "/nintendo"
         },
       ]
     }
@@ -167,7 +192,7 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
             </ul>
             )}
             {sections.map((section, i) => (
-            <div key={i} className="mb-8">
+            <div key={i} className={sections.length - 1 === i ? "mb-0" : "mb-8"}>
                 <h3 className="text-lg font-(family-name:--bounded-black) mb-4 uppercase tracking-wider flex w-full gap-4 items-center cursor-pointer" onClick={()=>setSectionOpen(state=>{const buf = [...state]; buf[i] = !buf[i]; return buf})}>
                     {section.title}
                     <div className="w-full h-[1px] bg-(--white)" />
