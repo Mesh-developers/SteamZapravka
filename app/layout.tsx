@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import localFont from 'next/font/local';
 import "./globals.css";
 import Header from "@/components/Header";
@@ -7,14 +6,15 @@ import Footer from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
-});
-
 const boundedRegular = localFont({
   src: "../public/fonts/Bounded-Regular.ttf",
   variable: "--bounded-regular",
+  display: "swap"
+});
+
+const boundedBlack = localFont({
+  src: "../public/fonts/Bounded-Black.ttf",
+  variable: "--bounded-black",
   display: "swap"
 });
 
@@ -59,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeMedium.variable} ${ManropeRegular.variable} ${ManropeLight.variable} !bg-[url('/images/background.png')] !bg-center !bg-no-repeat !bg-cover antialiased`}
+        className={`${boundedRegular.variable} ${ManropeSemibold.variable} ${ManropeMedium.variable} ${ManropeRegular.variable} ${ManropeLight.variable} ${boundedBlack.variable} !bg-[url('/images/background.png')] !bg-center !bg-no-repeat !bg-cover antialiased`}
       >
         <Providers>
           <Header />

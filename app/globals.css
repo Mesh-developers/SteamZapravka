@@ -48,6 +48,23 @@
     background-color: #101723;
 }
 
+.sidebar::-webkit-scrollbar {
+    background-color: #171D25; /* Цвет фона */
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background-color: #171D25; /* Цвет фона дорожки */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--green); /* Цвет ползунка */
+    border: 2px solid #171D25; /* Граница для контраста */
+}
+
+.sidebar::-webkit-scrollbar-corner {
+    background-color: #171D25;
+}
+
   .animate-fill-up {
     animation: fillUp 2s cubic-bezier(0.2, 0.6, 0.8, 0.4) forwards;
   }

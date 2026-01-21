@@ -1,12 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import BurgerMenu from "./BurgerMenu";
 import Icon from "./Icon";
 import Switcher from "./Switcher";
+import Sidebar from "./Sidebar";
+import { useState } from "react";
 
 export default function Header() {
+    const [open, setOpen] = useState(false);
     return (
-        <header className="relative z-2 rounded-b-3xl max-w-[1500px] lg:w-[80%] md:w-[95%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
-            <BurgerMenu />
+        <>
+        <header className="relative z-1 rounded-b-3xl max-w-[1500px] lg:w-[80%] md:w-[95%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
+            <BurgerMenu open={open} setOpen={setOpen} />
             <Switcher leftText="Игры" rightText="Telegram" />
             <Link href="/"><Icon type="logo" /></Link>
             <div className="flex gap-10 font-light">
@@ -34,5 +40,7 @@ export default function Header() {
                 </a>
             </div>
         </header>
+        <Sidebar open={open} setOpen={setOpen} />
+        </>
     )
 }

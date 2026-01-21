@@ -7,6 +7,11 @@ export type ExchangeResponse = {
     kztToRub: number;
 }
 
+export type ExchangeTelegramResponse = {
+    priceRubCrypto: number[];
+    priceRubSbp: number[];
+}
+
 export type TopupResponse = {
     amount: number;
     currency: "RUB"|"KZT"|"USD";
@@ -18,11 +23,25 @@ export type TopupResponse = {
     transactionId: string;
 }
 
+export type TopupTelegramResponse = {
+    orderId: string;
+    telegramLogin: string;
+    paymentLink: string;
+    priceRub: number;
+    starsAmount: number;
+}
+
 export type TopupRequest = {
     paymentMethod: string,
     amountRub: number,
     steamLogin: string,
     couponCode: string
+}
+
+export type TopupTelegramRequest = {
+    paymentMethod: string,
+    starsAmount: number,
+    telegramLogin: string
 }
 
 export type LoginResponse = {

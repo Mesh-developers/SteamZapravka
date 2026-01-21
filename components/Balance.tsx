@@ -8,23 +8,28 @@ import Icon from "./Icon"
 import Checkbox from "./Checkbox"
 import Link from "next/link"
 import { useSiteType } from "./SiteTypeContext"
-import { ExchangeResponse, LoginResponse, PaymentSystem, PromocodeResponse, TopupRequest, TopupResponse } from "@/typings"
+import { ExchangeResponse, ExchangeTelegramResponse, LoginResponse, PaymentSystem, PromocodeResponse, TopupRequest, TopupResponse, TopupTelegramRequest, TopupTelegramResponse } from "@/typings"
 import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
 import useDebounce from "@/hooks/useDebounce"
 import Image from "next/image"
+import { removeAtSymbol } from "@/utils"
 
 export default function Balance() {
     const [resMessage, setResMessage] = useState("")
     const [login, setLogin] = useState("")
     const [promocode, setPromocode] = useState("")
     const [price, setPrice] = useState(1000)
+    const prices = [150, 500, 1000, 2000]
+    const [starsIndex, setStarsIndex] = useState(2)
+    const stars = [100, 500, 1000, 2500]
     const [system, setSystem] = useState<PaymentSystem>("SBP")
     const [isAgree, setIsAgree] = useState(false)
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
     const { siteType } = useSiteType()
     const [exchange, setExchange] = useState<ExchangeResponse>();
+    const [exchangeTelegram, setExchangeTelegram] = useState<ExchangeTelegramResponse>();
     const debouncedLogin = useDebounce(login, 1000)
     const debouncedPromocode = useDebounce(promocode, 1000)
     const [promocodeResult, setPromocodeResult] = useState<PromocodeResponse>()
@@ -55,17 +60,66 @@ export default function Balance() {
         }
     }
 
+    const topupTelegramRequest = async () => {
+        if ((isAgree || (isUserTerms && isPrivacy)) && exchangeTelegram) {
+            if (system === "SBP" && exchangeTelegram.priceRubSbp[starsIndex] >= 100 && exchangeTelegram.priceRubSbp[starsIndex] <= 20_000 ||
+                system === "CRYPTOCURRENCY" && exchangeTelegram.priceRubCrypto[starsIndex] >= 200 && exchangeTelegram.priceRubCrypto[starsIndex] <= 20_000
+            ) {
+                const body: TopupTelegramRequest = {
+                    telegramLogin: removeAtSymbol(login),
+                    starsAmount: stars[starsIndex],
+                    paymentMethod: system
+                }
+
+                const req = await fetch("https://api.steamzapravka.io/stars", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(body)
+                })
+
+                if (req.status === 200) {
+                    const res: TopupTelegramResponse = await req.json()
+                    redirect(res.paymentLink, RedirectType.push)
+                }
+            } else {
+                setResMessage("Cумма оплаты для СБП: 100 – 20 000 ₽.\nСумма для Crypto: 200 – 20 000 ₽")
+            }
+        }
+    }
+
     useEffect(()=>{
         const getExchange = async () => {
-            const res = await fetch("https://api.steamzapravka.io/steam/exchange")
+            if (siteType === "game") {
+                const res = await fetch("https://api.steamzapravka.io/steam/exchange")
 
-            if (res.status === 200) {
-                const data: ExchangeResponse = await res.json()
-                setExchange(data)
+                if (res.status === 200) {
+                    const data: ExchangeResponse = await res.json()
+                    setExchange(data)
+                }
+            } else if (siteType === "telegram") {
+                const res = await fetch("https://api.steamzapravka.io/stars/price", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        starsAmount: stars
+                    })
+                })
+
+                if (res.status === 200) {
+                    const data: ExchangeTelegramResponse = await res.json()
+                    setExchangeTelegram(data)
+                } else {
+                    setResMessage((await res.json()).message)
+                }
             }
         }
         getExchange()
-    }, [])
+    }, [siteType])
+
 
     useEffect(()=>{
         const checkLogin = async () => {
@@ -129,10 +183,10 @@ export default function Balance() {
             </div>
             <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
-                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={loginResult && !loginResult.usernameExists} isSuccess={loginResult && loginResult.usernameExists} renderHint={loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
-                    <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
+                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
+                    <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
                     <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
-                    <Chips value={price} values={["150", "500", "1000", "2000"]} setValue={setPrice} />
+                    <Chips value={siteType === "game" ? price : stars[starsIndex]} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={setStarsIndex} />
                 </div>
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
                     <PaymentSystems
@@ -152,8 +206,16 @@ export default function Balance() {
                     ]}
                     />
                 </div>
-                <button onClick={topupRequest} className={`bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
+                <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest } className={`bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
+                    {siteType === "game" ?
+                    <>
                     Пополнить баланс <br/> {price} ₽
+                    </>
+                    :
+                    <>
+                    Купить звёзды <br/> {system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex])} ₽
+                    </>
+                    }
                 </button>
             </div>
             <Checkbox checked={isAgree} setChecked={setIsAgree}>
@@ -195,8 +257,8 @@ export default function Balance() {
                     <div className="bg-linear-to-r from-[#33475D] to-[#355477] flex flex-col rounded-2xl w-full h-[260px] p-1 gap-3">
                         <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={loginResult && !loginResult.usernameExists} isSuccess={loginResult && loginResult.usernameExists} renderHint={loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                         <div className="flex flex-col gap-2">
-                            <Input type="number" value={price} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
-                            <Chips value={price} values={["150", "500", "1000", "2000"]} setValue={setPrice} />
+                            <Input type="number" value={siteType === "game" ? price : (system === "SBP" ? Number(exchangeTelegram?.priceRubSbp) : Number(exchangeTelegram?.priceRubCrypto))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
+                            <Chips value={price} values={prices} setValue={setPrice} />
                         </div>
                         <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
                         <div className="flex gap-3">
@@ -217,7 +279,7 @@ export default function Balance() {
                             ]}
                             />
                         </div>
-                        <button onClick={topupRequest} className={`leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
+                        <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest} className={`leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
                             Пополнить баланс <br/> {price} ₽
                         </button>
                         <div className="flex flex-col">
@@ -237,7 +299,7 @@ export default function Balance() {
             </div>
         </section>
         <Modal open={!!resMessage} onClose={()=>setResMessage("")}>
-            <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2">
+            <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2 whitespace-pre">
                 {resMessage}
             </div>
         </Modal>

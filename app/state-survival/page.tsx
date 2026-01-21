@@ -12,7 +12,7 @@ export default function StateSurvival() {
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-2 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <Form
             type="topup"
             prefix="State of Survival"

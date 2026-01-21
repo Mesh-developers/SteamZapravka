@@ -12,9 +12,10 @@ interface InputProps {
     renderHint?: ReactNode;
     isWarning?: boolean;
     isSuccess?: boolean;
+    disabled?: boolean
 }
 
-export default function Input({ type, hint, placeholder, value, setValue, renderHint, isWarning=false, isSuccess=false, hintWrap=false }:InputProps) {
+export default function Input({ type, hint, placeholder, value, setValue, renderHint, isWarning=false, isSuccess=false, hintWrap=false, disabled=false }:InputProps) {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
@@ -38,6 +39,7 @@ export default function Input({ type, hint, placeholder, value, setValue, render
             className="placeholder:text-[#686868] md:placeholder:text-xs lg:placeholder:text-base md:text-xs lg:text-base text-white outline-none h-full !font-(family-name:--manrope-regular)"
             value={value}
             onChange={(e)=>handleChange(e)}
+            disabled={disabled}
             />
             {renderHint}
             {hint && !renderHint &&

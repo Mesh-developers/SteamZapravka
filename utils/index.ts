@@ -21,3 +21,7 @@ export function replaceWords(
     wordMap.get(match.toLowerCase()) || match
   )
 }
+
+export function removeAtSymbol(str: string): string {
+  return str.startsWith('@') ? str.slice(1) : str
+}

@@ -299,46 +299,46 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         <div className="grid grid-cols-2 grid-rows-2 gap-x-10 gap-y-5">
                             {isRoblox ?
                             <>
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">E-mail/Login</span>
                                 <Input placeholder="Ваш E-mail/Login" value={email} setValue={setEmail} isWarning={email === ""} />
                             </div>
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Пароль</span>
                                 <Input placeholder="Ваш пароль" value={password} setValue={setPassword} />
                             </div>
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Nikname в игре</span>
                                 <Input placeholder="Ваш nikname" value={nick} setValue={setNick} />
                             </div>
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Backup code</span>
                                 <Input placeholder="Ваш Backup code" value={backup} setValue={setBackup} />
                             </div>
-                            {/* <div className="flex flex-col gap-1 relative z-2">
+                            {/* <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
                             </div> */}
                             </>
                             :
                             <>
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">{isService ? "E-mail"  : (isLegends ? "UID от аккаунта" : "ID от аккаунта") }</span>
                                 <Input placeholder={isService ? "Ваш E-mail" : (isLegends ? "Ваш UID" : "Ваш ID")} value={isService ? email : id} setValue={isService ? setEmail : setId} isWarning={isService ? email === "" : id === ""} />
                             </div>
                             {isLegends ?
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Zone ID от аккаунта</span>
                                 <Input placeholder="Ваш Zone ID" value={serverId} setValue={setServerId} isWarning={serverId === ""} />
                             </div>
                             :
                             <></>
                             }
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
                             </div>
-                            <div className="flex flex-col gap-1 relative z-2">
+                            <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Выберите товар из полного списка</span>
                                 <Select
                                 placeholder="Выберите товар"

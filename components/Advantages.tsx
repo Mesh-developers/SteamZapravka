@@ -17,7 +17,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
     <div className="absolute z-1 top-0 left-0 w-[90%] h-[90%] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full bg-radial from-0% from-[#2C7DC3] to-100% to-[rgba(69,196,126,0)] blur-3xl opacity-25" />
     <div className="relative border border-(--border) rounded-3xl flex flex-col bg-(--section-back) justify-between h-full">
       {/* верхняя часть */}
-      <div className="flex relative z-2 items-start justify-between p-4">
+      <div className="flex relative z-1 items-start justify-between p-4">
         <div className="relative w-[8rem] h-[8rem] shrink-0">
           <Image
             fill
@@ -33,7 +33,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
       </div>
 
       {/* текст */}
-      <div className="relative z-2 pl-6 pb-4 text-[clamp(1.1rem,1.5vw,1.1rem)] leading-[1.5] relative -top-8">
+      <div className="relative z-1 pl-6 pb-4 text-[clamp(1.1rem,1.5vw,1.1rem)] leading-[1.5] relative -top-8">
         {children}
       </div>
     </div>

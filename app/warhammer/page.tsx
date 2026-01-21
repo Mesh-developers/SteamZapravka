@@ -7,7 +7,7 @@ export default function Warhammer() {
     return (
         <>
         <Backlight count={6} gap={30} />
-        <main className="relative z-2 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
             <GamePage
             price={warhammer.price}
             mainImage={warhammer.mainImage}

@@ -1,11 +1,16 @@
-"use client"; // Next.js 13+ (уберите если не нужно)
+"use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-export default function BurgerMenu() {
-  const [open, setOpen] = useState(false);
+type BurgerMenuProps = {
+    open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export default function BurgerMenu({ open, setOpen }:BurgerMenuProps) {
 
   return (
+    <>
     <button
       onClick={() => setOpen((v) => !v)}
       className="group flex flex-col gap-[6px] w-8 h-8 items-center justify-center"
@@ -34,5 +39,6 @@ export default function BurgerMenu() {
         `}
       />
     </button>
+    </>
   );
 }
