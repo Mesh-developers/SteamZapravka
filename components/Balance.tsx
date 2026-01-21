@@ -257,8 +257,8 @@ export default function Balance() {
                     <div className="bg-linear-to-r from-[#33475D] to-[#355477] flex flex-col rounded-2xl w-full h-[260px] p-1 gap-3">
                         <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={loginResult && !loginResult.usernameExists} isSuccess={loginResult && loginResult.usernameExists} renderHint={loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                         <div className="flex flex-col gap-2">
-                            <Input type="number" value={siteType === "game" ? price : (system === "SBP" ? Number(exchangeTelegram?.priceRubSbp) : Number(exchangeTelegram?.priceRubCrypto))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
-                            <Chips value={price} values={prices} setValue={setPrice} />
+                            <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
+                            <Chips value={siteType === "game" ? price : stars[starsIndex]} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={setStarsIndex} />
                         </div>
                         <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
                         <div className="flex gap-3">
@@ -280,16 +280,24 @@ export default function Balance() {
                             />
                         </div>
                         <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest} className={`leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
+                            {siteType === "game" ?
+                            <>
                             Пополнить баланс <br/> {price} ₽
+                            </>
+                            :
+                            <>
+                            Купить звёзды <br/> {system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex])} ₽
+                            </>
+                            }
                         </button>
                         <div className="flex flex-col">
                             <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
-                                <span className="!font-(family-name:--manrope-regular) text-[9px]">
+                                <span className="!font-(family-name:--manrope-regular) text-[12px]">
                                     Я согласен с условиями <Link href={""} className="underline">Пользовательского соглашения</Link>.
                                 </span>
                             </Checkbox>
                             <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
-                                <span className="!font-(family-name:--manrope-regular) text-[9px]">
+                                <span className="!font-(family-name:--manrope-regular) text-[12px]">
                                     Я согласен с условиями <Link href={""} className="underline">Политики конфиденциальности</Link>.
                                 </span>
                             </Checkbox>

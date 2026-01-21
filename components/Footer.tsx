@@ -8,7 +8,9 @@ export default function Footer() {
     const [size, setSize] = useState([82, 174])
     useEffect(() => {
         const checkScreenSize = () => {
-        setSize([42, 100]);
+            if(window.outerWidth <= 768) {
+                setSize([42, 100]);
+            }
         };
 
         checkScreenSize();

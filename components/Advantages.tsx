@@ -54,7 +54,7 @@ export default function Advantages() {
       style: { top: "-1.9em", left: "-1.7em" },
     },
     {
-      title: "Надежные партнеры",
+      title: "Надёжные партнеры",
       image: "/images/lock.png",
       text: <span>Официальное пополнене счета <br/>
         <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Гарантия безопасности</span> ваших <br/>
@@ -65,9 +65,9 @@ export default function Advantages() {
     {
       title: "Выгодные цены",
       image: "/images/box.png",
-      text: <span><span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Самая низкая комиссия!</span><br/>
-        Никаких скрытых платежей, <br/>
-        только прозрачные условия.
+      text: <span><span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>Честная и низкая комиссия у нас!</span><br/>
+        Без наценок прямо в ходе оплаты <br/>
+        всегда прозрачные условия.
         </span>,
       style: { top: "-2em", left: "-1.9em" },
     },
@@ -75,8 +75,8 @@ export default function Advantages() {
       title: "Розыгрыши и бонусы",
       image: "/images/gift.png",
       text: <span>Пополняйте баланс через нас <br/>
-        и <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>участвуйте в розыгрышах</span><br/>
-        в нашем Telegram-канале!
+        и <span className={`text-(${siteType === "game" ? "--green" : "--blue"})`}>выигрывайте в розыгрышах</span><br/>
+        призов у нас в Telegram-канале!
         </span>,
       style: { top: "-1.8em", left: "-1.75em" },
     },
