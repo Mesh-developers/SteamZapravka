@@ -162,13 +162,10 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
 
     if (open) {
       document.addEventListener('mouseover', handleClickOutside);
-      // Блокируем прокрутку страницы при открытом сайдбаре
-      document.body.style.overflow = 'hidden';
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'unset';
     };
   }, [open]);
 
@@ -193,12 +190,15 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
             )}
             {sections.map((section, i) => (
             <div key={i} className={sections.length - 1 === i ? "mb-0" : "mb-8"}>
-                <h3 className="text-lg font-(family-name:--bounded-black) mb-4 uppercase tracking-wider flex w-full gap-4 items-center cursor-pointer" onClick={()=>setSectionOpen(state=>{const buf = [...state]; buf[i] = !buf[i]; return buf})}>
+                <h3 className="text-lg font-(family-name:--bounded-black) mb-4 uppercase tracking-wider flex w-full gap-6 items-center cursor-pointer" onClick={()=>setSectionOpen(state=>{const buf = [...state]; buf[i] = !buf[i]; return buf})}>
                     {section.title}
                     <div className="w-full h-[1px] bg-(--white)" />
-                    <svg width="12" height="24" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transition-all duration-200 ${sectionOpen[i] ? "-rotate-90" : ""}`}>
-                        <path d="M5 0.5L0.5 5.97169L5 11.4434" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <div className="w-[12px] h-[24px]">
+                      <svg width="12" height="24" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transition-all duration-200 ${sectionOpen[i] ? "-rotate-90" : ""}`}>
+                          <path d="M5 0.5L0.5 5.97169L5 11.4434" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+
+                    </div>
                 </h3>
                 {sectionOpen[i] ?
                 <ul className="space-y-5 list-none">

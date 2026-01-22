@@ -69,7 +69,7 @@ export default function FAQ() {
             Важно! Логин — это имя, которое вы
                   используете для входа в Steam.
                   Если вы введёте неверный логин, средства будут зачислены другому пользователю.<br><br>
-            <a href="https://store.steampowered.com/login/" class="underline">STEAM Логин можно взять тут</a>
+            <a href="https://store.steampowered.com/login/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
             <div id='telegram_tutorial' class="absolute cursor-pointer lg:left-140 md:left-58 lg:top-0 md:top-3 rounded-2xl lg:w-30 lg:h-20 md:w-22 md:h-15 flex flex-col justify-center items-center bg-[#27837E]">
               <svg width="40" height="30" class="md:w-[30px] md:w-[20px]" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="path-1-inside-1_1335_6" fill="white">
@@ -141,7 +141,7 @@ export default function FAQ() {
     }, [])
 
     return (
-        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-4">
+        <section id="faq" className="w-full h-220 border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-4">
             <h1 className="lg:text-4xl md:text-2xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
                 <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />

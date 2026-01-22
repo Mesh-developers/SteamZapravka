@@ -1,12 +1,13 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function Genshin() {
 
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="topup"
             prefix="Genshin Impact"
@@ -50,7 +51,7 @@ export default function Genshin() {
                 { id: 544, name: "Genshin Impact 9760 + 2200 Crystals", price: 11515, region: "Любой" }
             ]}
             />
-        </main>
+        </Main>
     </>
     );
 }

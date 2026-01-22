@@ -11,7 +11,7 @@ export default function Header() {
     const [open, setOpen] = useState(false);
     return (
         <>
-        <header className="relative z-1 rounded-b-3xl max-w-[1500px] lg:w-[80%] md:w-[95%] h-24 bg-[#171D25] flex justify-around items-center m-auto">
+        <header className="fixed z-50 rounded-b-3xl max-w-[1500px] lg:w-[80%] md:w-[95%] h-24 bg-[#171D25] flex justify-around items-center top-0 left-[50%] -translate-x-[50%]">
             <BurgerMenu open={open} setOpen={setOpen} />
             <Switcher leftText="Игры" rightText="Telegram" />
             <Link href="/"><Icon type="logo" /></Link>
@@ -23,19 +23,19 @@ export default function Header() {
                 <a href="#">
                     <Icon type="instagram" size={17} strokeWidth={8} />
                 </a>
-                <a href="https://t.me/steamzapravka">
+                <a href="https://t.me/steamzapravka" target="_blank">
                     <Icon type="telegram" size={18} />
                 </a>
                 <a href="#">
                     <Icon type="youtube" size={18} />
                 </a>
-                <a href="https://www.tiktok.com/@steam_zapravka">
+                <a href="https://www.tiktok.com/@steam_zapravka" target="_blank">
                     <Icon type="tiktok" size={18} />
                 </a>
                 <a href="#">
                     <Icon type="discord" size={19} />
                 </a>
-                <a href="https://dtf.ru/id3087606">
+                <a href="https://dtf.ru/id3087606" target="_blank">
                     <Icon type="dtf" width={20} height={22} />
                 </a>
             </div>

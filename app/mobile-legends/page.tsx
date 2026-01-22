@@ -1,12 +1,13 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function MarvelRivals() {
 
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="topup"
             prefix="Mobile Legends"
@@ -59,7 +60,7 @@ export default function MarvelRivals() {
                 { id: 5930, name: "Mobile Legends (GLOBAL): 6000 Diamonds", price: 8755, region: "Любой" }
             ]}
             />
-        </main>
+        </Main>
     </>
     );
 }

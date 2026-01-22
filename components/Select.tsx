@@ -1,5 +1,5 @@
 "use client"
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
 
 type SelectProps = {
@@ -12,8 +12,29 @@ type SelectProps = {
 
 export default function Select({ placeholder, options, value, setValue, callback }:SelectProps) {
     const [show, setShow] = useState(false)
+    const selectRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            // Если клик был вне компонента и список открыт
+            if (selectRef.current &&
+                !selectRef.current.contains(event.target as Node) &&
+                show) {
+                setShow(false);
+            }
+        };
+
+        // Добавляем обработчик при монтировании компонента
+        document.addEventListener("mousedown", handleClickOutside);
+
+        // Убираем обработчик при размонтировании
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [show]); // Зависимость от show - обновляем обработчик при изменении состояния
+
     return (
-        <div className="w-full relative">
+        <div ref={selectRef} className="w-full relative">
             <div onClick={()=>setShow(!show)} className="cursor-pointer w-full bg-(--black) rounded-2xl flex px-3 items-center justify-between min-h-[52px]">
                 <span className={value ? "" : "text-[#686868]"}>{value || placeholder}</span>
                 <div className={`${show ? "rotate-90" : "rotate-270"} transition-all delay-200 select-none`}>

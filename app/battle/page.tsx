@@ -1,11 +1,12 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function BattleNet() {
     return (
         <>
         <Backlight count={3} gap={100} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="topup"
             cover="battle_cover.png"
@@ -33,7 +34,7 @@ export default function BattleNet() {
             prefix={["Battle"]}
             isService
             />
-        </main>
+        </Main>
     </>
     )
 }

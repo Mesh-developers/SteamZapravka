@@ -12,14 +12,18 @@ interface InputProps {
     renderHint?: ReactNode;
     isWarning?: boolean;
     isSuccess?: boolean;
-    disabled?: boolean
+    disabled?: boolean;
+    filterHandler?: (str: string)=>boolean;
 }
 
-export default function Input({ type, hint, placeholder, value, setValue, renderHint, isWarning=false, isSuccess=false, hintWrap=false, disabled=false }:InputProps) {
+export default function Input({ type, hint, placeholder, value, setValue, renderHint, filterHandler, isWarning=false, isSuccess=false, hintWrap=false, disabled=false }:InputProps) {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
-
+        if (filterHandler) {
+            if (!filterHandler(inputValue))
+                return
+        }
         if (type === "number") {
         const numValue = inputValue === '' ? 0 : parseInt(inputValue, 10);
 

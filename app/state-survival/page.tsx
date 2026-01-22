@@ -1,5 +1,6 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default function StateSurvival() {
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="topup"
             prefix="State of Survival"
@@ -42,7 +43,7 @@ export default function StateSurvival() {
                 { id: 1416, name: "State of Survival: Zombie War 50000 Diamonds", price: 47630, region: "Любой" }
             ]}
             />
-        </main>
+        </Main>
     </>
     );
 }

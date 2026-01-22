@@ -1,5 +1,6 @@
 import Backlight from "@/components/Backlight";
 import GamePage from "@/components/GamePage";
+import Main from "@/components/Main";
 import { monsterHunter } from "@/constants";
 
 export default function MonsterHunter() {
@@ -7,7 +8,7 @@ export default function MonsterHunter() {
     return (
         <>
         <Backlight count={6} gap={50} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <GamePage
             price={monsterHunter.price}
             mainImage={monsterHunter.mainImage}
@@ -21,7 +22,7 @@ export default function MonsterHunter() {
                 { id: 1065, name: "MONSTER HUNTER WORLD RU+CIS", price: 630, region: "РФ и СНГ" },
             ]}
             />
-        </main>
+        </Main>
         </>
     )
 }

@@ -1,5 +1,6 @@
 import Backlight from "@/components/Backlight";
 import GamePage from "@/components/GamePage";
+import Main from "@/components/Main";
 import { arcRaiders } from "@/constants";
 
 export default function ArcRaiders() {
@@ -7,7 +8,7 @@ export default function ArcRaiders() {
     return (
         <>
         <Backlight count={6} gap={50} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <GamePage
             price={arcRaiders.price}
             mainImage={arcRaiders.mainImage}
@@ -23,7 +24,7 @@ export default function ArcRaiders() {
                 { id: 2731, name: "ARC Raiders ROW WITHOUT CN+SEASIA+UA+LATAM", price: 3400, region: "СНГ БЕЗ Украины" },
             ]}
             />
-        </main>
+        </Main>
         </>
     )
 }

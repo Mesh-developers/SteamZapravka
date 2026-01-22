@@ -1,12 +1,13 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function ZZZ() {
 
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="topup"
             prefix="Zenless Zone Zero"
@@ -35,7 +36,7 @@ export default function ZZZ() {
                 { id: 1822, name: "Zenless Zone Zero 6480 + 1600 Monochrome", price: 6610, region: "Америка" }
             ]}
             />
-        </main>
+        </Main>
     </>
     );
 }

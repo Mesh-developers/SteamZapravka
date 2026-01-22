@@ -29,8 +29,8 @@ export default function Footer() {
             <div className="flex flex-col items-end">
                 <div className="flex flex-col lg:gap-4 md:gap-2 items-start">
                     <h4 className="lg:text-xl md:text-xs">Помощь и обратная связь</h4>
-                    <a href="mailto:support@steamzapravka.io" className="flex items-center gap-1 lg:text-sm md:text-[9px]"><span className="mt-1"><Icon type="mail" size={12} /></span> support@steamzapravka.io</a>
-                    <a href="https://t.me/steamzapravka" className="flex items-center gap-1 lg:text-sm md:text-[9px]"><Icon type="telegram" size={12} /> @steam_zapravka</a>
+                    <a href="mailto:support@steamzapravka.io" target="_blank" className="flex items-center gap-1 lg:text-sm md:text-[9px]"><span className="mt-1"><Icon type="mail" size={12} /></span> support@steamzapravka.io</a>
+                    <a href="https://t.me/steamzapravka" target="_blank" className="flex items-center gap-1 lg:text-sm md:text-[9px]"><Icon type="telegram" size={12} /> @steam_zapravka</a>
                 </div>
             </div>
         </footer>

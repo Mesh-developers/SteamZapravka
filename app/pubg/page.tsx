@@ -1,12 +1,13 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function PUBG() {
 
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="all"
             prefix="PUBG Mobile"
@@ -112,7 +113,7 @@ export default function PUBG() {
                 { id: 5905, name: "PUBG Mobile: 81000 UC", price: 73630, region: "Любой" }
             ]}
             />
-        </main>
+        </Main>
     </>
     );
 }

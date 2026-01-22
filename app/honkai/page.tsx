@@ -1,12 +1,13 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function Honkai() {
 
     return (
     <>
         <Backlight count={2} gap={520} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="topup"
             prefix="Honkai Star Rail"
@@ -35,7 +36,7 @@ export default function Honkai() {
                 { id: 1904, name: "Honkai: Star Rail 6480+1600 Oneiric Shard Top UP (Global)", price: 7725, region: "Любой" }
             ]}
             />
-        </main>
+        </Main>
     </>
     );
 }

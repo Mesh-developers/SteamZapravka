@@ -1,11 +1,12 @@
 import Backlight from "@/components/Backlight";
 import Form from "@/components/Form";
+import Main from "@/components/Main";
 
 export default function Roblox() {
     return (
         <>
         <Backlight count={3} gap={100} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <Form
             type="all"
             cover="roblox_cover.png"
@@ -47,7 +48,7 @@ export default function Roblox() {
             image: "roblox_card.png"
             }}
             instructions={[[
-                "Перейдите по ссылке, <a href='https://roblox.com/redeem' style='text-decoration: underline'>чтобы активировать коды Roblox</a>.",
+                "Перейдите по ссылке, <a href='https://roblox.com/redeem' target='_blank' style='text-decoration: underline'>чтобы активировать коды Roblox</a>.",
                 "Войдите в систему или создайте учетную запись.",
                 "Найдите свой PIN-код и введите его на веб-сайте.",
                 "Потратьте свой кредит на Robux или Roblox Premium."
@@ -71,7 +72,7 @@ export default function Roblox() {
             ]}
             prefix=""
             />
-        </main>
+        </Main>
     </>
     )
 }

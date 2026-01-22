@@ -55,7 +55,7 @@ export default function Payment({ success }:PaymentProps) {
                         {success ?
                         <Link href="/" className="text-center btn p-5 !rounded-3xl w-full font-(family-name:--manrope-semibold)">Перейти на главную</Link>
                         :
-                        <a href={order.href} className="!from-[#C93636] !to-[#842D2D] text-center btn p-5 !rounded-3xl w-full font-(family-name:--manrope-semibold)">Повторить попытку</a>
+                        <a href={order.href} target="_blank" className="!from-[#C93636] !to-[#842D2D] text-center btn p-5 !rounded-3xl w-full font-(family-name:--manrope-semibold)">Повторить попытку</a>
                         }
                         <Link href="/" className="text-center btn p-5 !rounded-3xl w-full font-(family-name:--manrope-semibold) !bg-none !shadow-none border-[#3A5056] border-1">Написать в поддержку</Link>
                     </div>

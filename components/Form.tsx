@@ -13,7 +13,7 @@ import { PaymentSystem, VouchersResponse } from "@/typings";
 import { redirect, RedirectType, usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
-import { replaceWords, truncateString } from "@/utils";
+import { replaceWords, truncateString, validateSteamUsername } from "@/utils";
 import useData from "@/hooks/useData";
 import Skeleton from "react-loading-skeleton";
 
@@ -54,7 +54,7 @@ interface FormProps {
 function Card({ altPrice, price, coin, image, index, currentIndex, setCurrentIndex, isTopup, disabled, callback }:CardProps) {
     if (!coin) return <div />
     return (
-        <div className={`w-full max-w-[250px] cursor-pointer border-1 border-(--border) ${isTopup ? "h-36" : "h-60"} ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl font-(family-name:--bounded-regular)`} onClick={()=>{ if(!disabled) setCurrentIndex(index); if (callback) callback()}}>
+        <div className={`w-full min-w-[250px] cursor-pointer border-1 border-(--border) ${isTopup ? "h-36" : "h-60"} ${currentIndex !== index ? "" : "shadow-[3px_-3px_5px_0_#46F9D7,-3px_-3px_5px_0px_#46F9D7,3px_3px_5px_0_#15B5ED,-3px_3px_5px_0_#15B5ED]"} grid grid-rows-[4fr_1fr] overflow-hidden rounded-2xl font-(family-name:--bounded-regular)`} onClick={()=>{ if(!disabled) setCurrentIndex(index); if (callback) callback()}}>
             <div className={`relative flex bg-center bg-no-repeat bg-cover w-full h-full`} style={{ backgroundImage: `url('/images/${image}')` }}>
                 {!isTopup && <span className={`z-2 relative text-[13px] relative self-end ml-3 ${disabled ? "text-[#717274]" : ""}`}>{coin}</span>}
                 <div className="absolute bg-linear-to-b from-[#00000000] to-[#0E131E] left-0 bottom-0 w-full h-8" />
@@ -82,7 +82,7 @@ function CardSkeleton({ isTopup = false }: { isTopup: boolean }) {
       {/* Верхняя часть с изображением */}
       <div className="relative flex bg-gray-900 w-full h-full">
         {!isTopup && (
-          <div className="z-2 relative self-end ml-3 mb-2">
+          <div className="z-1 relative self-end ml-3 mb-2">
             <Skeleton
               width={60}
               height={16}
@@ -324,7 +324,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             <>
                             <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">{isService ? "E-mail"  : (isLegends ? "UID от аккаунта" : "ID от аккаунта") }</span>
-                                <Input placeholder={isService ? "Ваш E-mail" : (isLegends ? "Ваш UID" : "Ваш ID")} value={isService ? email : id} setValue={isService ? setEmail : setId} isWarning={isService ? email === "" : id === ""} />
+                                <Input placeholder={isService ? "Ваш E-mail" : (isLegends ? "Ваш UID" : "Ваш ID")} value={isService ? email : id} setValue={isService ? setEmail : setId} isWarning={isService ? email === "" : id === ""} filterHandler={!isService && !isLegends ? (str)=>validateSteamUsername(str) : undefined} />
                             </div>
                             {isLegends ?
                             <div className="flex flex-col gap-1 relative z-1">
@@ -334,7 +334,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             :
                             <></>
                             }
-                            <div className="flex flex-col gap-1 relative z-1">
+                            <div className="flex flex-col gap-1 relative">
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
                             </div>
@@ -369,7 +369,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 callback={()=>setProduct("")}
                                 />)
                                 :
-                                products.slice(0, 3).map((prod, i)=>
+                                products.slice(0, 3).map((_, i)=>
                                 <CardSkeleton key={i} isTopup={isTopup} />)
                                 }
                             </div>

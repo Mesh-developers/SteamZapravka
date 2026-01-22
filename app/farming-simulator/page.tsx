@@ -1,5 +1,6 @@
 import Backlight from "@/components/Backlight";
 import GamePage from "@/components/GamePage";
+import Main from "@/components/Main";
 import { farmingSimulator } from "@/constants";
 
 export default function FarmingSimulator() {
@@ -7,7 +8,7 @@ export default function FarmingSimulator() {
     return (
         <>
         <Backlight count={6} gap={50} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <GamePage
             price={farmingSimulator.price}
             mainImage={farmingSimulator.mainImage}
@@ -25,7 +26,7 @@ export default function FarmingSimulator() {
                 { id: 1764, name: "Farming Simulator 25 - Highlands Fishing Edition RU+CIS", price: 4255, region: "РФ и СНГ" },
             ]}
             />
-        </main>
+        </Main>
         </>
     )
 }

@@ -1,5 +1,6 @@
 import Backlight from "@/components/Backlight";
 import GamePage from "@/components/GamePage";
+import Main from "@/components/Main";
 import { warhammer } from "@/constants";
 
 export default function Warhammer() {
@@ -7,7 +8,7 @@ export default function Warhammer() {
     return (
         <>
         <Backlight count={6} gap={30} />
-        <main className="relative z-1 mt-10 w-[75%] max-w-[1400px] m-auto flex min-h-screen flex-col gap-10 items-start justify-items-start bg-transparent">
+        <Main>
             <GamePage
             price={warhammer.price}
             mainImage={warhammer.mainImage}
@@ -24,7 +25,7 @@ export default function Warhammer() {
                 { id: 1761, name: "Warhammer 40,000: Space Marine 2 EU", price: 7700, region: "Европа" }
             ]}
             />
-        </main>
+        </Main>
         </>
     )
 }
