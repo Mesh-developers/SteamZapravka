@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useSiteType } from "./SiteTypeContext"
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function CTA() {
     const { siteType } = useSiteType()
@@ -19,6 +20,7 @@ export default function CTA() {
     }, []);
     return (
         <section className="w-[100%] lg:h-96 md:h-75 bg-transparent flex items-start">
+            {!isMobile && siteType === "telegram" && <Image width={840} height={900} src="/images/service_astronaut.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[0%]" />}
             <div className={`w-full flex flex-col ${siteType === "game" ? "" : "items-end"} gap-6`}>
                 {siteType === "game" ?
                 <>
@@ -30,9 +32,9 @@ export default function CTA() {
                         Мгновенное пополнение, низкая комиссия <br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
-                    <button className="w-96 h-20 btn !rounded-2xl text-xl">
+                    <Link href="#balance" className="w-96 h-20 btn !rounded-2xl text-xl flex items-center justify-center">
                         Пополнить
-                    </button>
+                    </Link>
                 </>
                 :
                 <>
@@ -44,13 +46,14 @@ export default function CTA() {
                         Мгновенное пополнение, низкая комиссия<br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
-                    <button className="w-96 h-20 btn !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl">
+                    <Link href="#balance" className="w-96 h-20 btn !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl text-center flex items-center justify-center">
                         Купить <br />
                         Telegram Stars
-                    </button>
+                    </Link>
                 </>
                 }
             </div>
+            {!isMobile && siteType === "game" && <Image width={840} height={900} src="/images/game_astronaut.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[42%]" />}
             {isMobile ? <Image width={561} height={682} src={"/images/steam_mobile.png"} alt="steam mobile" className="-left-25 -top-20 relative" /> : <></>}
         </section>
     )

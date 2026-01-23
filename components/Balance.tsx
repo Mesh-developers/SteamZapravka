@@ -169,7 +169,7 @@ export default function Balance() {
 
     return (
         <>
-        <section className="w-full h-84 border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-6 max-[769px]:hidden">
+        <section id="balance" className="w-full h-84 border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-6 max-[769px]:hidden">
             <div className="flex justify-between">
                 <h1 className="text-4xl">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
                 <button className="w-48 h-9 rounded-full border-2 border-[#3EAFF7]">
@@ -224,7 +224,7 @@ export default function Balance() {
                 </span>
             </Checkbox>
         </section>
-        <section className="max-[769px]:flex hidden w-full h-127 border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex-col gap-4">
+        <section className="max-[769px]:flex hidden w-full h-123 border-1 border-(--border) bg-(--section-back) rounded-3xl px-4 py-4 flex-col gap-4">
             <div className="flex justify-between items-center">
                 <h1 className="text-[28px]">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
                 <button className="w-40 h-7 rounded-full border-2 border-[#3EAFF7]">
@@ -238,13 +238,13 @@ export default function Balance() {
                     </span>
                 </button>
             </div>
-            <div className="grid grid-cols-2 gap-8 w-full">
+            <div className="grid grid-cols-2 gap-3 w-full">
                 <div className="flex flex-col gap-3 w-full">
                     <div className="w-full h-[230px] relative">
-                        <Image src={"/images/steam_cover.png"} className="border-1 border-(--border) rounded-2xl object-cover" fill alt="steam cover" />
+                        <Image src={"/images/steam_topup.png"} quality={100} className="border-1 border-(--border) rounded-2xl object-cover" fill alt="steam cover" />
                     </div>
                     <h3>Инструкция</h3>
-                    <ol className="text-xs flex flex-col gap-1 font-(family-name:--manrope-light) ml-3">
+                    <ol className="text-xs flex flex-col gap-1 ml-3">
                         <li>Введите ваш логин Steam.</li>
                         <li>Введите желаемую сумму для пополнения.</li>
                         <li>Введите промокод (если есть).</li>
@@ -292,12 +292,12 @@ export default function Balance() {
                         </button>
                         <div className="flex flex-col">
                             <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
-                                <span className="!font-(family-name:--manrope-regular) text-[12px]">
+                                <span className="!font-(family-name:--manrope-regular) text-[11px] text-nowrap">
                                     Я согласен с условиями <Link href={""} className="underline">Пользовательского соглашения</Link>.
                                 </span>
                             </Checkbox>
                             <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
-                                <span className="!font-(family-name:--manrope-regular) text-[12px]">
+                                <span className="!font-(family-name:--manrope-regular) text-[11px] text-nowrap">
                                     Я согласен с условиями <Link href={""} className="underline">Политики конфиденциальности</Link>.
                                 </span>
                             </Checkbox>

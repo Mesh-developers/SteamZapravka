@@ -5,21 +5,39 @@ import BurgerMenu from "./BurgerMenu";
 import Icon from "./Icon";
 import Switcher from "./Switcher";
 import Sidebar from "./Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
     const [open, setOpen] = useState(false);
+    const [size, setSize] = useState([82, 174])
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            if(window.outerWidth <= 768) {
+                setSize([32, 90]);
+            }
+        };
+
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
     return (
         <>
-        <header className="fixed z-50 rounded-b-3xl max-w-[1500px] lg:w-[80%] md:w-[95%] h-24 bg-[#171D25] flex justify-around items-center top-0 left-[50%] -translate-x-[50%]">
-            <BurgerMenu open={open} setOpen={setOpen} />
-            <Switcher leftText="Игры" rightText="Telegram" />
-            <Link href="/"><Icon type="logo" /></Link>
-            <div className="flex gap-10 font-light">
+        <header className="fixed z-50 rounded-b-3xl max-w-[1500px] lg:w-[80%] md:w-[95%] h-24 bg-[#171D25] flex lg:justify-around md:justify-between md:px-7 lg:px-0 items-center top-0 left-[50%] -translate-x-[50%]">
+            <div className="lg:w-fit md:w-20">
+                <BurgerMenu open={open} setOpen={setOpen} />
+            </div>
+            <div className="lg:block md:hidden">
+                <Switcher leftText="Игры" rightText="Telegram" />
+            </div>
+            <Link href="/"><Icon type="logo" height={size[0]} width={size[1]} /></Link>
+            <div className="flex lg:gap-10 md:gap-3 font-light lg:text-base md:text-sm">
                 <Link href="/">О НАС</Link>
                 <a href="#faq">FAQ</a>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="lg:flex items-center gap-2 md:hidden">
                 <a href="#">
                     <Icon type="instagram" size={17} strokeWidth={8} />
                 </a>

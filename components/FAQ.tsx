@@ -141,7 +141,8 @@ export default function FAQ() {
     }, [])
 
     return (
-        <section id="faq" className="w-full h-220 border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-4">
+      <div className="lg:h-230 md:h-270">
+        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-4">
             <h1 className="lg:text-4xl md:text-2xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
                 <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />
@@ -156,5 +157,6 @@ export default function FAQ() {
               </div>
             </Modal>
         </section>
+      </div>
     )
 }
