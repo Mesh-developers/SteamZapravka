@@ -27,7 +27,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
             style={style}
           />
         </div>
-        <h3 className="lg:text-[clamp(1.5rem,2.7vw,1.7rem)] md:text-3xl lg:leading-10 md:leading-7 font-(--manrope-semibold) leading-tight pr-4">
+        <h3 className="lg:text-[1.6rem] md:text-3xl lg:leading-10 md:leading-7 font-(--manrope-semibold) leading-tight pr-4">
             <div dangerouslySetInnerHTML={{ __html: title.replace(" ", "<br/>") }} />
         </h3>
       </div>
@@ -83,7 +83,7 @@ export default function Advantages() {
   ];
 
   return (
-    <section className="relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <section className="relative w-full grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {items.map((item, i) => (
         <AdvantageItem
           key={i}

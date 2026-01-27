@@ -31,12 +31,12 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
               ${on === "telegram" ? "border-black" : "border-white"}
             `}
           >
-            <span
+            {/* <span
             className={`
               absolute top-0 left-0 w-full h-full z-10 transition-all duration-200 bg-linear-to-r from-[#1414140] to-[rgba(20,_20,_20,_0.9)]
               ${on === "telegram" ? "opacity-0 !duration-[2.5s]" : "opacity-100"}
             `}
-            />
+            /> */}
             {/* вода left */}
             <div
             className={`
@@ -70,12 +70,12 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
               ${on === "telegram" ? "border-white" : "border-black"}
             `}
           >
-          <span
+          {/* <span
             className={`
               absolute top-0 left-0 w-full h-full z-10 transition-all duration-200 rounded-e-4xl rounded-s-lg bg-linear-to-r to-[#19A9DE0] from-[rgba(20,_20,_20,_0.8)] from-15%
               ${on === "telegram" ? "opacity-100" : "opacity-0 !duration-[2.5s]"}
               `}
-          />
+          /> */}
             {/* вода right */}
             <div
             className={`
@@ -101,7 +101,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
             </span>
           </span>
         </span>
-        <span className={`thumb z-11 ${on === "telegram" ? 'on' : ''}`} />
+        {/* <span className={`thumb z-11 ${on === "telegram" ? 'on' : ''}`} /> */}
       </span>
     </div>
   );

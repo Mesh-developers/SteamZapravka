@@ -46,7 +46,7 @@ export default function SteamDrop() {
         "https://dtf.ru/id3087606"
     ]
     return (
-        <section className="w-full h-80 border-1 border-(--border) bg-(--section-back) rounded-2xl lg:px-8 md:px-3 py-8 grid grid-cols-2">
+        <section id="steamdrop" className="w-full h-80 border-1 border-(--border) bg-(--section-back) rounded-2xl lg:px-8 md:px-3 py-8 grid grid-cols-2">
             <div className="flex flex-col gap-6">
                 <h1 className="lg:text-4xl md:text-2xl font-(family-name:--manrope-semibold)">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
                 <h2 className="lg:text-xl md:text-base">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>

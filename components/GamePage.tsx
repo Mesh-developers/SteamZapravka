@@ -193,12 +193,12 @@ export default function GamePage({ mainImage, images, video, description, minima
                         <div className="mt-4 flex flex-col gap-2">
                             <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
                                 <span className="!font-(family-name:--manrope-regular) text-[15px]">
-                                    Я согласен с условиями <Link href={""} className="underline">Пользовательского соглашения</Link>.
+                                    Я согласен с условиями <Link href={"/user-agreement.pdf"} className="underline">Пользовательского соглашения</Link>.
                                 </span>
                             </Checkbox>
                             <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
                                 <span className="!font-(family-name:--manrope-regular) text-[15px]">
-                                    Я согласен с условиями <Link href={""} className="underline">Политики конфиденциальности</Link>.
+                                    Я согласен с условиями <Link href={"/policy-of-confidentiality.pdf"} className="underline">Политики конфиденциальности</Link>.
                                 </span>
                             </Checkbox>
                         </div>

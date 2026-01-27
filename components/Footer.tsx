@@ -19,10 +19,10 @@ export default function Footer() {
         return () => window.removeEventListener('resize', checkScreenSize);
     }, []);
     return (
-        <footer className="relative z-1 border-1 border-(--border) max-w-[1500px] lg:w-[76%] md:w-[95%] bg-(--section-back) rounded-t-3xl m-auto px-5 lg:py-5 md:py-3 grid grid-cols-3 items-center justify-between text-[#EEEEEE]">
+        <footer className="relative z-1 border-1 border-(--border) max-w-[1500px] lg:w-[85%] md:w-[95%] bg-(--section-back) rounded-t-3xl m-auto px-5 lg:py-5 md:py-3 grid grid-cols-3 items-center justify-between text-[#EEEEEE]">
             <div className="flex flex-col lg:gap-4 md:gap-2">
-                <Link href={""} className="lg:text-base md:text-xs">Пользовательское соглашение</Link>
-                <Link href={""} className="lg:text-base md:text-xs">Политика конфиденциальности</Link>
+                <Link href={"/user-agreement.pdf"} className="lg:text-base md:text-xs">Пользовательское соглашение</Link>
+                <Link href={"/policy-of-confidentiality.pdf"} className="lg:text-base md:text-xs">Политика конфиденциальности</Link>
                 <span className="lg:text-base md:text-xs">© 2025 Все права защищены.</span>
             </div>
             <div className="justify-self-center"><Icon type="logo" height={size[0]} width={size[1]} /></div>
