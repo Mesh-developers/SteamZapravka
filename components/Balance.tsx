@@ -17,6 +17,7 @@ import { removeAtSymbol } from "@/utils"
 
 export default function Balance() {
     const [resMessage, setResMessage] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const [login, setLogin] = useState("")
     const [promocode, setPromocode] = useState("")
     const [price, setPrice] = useState(1000)
@@ -50,9 +51,11 @@ export default function Balance() {
                 },
                 body: JSON.stringify(body)
             })
+            setIsLoading(true)
 
             if (req.status === 200) {
                 const res: TopupResponse = await req.json()
+                setIsLoading(false)
                 redirect(res.sbpPaymentUrl, RedirectType.push)
             } else if (req.status === 400) {
                 setResMessage((await req.json()).message)
@@ -79,8 +82,11 @@ export default function Balance() {
                     body: JSON.stringify(body)
                 })
 
+                setIsLoading(true)
+
                 if (req.status === 200) {
                     const res: TopupTelegramResponse = await req.json()
+                    setIsLoading(false)
                     redirect(res.paymentLink, RedirectType.push)
                 }
             } else {
@@ -206,7 +212,7 @@ export default function Balance() {
                     ]}
                     />
                 </div>
-                <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest } className={`bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
+                <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest } className={`bg-radial border-1 border-transparent ${siteType === "game" ? "from-[#45C47E] hover:border-(--green)" : "from-[#0698D6] hover:border-(--blue)"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
                     {siteType === "game" ?
                     <>
                     Пополнить баланс <br/> {price} ₽
@@ -226,20 +232,20 @@ export default function Balance() {
         </section>
         <section className="max-[769px]:flex hidden w-full h-123 border-1 border-(--border) bg-(--section-back) rounded-3xl px-4 py-4 flex-col gap-4">
             <div className="flex justify-between items-center">
-                <h1 className="text-[28px]">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
-                <button className="w-40 h-7 rounded-full border-2 border-[#3EAFF7]">
-                    <span className="p-2 flex items-center justify-center gap-1 w-full h-full rounded-full text-sm">
+                <h1 className="min-[481px]:text-[28px] text-lg">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
+                <button className="min-[481px]:w-40 w-35 h-7 rounded-full border-2 border-[#3EAFF7]">
+                    <span className="p-2 flex items-center justify-center gap-1 w-full h-full rounded-full">
                         <svg width="10" height="16" viewBox="0 0 3 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.5 0.5625C1.23478 0.5625 0.98043 0.681026 0.792893 0.892005C0.605357 1.10298 0.5 1.38913 0.5 1.6875C0.5 2.84906 0.873 4.45219 1.092 5.28919C1.1184 5.3875 1.17255 5.47346 1.24626 5.53406C1.31997 5.59465 1.40922 5.62658 1.5005 5.625C1.59157 5.62652 1.68061 5.5947 1.7542 5.53434C1.82779 5.47397 1.88195 5.38832 1.9085 5.29031C2.1275 4.45781 2.5 2.86312 2.5 1.6875C2.5 1.38913 2.39464 1.10298 2.20711 0.892005C2.01957 0.681026 1.76522 0.5625 1.5 0.5625ZM0 1.6875C0 1.23995 0.158035 0.810725 0.43934 0.494257C0.720644 0.17779 1.10218 0 1.5 0C1.89782 0 2.27936 0.17779 2.56066 0.494257C2.84196 0.810725 3 1.23995 3 1.6875C3 2.95312 2.606 4.62038 2.388 5.45062C2.3307 5.66495 2.2132 5.8526 2.0531 5.98546C1.893 6.11831 1.69893 6.1892 1.5 6.1875C1.0945 6.1875 0.729 5.895 0.612 5.44781C0.3945 4.61475 0 2.94019 0 1.6875ZM1.5 7.3125C1.36739 7.3125 1.24021 7.37176 1.14645 7.47725C1.05268 7.58274 1 7.72582 1 7.875C1 8.02418 1.05268 8.16726 1.14645 8.27275C1.24021 8.37824 1.36739 8.4375 1.5 8.4375C1.63261 8.4375 1.75979 8.37824 1.85355 8.27275C1.94732 8.16726 2 8.02418 2 7.875C2 7.72582 1.94732 7.58274 1.85355 7.47725C1.75979 7.37176 1.63261 7.3125 1.5 7.3125ZM0.5 7.875C0.5 7.57663 0.605357 7.29048 0.792893 7.0795C0.98043 6.86853 1.23478 6.75 1.5 6.75C1.76522 6.75 2.01957 6.86853 2.20711 7.0795C2.39464 7.29048 2.5 7.57663 2.5 7.875C2.5 8.17337 2.39464 8.45952 2.20711 8.6705C2.01957 8.88147 1.76522 9 1.5 9C1.23478 9 0.98043 8.88147 0.792893 8.6705C0.605357 8.45952 0.5 8.17337 0.5 7.875Z" fill="#EEEEEE"/>
                         </svg>
-                        <span className="text-xs">
+                        <span className="min-[481px]:text-[12px] text-[10px]">
                             Важная информация
                         </span>
                     </span>
                 </button>
             </div>
-            <div className="grid grid-cols-2 gap-3 w-full">
-                <div className="flex flex-col gap-3 w-full">
+            <div className="grid min-[481px]:grid-cols-2 grid-cols-1 gap-3 w-full">
+                <div className="hidden flex-col gap-3 w-full min-[481px]:flex">
                     <div className="w-full h-[230px] relative">
                         <Image src={"/images/steam_topup.png"} quality={100} className="border-1 border-(--border) rounded-2xl object-cover" fill alt="steam cover" />
                     </div>
@@ -253,8 +259,8 @@ export default function Balance() {
                         <li>Нажмите на кнопку “Пополнить баланс”.</li>
                     </ol>
                 </div>
-                <div className="flex flex-col gap-10 w-full">
-                    <div className="bg-linear-to-r from-[#33475D] to-[#355477] flex flex-col rounded-2xl w-full h-[260px] p-1 gap-3">
+                <div className="flex flex-col gap-2 w-full">
+                    <div className="bg-linear-to-r from-[#33475D] to-[#355477] flex flex-col rounded-2xl w-full min-[481px]:h-[263px] h-[278px] p-1 gap-3">
                         <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={loginResult && !loginResult.usernameExists} isSuccess={loginResult && loginResult.usernameExists} renderHint={loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                         <div className="flex flex-col gap-2">
                             <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
@@ -279,29 +285,29 @@ export default function Balance() {
                             ]}
                             />
                         </div>
-                        <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest} className={`leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
-                            {siteType === "game" ?
-                            <>
-                            Пополнить баланс <br/> {price} ₽
-                            </>
-                            :
-                            <>
-                            Купить звёзды <br/> {system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex])} ₽
-                            </>
-                            }
-                        </button>
-                        <div className="flex flex-col">
-                            <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
-                                <span className="!font-(family-name:--manrope-regular) text-[11px] text-nowrap">
-                                    Я согласен с условиями <Link href={"/user-agreement.pdf"} className="underline">Пользовательского соглашения</Link>.
-                                </span>
-                            </Checkbox>
-                            <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
-                                <span className="!font-(family-name:--manrope-regular) text-[11px] text-nowrap">
-                                    Я согласен с условиями <Link href={"/policy-of-confidentiality.pdf"} className="underline">Политики конфиденциальности</Link>.
-                                </span>
-                            </Checkbox>
-                        </div>
+                    </div>
+                    <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest} className={`min-[481px]:mt-0 leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
+                        {siteType === "game" ?
+                        <>
+                        Пополнить баланс <br/> {price} ₽
+                        </>
+                        :
+                        <>
+                        Купить звёзды <br/> {system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex])} ₽
+                        </>
+                        }
+                    </button>
+                    <div className="flex flex-col">
+                        <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
+                            <span className="!font-(family-name:--manrope-regular) text-[11px] text-nowrap">
+                                Я согласен с условиями <Link href={"/user-agreement.pdf"} className="underline">Пользовательского соглашения</Link>.
+                            </span>
+                        </Checkbox>
+                        <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
+                            <span className="!font-(family-name:--manrope-regular) text-[11px] text-nowrap">
+                                Я согласен с условиями <Link href={"/policy-of-confidentiality.pdf"} className="underline">Политики конфиденциальности</Link>.
+                            </span>
+                        </Checkbox>
                     </div>
                 </div>
             </div>
@@ -310,6 +316,9 @@ export default function Balance() {
             <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2 whitespace-pre">
                 {resMessage}
             </div>
+        </Modal>
+        <Modal open={isLoading} onClose={()=>{}}>
+            <span className="loader"></span>
         </Modal>
         </>
     )

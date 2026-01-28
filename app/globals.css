@@ -94,6 +94,10 @@
   @apply shadow-lg/30 bg-radial from-[#45C47E] from-0% to-[#2D8451] rounded-xl;
 }
 
+.btn:hover {
+  border: 1px solid var(--green);
+}
+
 .thumb {
   @apply absolute top-1/2 -translate-y-1/2 w-5 h-4 rounded-full bg-[#2D2D2D];
   transform: translateX(-50%);
@@ -119,15 +123,49 @@
 .thumb.on::after      { border: 1px solid white; border-left: none;  }
 .thumb:not(.on)::before { border: 1px solid white; border-right: none; }
 
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 4px solid var(--blue);
+  border-right: 4px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border-bottom: 4px solid var(--green);
+  border-left: 4px solid transparent;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 body {
   background: #182535;
   color: var(--foreground);
   font-family: var(--manrope-regular);
+  height: fit-content;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 140px;
+  height: fit-content;
 }
 
 input::-webkit-outer-spin-button,

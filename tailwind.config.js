@@ -22,11 +22,19 @@ module.exports = {
         fillUp: "fillUp 0.7s cubic-bezier(.2,.6,.8,.4) forwards",
         fillDown: "fillDown 0.7s cubic-bezier(.2,.6,.8,.4) forwards",
       },
-      screens: {
-        "xs": "320px",
-        "sm": '480px'
-      }
+      // screens: {
+      //   "xs": "320px",
+      //   "sm": '480px',
+      // }
     },
+    screens: {
+      "xs": "320px",
+      "sm": '480px',
+      'md': '768px',    // 768px+
+      'lg': '1024px',   // 1024px+
+      'xl': '1280px',   // 1280px+
+      '2xl': '1536px',  // 1536px+
+    }
   },
   plugins: [],
 };
