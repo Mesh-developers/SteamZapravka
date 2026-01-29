@@ -23,9 +23,12 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: {
 
     >
       {/* вопрос + иконка */}
-      <summary className="flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10">
-        <h2 className="lg:text-lg max-[1025px]:text-base text-(--white) select-none self-center">{question}</h2>
-        {open ? <p className="relative flex-1 lg:text-sm max-[1025px]:text-[9px] text-(--white) flex" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
+      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""}`}>
+        <h2 className="lg:text-lg max-[1025px]:text-base text-(--white) select-none self-center flex flex-col max-[481px]:w-60">
+          {question}
+          {open ? <p className="relative flex-1 text-[12px] text-(--white) max-[481px]:flex w-60 hidden" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
+        </h2>
+        {open ? <p className="relative flex-1 lg:text-sm max-[1025px]:text-[9px] text-(--white) flex max-[481px]:hidden" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
         {/* плюс → крестик */}
         <div
           className={`
@@ -72,7 +75,7 @@ export default function FAQ() {
                     Если вы введёте неверный логин, средства будут зачислены другому пользователю.<br><br>
               <a href="https://store.steampowered.com/login/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
             </p>
-            <div id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
+            <div id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
               <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
               <span class='select-none'>Инструкция</span>
             </div>
@@ -85,7 +88,7 @@ export default function FAQ() {
 
                     Если у вас не задано имя пользователя, придумайте и добавьте его в настройках. Без него мы не сможем отправить вам звёзды.
                   </p>
-                    <div id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
+                    <div id='telegram_tutorial' class="cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
                       <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
                       <span class='select-none'>Инструкция</span>
                     </div>
@@ -135,7 +138,7 @@ export default function FAQ() {
     }, [])
 
     return (
-      <div className="lg:h-230 max-[1025px]:h-270">
+      <div className="lg:h-230 max-[1025px]:h-270 max-[481px]:h-280">
         <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-4">
             <h1 className="lg:text-4xl max-[1025px]:text-2xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
