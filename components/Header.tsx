@@ -13,7 +13,6 @@ export default function Header() {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            console.log(window.outerWidth)
             if(window.outerWidth <= 768) {
                 setSize([32, 90]);
             }
@@ -26,7 +25,7 @@ export default function Header() {
     }, []);
     return (
         <>
-        <header className="fixed z-50 rounded-b-3xl max-w-[1500px] lg:w-[90%] max-[481px]:w-[85%] max-[481px]:left-[50%] w-[95%] h-24 bg-[#171D25] flex lg:justify-around justify-between px-7 lg:px-0 items-center top-0 left-[50%] -translate-x-[50%]">
+        <header className="fixed z-50 rounded-b-3xl max-w-[1500px] lg:w-[90%] max-[481px]:w-[85%] max-[481px]:left-[47%] w-[95%] h-24 bg-[#171D25] flex lg:justify-around justify-between px-7 lg:px-0 items-center top-0 left-[50%] -translate-x-[50%]">
             <div className="lg:w-fit md:w-20">
                 <BurgerMenu open={open} setOpen={setOpen} />
             </div>

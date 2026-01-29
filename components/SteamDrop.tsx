@@ -52,14 +52,14 @@ export default function SteamDrop() {
         "https://dtf.ru/id3087606"
     ]
     return (
-        <section id="steamdrop" className="w-full h-80 border-1 border-(--border) bg-(--section-back) rounded-2xl lg:px-8 px-3 py-4 grid min-[481]:grid-cols-2 grid-cols-1">
+        <section id="steamdrop" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-2xl lg:px-8 px-3 py-4 grid min-[481]:grid-cols-2 grid-cols-1">
             <div className="flex flex-col gap-6">
                 <h1 className="lg:text-4xl text-2xl font-(family-name:--manrope-semibold) min-[481px]:text-start text-center">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
                 <h2 className="lg:text-xl text-base min-[481px]:block hidden">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
                 <span className="lg:text-base md:text-xs lg:w-130 md:w-85 lg:whitespace-wrap tracking-wide min-[481]:block hidden">Преврати пополнение кошелька в твой постоянный профит. Мы разыгрываем ценные призы, Steam-гифты и промокоды только для наших подписчиков. Все новости о самых низких
                 комиссиях и специальных акциях — мгновенно в ленте!</span>
             </div>
-            <div className="w-full grid lg:grid-cols-[repeat(4,126px)] min-[481px]:grid-cols-4 min-[320px]:grid-cols-3 lg:grid-rows-2 auto-rows-min lg:gap-x-3 gap-x-6 gap-y-4 justify-end justify-items-end lg:content-start content-center">
+            <div className="w-full max-[481px]:mt-2 grid lg:grid-cols-[repeat(4,126px)] min-[481px]:grid-cols-4 min-[320px]:grid-cols-3 lg:grid-rows-2 auto-rows-min lg:gap-x-3 gap-x-6 gap-y-4 justify-end justify-items-end lg:content-start content-center">
                 {medias.filter((_, i)=>(isMobile && i !== 3 && i !== 4) || !isMobile).map((item, i)=><LinkItem key={i} link={links[i]}>{item}</LinkItem>)}
             </div>
             <h2 className="lg:text-xl md:text-base text-center max-[481px]:block hidden mt-2">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>

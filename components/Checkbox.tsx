@@ -13,7 +13,7 @@ export default function Checkbox({ children, checked, setChecked }:CheckboxProps
   };
 
   return (
-    <label className="flex items-center cursor-pointer select-none z-1 relative">
+    <label className="flex items-center cursor-pointer select-none">
       <input
         type="checkbox"
         className="sr-only"

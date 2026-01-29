@@ -24,7 +24,7 @@ export default function CTA() {
             <div className={`w-full flex flex-col ${siteType === "game" ? "" : "items-end"} gap-6`}>
                 {siteType === "game" ?
                 <>
-                    <h1 className="font-(family-name:--bounded-regular) lg:w-full lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-100">
+                    <h1 className="font-(family-name:--bounded-regular) lg:w-full lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-100 max-[394px]:w-[100%]">
                         Заправь свой <span className="text-(--green)">STEAM</span> <br/>
                         баланс на максимум!
                     </h1>
@@ -54,7 +54,7 @@ export default function CTA() {
                 }
             </div>
             {!isMobile && siteType === "game" && <Image width={840} height={900} src="/images/mika_game.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[42%] top-13" />}
-            {isMobile ? <Image width={561} height={682} src={"/images/steam_mobile.png"} alt="steam mobile" className="-left-25 -top-20 relative max-[481px]:-top-10 max-[481px]:-left-35 max-[481px]:w-[400px] max-[481px]:h-[280px]" /> : <></>}
+            {isMobile ? <Image width={561} height={682} src={"/images/steam_mobile.png"} alt="steam mobile" className="-left-25 -top-20 relative max-[481px]:-top-10 max-[481px]:-left-35 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[394px]:hidden" /> : <></>}
         </section>
     )
 }

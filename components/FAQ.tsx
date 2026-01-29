@@ -139,8 +139,8 @@ export default function FAQ() {
 
     return (
       <div className="lg:h-230 max-[1025px]:h-270 max-[481px]:h-280">
-        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 flex flex-col gap-4">
-            <h1 className="lg:text-4xl max-[1025px]:text-2xl">Часто задаваемые вопросы</h1>
+        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
+            <h1 className="lg:text-4xl max-[1025px]:text-2xl max-[481px]:text-xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
                 <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />
             ))}
