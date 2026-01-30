@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ChangeEvent, Dispatch, HTMLInputTypeAttribute, ReactNode, SetStateAction } from "react"
 import Icon from "./Icon";
 import Link from "next/link";
@@ -25,10 +26,10 @@ export default function Input({ type, hint, placeholder, value, setValue, render
                 return
         }
         if (type === "number") {
-        const numValue = inputValue === '' ? 0 : parseInt(inputValue, 10);
-
+        const numValue = inputValue === ''  ? 0 : parseInt(inputValue, 10);
             if (numValue <= 10000) {
-                (setValue as Dispatch<SetStateAction<number>>)(Number(inputValue));
+                // @ts-expect-error
+                (setValue as Dispatch<SetStateAction<number>>)(numValue === 0 ? "" : Number(inputValue));
             }
         } else {
             (setValue as Dispatch<SetStateAction<string>>)(inputValue)
@@ -43,6 +44,11 @@ export default function Input({ type, hint, placeholder, value, setValue, render
             className="placeholder:text-[#686868] text-white outline-none h-full !font-(family-name:--manrope-regular)"
             value={value}
             onChange={(e)=>handleChange(e)}
+            onKeyDown={type === "number" ? (e) => {
+                if (e.key === '+' || e.key === '-' || e.key === 'e' || e.key === 'E') {
+                e.preventDefault()
+                }
+            } : ()=>{}}
             disabled={disabled}
             />
             {renderHint}

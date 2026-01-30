@@ -13,7 +13,7 @@ import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
 import useDebounce from "@/hooks/useDebounce"
 import Image from "next/image"
-import { removeAtSymbol } from "@/utils"
+import { removeAtSymbol, validateZeroStart } from "@/utils"
 
 export default function Balance() {
     const [resMessage, setResMessage] = useState("")
@@ -196,7 +196,7 @@ export default function Balance() {
             <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
                     <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
-                    <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
+                    <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} filterHandler={validateZeroStart} />
                     <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
                     <Chips value={siteType === "game" ? price : stars[starsIndex]} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={siteType === "telegram" ? setStarsIndex : undefined} />
                 </div>
@@ -273,7 +273,7 @@ export default function Balance() {
                     <div className="bg-linear-to-r from-[#33475D] to-[#355477] flex flex-col rounded-2xl w-full min-[481px]:h-[263px] h-[278px] p-1 gap-3">
                         <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={loginResult && !loginResult.usernameExists} isSuccess={loginResult && loginResult.usernameExists} renderHint={loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                         <div className="flex flex-col gap-2">
-                            <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} />
+                            <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} filterHandler={validateZeroStart} />
                             <Chips value={siteType === "game" ? price : stars[starsIndex]} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={siteType === "telegram" ? setStarsIndex : undefined} />
                         </div>
                         <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />

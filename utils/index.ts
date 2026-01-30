@@ -37,21 +37,12 @@ export function validateSteamUsername(text: string): boolean {
     return false
   }
 
-  // Проверка на запрещённые последовательности
-  // const forbiddenPatterns = [
-  //   { pattern: /\.{2,}/},
-  //   { pattern: /_{2,}/ },
-  //   { pattern: /^\./ },
-  //   { pattern: /\.$/ },
-  //   { pattern: /^_/ },
-  //   { pattern: /_$/ }
-  // ];
-
-  // for (const { pattern } of forbiddenPatterns) {
-  //   if (pattern.test(text)) {
-  //     return false
-  //   }
-  // }
-
   return true
+}
+
+export function validateZeroStart(text: string): boolean {
+  if (text.startsWith('0')) {
+    return false;
+  }
+  return true;
 }
