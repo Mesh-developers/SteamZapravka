@@ -27,7 +27,7 @@ function AdvantageItem({ title, image, children, style }: AdvantageItemProps) {
             style={style}
           />
         </div>
-        <h3 className="lg:text-[1.6rem] max-[481px]:text-3xl text-3xl lg:leading-10 md:leading-7 font-(--manrope-semibold) leading-tight pr-4">
+        <h3 className="lg:text-[1.6rem] max-[481px]:text-3xl min-[1399px]:!text-[20px] min-[1399px]:!leading-7 text-3xl lg:leading-10 md:leading-7 font-(--manrope-semibold) leading-tight pr-4">
             <div dangerouslySetInnerHTML={{ __html: title.replace(" ", "<br/>") }} />
         </h3>
       </div>

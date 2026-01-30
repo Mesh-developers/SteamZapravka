@@ -97,30 +97,36 @@ export default function Balance() {
 
     useEffect(()=>{
         const getExchange = async () => {
-            if (siteType === "game") {
-                const res = await fetch("https://api.steamzapravka.io/steam/exchange")
+            try {
+                if (siteType === "game") {
+                    const res = await fetch("https://api.steamzapravka.io/steam/exchange")
 
-                if (res.status === 200) {
-                    const data: ExchangeResponse = await res.json()
-                    setExchange(data)
-                }
-            } else if (siteType === "telegram") {
-                const res = await fetch("https://api.steamzapravka.io/stars/price", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify({
-                        starsAmount: stars
+                    if (res.status === 200) {
+                        const data: ExchangeResponse = await res.json()
+                        setExchange(data)
+                    }
+                } else if (siteType === "telegram") {
+                    const res = await fetch("https://api.steamzapravka.io/stars/price", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify({
+                            starsAmount: stars
+                        })
                     })
-                })
 
-                if (res.status === 200) {
-                    const data: ExchangeTelegramResponse = await res.json()
-                    setExchangeTelegram(data)
-                } else {
-                    setResMessage((await res.json()).message)
+                    if (res.status === 200) {
+                        const data: ExchangeTelegramResponse = await res.json()
+                        setExchangeTelegram(data)
+                    } else {
+                        setResMessage((await res.json()).message)
+                    }
                 }
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (e: any) {
+                console.error(e.message)
             }
         }
         getExchange()
@@ -232,7 +238,7 @@ export default function Balance() {
         </section>
         <section className="max-[769px]:flex hidden w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-4 py-4 flex-col gap-4">
             <div className="flex justify-between items-center">
-                <h1 className="min-[481px]:text-[28px] text-lg">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
+                <h1 className="max-[481px]:text-[16px] text-lg">Пополни {siteType === "game" ? <>баланс <span className="text-(--blue)">STEAM</span></> : <><span className="text-(--blue)">TELEGRAM STARS</span></>}</h1>
                 <button className="min-[481px]:w-40 w-30 h-7 rounded-full border-2 border-[#3EAFF7]">
                     <span className="p-2 flex items-center justify-center gap-1 w-full h-full rounded-full">
                         <svg width="6" height="12" viewBox="0 0 3 9" fill="none" xmlns="http://www.w3.org/2000/svg">

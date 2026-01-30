@@ -32,9 +32,9 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: {
         {/* плюс → крестик */}
         <div
           className={`
-            grid place-items-center w-7 h-7 shrink-0 cursor-pointer
-            transition-all duration-600 rounded-full justify-self-end self-center
-            ${open ? (`rotate-45 ${siteType === "game" ? "bg-[#2364FC]" : "bg-[#3CAD6B]"}`) : "rotate-0 bg-[#182236]"}
+            grid place-items-center w-7 h-7 shrink-0 cursor-pointer relative max-[481px]:right-10
+            transition-transform transition-colors duration-600 rounded-full justify-self-end self-center
+            ${open ? (`rotate-45 max-[481px]:!right-0 ${siteType === "game" ? "bg-[#2364FC]" : "bg-[#3CAD6B]"}`) : "rotate-0 bg-[#182236]"}
           `}
         onClick={()=>setOpen(state=>{
           const buf = new Array(state.length).fill(false)
@@ -77,7 +77,7 @@ export default function FAQ() {
             </p>
             <div id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
               <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
-              <span class='select-none'>Инструкция</span>
+              <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
             </div>
             `
             :`<p>
@@ -90,7 +90,7 @@ export default function FAQ() {
                   </p>
                     <div id='telegram_tutorial' class="cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
                       <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
-                      <span class='select-none'>Инструкция</span>
+                      <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
                     </div>
                     `
         },
@@ -138,8 +138,8 @@ export default function FAQ() {
     }, [])
 
     return (
-      <div className="lg:h-230 max-[1025px]:h-270 max-[481px]:h-280">
-        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
+      <div className="lg:h-240 max-[1025px]:h-270 max-[481px]:h-fit">
+        <section id="faq" className="w-full max-[481px]:w-[90%] h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
             <h1 className="lg:text-4xl max-[1025px]:text-2xl max-[481px]:text-xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
                 <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />
