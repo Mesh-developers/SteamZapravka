@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Backlight count={siteType === "game" ? 9 : 7} gap={100} />
-      <Main classStyle="relative z-1 lg:mt-10 md:mt-15 lg:px-0 max-[481px]:px-5 max-w-[1400px] lg:w-[85%] lg:px-0 md:px-5 md:w-[100%] md:justify-self-center lg:m-auto flex min-h-screen flex-col gap-15 items-start justify-items-start bg-transparent">
+      <Main classStyle="relative z-1 lg:mt-10 md:mt-15 lg:px-0 max-w-[1400px] lg:w-[85%] lg:px-0 md:px-5 md:w-[100%] md:justify-self-center lg:m-auto flex min-h-screen flex-col gap-15 items-start justify-items-start bg-transparent">
        <CTA />
        <Advantages />
        <Balance />

@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Icon from "./Icon";
+import { truncateString } from "@/utils"
 import Image from "next/image";
 import PaymentSystems from "./PaymentSystems";
 import Input from "./Input";
@@ -14,6 +15,59 @@ import { PaymentSystem, VouchersResponse } from "@/typings";
 import useData from "@/hooks/useData";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { redirect, RedirectType, usePathname } from "next/navigation";
+
+type GallaryGameProps = {
+    currentIndex: number;
+    video: string;
+    images: string[];
+    leftArrowHandler: ()=>void;
+    rightArrowHandler: ()=>void;
+    setCurrentIndex: Dispatch<SetStateAction<number>>
+}
+
+function GallaryGame({ currentIndex, video, images, leftArrowHandler, rightArrowHandler, setCurrentIndex }:GallaryGameProps) {
+    return (
+        <div className="flex flex-[2] flex-col gap-2 h-full">
+            <div className="min-w-[848px] max-[481px]:min-w-full w-full h-full flex relative justify-between items-center overflow-hidden group">
+                {currentIndex === -1 ?
+                <iframe src={video} className="w-full h-full absolute rounded-3xl" frameBorder="0" allowFullScreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture"/>
+                :
+                <Image
+                fill
+                src={`/images/${images[currentIndex]}`}
+                className="w-full h-full absolute object-cover rounded-3xl border-1 border-(--border)"
+                alt="edit image"
+                quality={100}
+                loading="eager"
+                />
+                }
+                <div className="transition-all delay-200 relative group-hover:ml-5 -ml-7 cursor-pointer select-none" onClick={leftArrowHandler}>
+                    <Icon type="arrow" />
+                </div>
+                <div className="transition-all delay-200 relative group-hover:mr-5 -mr-7 rotate-180 cursor-pointer select-none" onClick={rightArrowHandler}>
+                    <Icon type="arrow" />
+                </div>
+            </div>
+            <div className="flex gap-3 justify-between">
+                <div
+                className={`${currentIndex === -1 ? "shadow-[3px_-3px_8px_-1px_#46F9D7,-3px_-3px_8px_-1px_#46F9D7,3px_3px_8px_-1px_#15B5ED,-3px_3px_8px_-1px_#15B5ED]" : ""} relative overflow-hidden w-full h-[80px] max-[481px]:h-[38px] rounded-2xl border-1 border-(--border) cursor-pointer`}
+                >
+                    <div className="absolute w-full h-full bg-transparent" onClick={()=>setCurrentIndex(-1)} />
+                    <iframe
+                    src={video}
+                    className="w-full h-full"
+                    />
+                </div>
+                {images.map((image, i)=><div
+                                        key={i}
+                                        onClick={()=>setCurrentIndex(i)}
+                                        style={{ backgroundImage: `url('/images/${image}')` }}
+                                        className={`${currentIndex === i ? "shadow-[3px_-3px_8px_-1px_#46F9D7,-3px_-3px_8px_-1px_#46F9D7,3px_3px_8px_-1px_#15B5ED,-3px_3px_8px_-1px_#15B5ED]" : ""} w-full h-[80px] max-[481px]:h-[38px] rounded-2xl border-1 border-(--border) bg-center bg-no-repeat bg-cover cursor-pointer`}
+                                        />)}
+            </div>
+        </div>
+    )
+}
 
 type GamePageProps = {
     mainImage: string;
@@ -34,6 +88,8 @@ type GamePageProps = {
 
 export default function GamePage({ mainImage, images, video, description, minimal, recommended, platforms, price, editions }:GamePageProps) {
     const pathname = usePathname()
+    const [isReadMore, setIsReadMore] = useState<undefined|boolean>(false)
+    const [isMobile, setIsMobile] = useState<undefined|boolean>(false)
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
     const [edition, setEdition] = useState("")
     const [isUserTerms, setIsUserTerms] = useState(false)
@@ -57,9 +113,17 @@ export default function GamePage({ mainImage, images, video, description, minima
 
     useEffect(()=>{
         window.addEventListener('keydown', handleKeyDown);
+        const checkScreenSize = () => {
+            if(window.outerWidth <= 480) {
+                setIsMobile(true);
+            }
+        };
 
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', checkScreenSize);
         };
     }, [])
 
@@ -95,58 +159,26 @@ export default function GamePage({ mainImage, images, video, description, minima
     }
 
     return (
-        <div className="w-full flex flex-col gap-6">
-            <div className="flex gap-4 h-180">
-                <div className="flex flex-[2] flex-col gap-2">
-                    <div className="min-w-[848px] w-full h-full flex relative justify-between items-center overflow-hidden group">
-                        {currentIndex === -1 ?
-                        <iframe src={video} className="w-full h-full absolute rounded-3xl" frameBorder="0" allowFullScreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture"/>
-                        :
-                        <Image
-                        fill
-                        src={`/images/${images[currentIndex]}`}
-                        className="w-full h-full absolute object-cover rounded-3xl border-1 border-(--border)"
-                        alt="edit image"
-                        quality={100}
-                        loading="eager"
-                        />
-                        }
-                        <div className="transition-all delay-200 relative group-hover:ml-5 -ml-7 cursor-pointer select-none" onClick={leftArrowHandler}>
-                            <Icon type="arrow" />
-                        </div>
-                        <div className="transition-all delay-200 relative group-hover:mr-5 -mr-7 rotate-180 cursor-pointer select-none" onClick={rightArrowHandler}>
-                            <Icon type="arrow" />
-                        </div>
-                        {/* <div className="absolute top-[92%] w-full flex justify-center items-center gap-4">
-                            {[...images, ""].map((_, i)=><div onClick={()=>setCurrentIndex(i-1)} key={i} className={`cursor-pointer w-[40px] h-[10px] rounded-sm opacity-60 ${i-1 === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
-                        </div> */}
-                    </div>
-                    <div className="flex gap-3 justify-between">
-                        <div
-                        className={`${currentIndex === -1 ? "shadow-[3px_-3px_8px_-1px_#46F9D7,-3px_-3px_8px_-1px_#46F9D7,3px_3px_8px_-1px_#15B5ED,-3px_3px_8px_-1px_#15B5ED]" : ""} relative overflow-hidden w-full h-[80px] rounded-2xl border-1 border-(--border) cursor-pointer`}
-                        >
-                            <div className="absolute w-full h-full bg-transparent" onClick={()=>setCurrentIndex(-1)} />
-                            <iframe
-                            src={video}
-                            className="w-full h-full"
-                            />
-                        </div>
-                        {images.map((image, i)=><div
-                                                key={i}
-                                                onClick={()=>setCurrentIndex(i)}
-                                                style={{ backgroundImage: `url('/images/${image}')` }}
-                                                className={`${currentIndex === i ? "shadow-[3px_-3px_8px_-1px_#46F9D7,-3px_-3px_8px_-1px_#46F9D7,3px_3px_8px_-1px_#15B5ED,-3px_3px_8px_-1px_#15B5ED]" : ""} w-full h-[80px] rounded-2xl border-1 border-(--border) bg-center bg-no-repeat bg-cover cursor-pointer`}
-                                                />)}
-                    </div>
+        <div className="w-full flex flex-col gap-6 max-[481px]:gap-0">
+            <div className="flex gap-4 max-[481px]:gap-0 h-180">
+                <div className="block max-[481px]:hidden">
+                    <GallaryGame
+                    video={video}
+                    images={images}
+                    currentIndex={currentIndex}
+                    leftArrowHandler={leftArrowHandler}
+                    rightArrowHandler={rightArrowHandler}
+                    setCurrentIndex={setCurrentIndex}
+                    />
                 </div>
-                <div className="flex flex-1 min-w-[535px] flex-col w-full gap-2">
+                <div className="flex flex-1 min-w-[535px] max-[481px]:min-w-full flex-col w-full gap-2">
                     <div className="relative w-full min-h-[200px]">
                         <div
                         style={{backgroundImage: `url('/images/${mainImage}')`}}
                         className="bg-cover bg-top bg-no-repeat w-full h-full rounded-4xl border-1 border-(--border)"
                         />
                     </div>
-                    <form onSubmit={(e)=>e.preventDefault()} className="flex flex-col gap-4 px-8 pt-6 border-1 border-(--border) bg-(--section-back) w-full h-full rounded-4xl">
+                    <form onSubmit={(e)=>e.preventDefault()} className="flex flex-col gap-4 px-8 max-[481px]:px-6 pt-6 border-1 border-(--border) bg-(--section-back) w-full h-full rounded-4xl">
                         <div className="flex flex-col gap-2">
                             <h3 className="text-lg">E-mail</h3>
                             <Input
@@ -190,7 +222,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                             <span>Купить</span>
                             }
                         </button>
-                        <div className="mt-4 flex flex-col gap-2">
+                        <div className="mt-4 max-[481px]:mt-0 flex flex-col gap-2">
                             <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
                                 <span className="!font-(family-name:--manrope-regular) text-[15px]">
                                     Я согласен с условиями <Link href={"/user-agreement.pdf"} className="underline">Пользовательского соглашения</Link>.
@@ -205,12 +237,36 @@ export default function GamePage({ mainImage, images, video, description, minima
                     </form>
                 </div>
             </div>
-            <div className="w-full px-8 py-6 border-1 border-(--border) bg-(--section-back) rounded-4xl mt-10">
+            <div className="hidden max-[481px]:block h-100 mt-5">
+                <GallaryGame
+                video={video}
+                images={images}
+                currentIndex={currentIndex}
+                leftArrowHandler={leftArrowHandler}
+                rightArrowHandler={rightArrowHandler}
+                setCurrentIndex={setCurrentIndex}
+                />
+            </div>
+            <div className="w-full px-8 py-6 border-1 border-(--border) bg-(--section-back) rounded-4xl mt-10 max-[481px]:mt-4">
                 <h2 className="text-xl">Об этой игре</h2>
-                <p className="whitespace-pre-line">{description}</p>
+                <p className="whitespace-pre-line max-[481px]:flex flex-col gap-2">
+                    {!isMobile ? description : (isReadMore === false ? truncateString(description, 189) : description)}
+                    {isMobile ?
+                    <button className="bg-[#212C3E] rounded-md flex items-center justify-items-center px-2 py-1 gap-1 w-fit" onClick={()=>setIsReadMore(state=>!state)}>
+                        <span>
+                            {isReadMore ? "Свернуть" : "Читать больше"}
+                        </span>
+                        <div className={`${isReadMore ? "rotate-90" : "rotate-270"} transition-all delay-200 select-none`}>
+                            <Icon type="arrow" size={14} />
+                        </div>
+                    </button>
+                    :
+                    <></>
+                    }
+                </p>
             </div>
             {platforms.map((platform, i)=>
-            <div key={i} className="flex gap-4">
+            <div key={i} className="flex gap-4 max-[481px]:flex-col max-[481px]:mt-5">
                 <div className="w-full px-8 py-6 border-1 border-(--border) bg-(--section-back) rounded-4xl">
                     <div className="flex justify-between">
                         <h2 className="text-xl">Минимальные системные требования</h2>

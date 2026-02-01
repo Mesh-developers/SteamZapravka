@@ -29,7 +29,7 @@ export default function Header() {
             <div className="lg:w-fit md:w-20">
                 <BurgerMenu open={open} setOpen={setOpen} />
             </div>
-            <div className="lg:block hidden">
+            <div className="">
                 <Switcher leftText="Игры" rightText="Сервисы" />
             </div>
             <Link href="/"><Icon type="logo" height={size[0]} width={size[1]} /></Link>

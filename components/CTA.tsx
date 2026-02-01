@@ -38,15 +38,15 @@ export default function CTA() {
                 </>
                 :
                 <>
-                    <h1 className="font-(family-name:--bounded-regular) text-6xl">
+                    <h1 className="font-(family-name:--bounded-regular) lg:w-full lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[481px]:text-center">
                         Доступ к <span className="text-(--blue)">сервисам</span><br/>
                         звёзд на максимум!
                     </h1>
-                    <h2 className="text-2xl">
+                    <h2 className="lg:text-2xl md:text-xl min-[481px]:block hidden">
                         Мгновенное пополнение, низкая комиссия<br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
-                    <Link href="#balance" className="w-96 h-20 font-(family-name:--manrope-semibold) btn hover:!border-(--blue) !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl text-center flex items-center justify-center">
+                    <Link href="#balance" className="w-96 h-20 font-(family-name:--manrope-semibold) btn hover:!border-(--blue) !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl text-center flex items-center justify-center max-[481px]:w-60 max-[481px]:h-15 max-[481px]:m-auto">
                         Купить <br />
                         Telegram Stars
                     </Link>

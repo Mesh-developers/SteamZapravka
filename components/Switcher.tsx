@@ -15,7 +15,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
       {/* track + wave + текст */}
       <span
         className={`
-          w-86 h-8
+          w-86 h-8 max-[481px]:w-25
           relative
           transition-colors duration-500 ease-in-out
         `}

@@ -45,12 +45,12 @@ export default function Slider({ mainImage="" }:SliderProps) {
     return (
         <section className="w-full lg:h-130 max-[1025px]:h-80 max-[481px]:h-fit flex">
             <div className="self-start w-full flex items-center gap-4">
-                <div className={`cursor-pointer select-none ${mainImage ? "relative z-1 left-3" : ""}`} onClick={()=>setCurrentIndex(state=>state-1 < 0 ? data.length-1 : state-1)}>
+                <div className={`cursor-pointer select-none ${mainImage ? "relative z-1 min-[481px]:left-3" : ""}`} onClick={()=>setCurrentIndex(state=>state-1 < 0 ? data.length-1 : state-1)}>
                     <Icon type="arrow" />
                 </div>
                 <div className="w-full flex flex-col lg:gap-4 max-[1025px]:gap-0">
-                    <Link href={data[currentIndex].link} className={`${mainImage ? "grid grid-cols-1 relative -left-10 w-[106%]" : "lg:grid-cols-[2fr_1fr] max-[1025px]:grid-cols-1"} grid cursor-pointer`}>
-                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "lg:rounded-l-3xl max-[1025px]:rounded-t-3xl lg:shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)] max-[1025px]:shadow-[0px_15px_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-top lg:h-[473px] max-[1025px]:h-[221px] max-[481px]:h-[150px]`} />
+                    <Link href={data[currentIndex].link} className={`${mainImage ? "grid-cols-1 relative -left-10 max-[481px]:static max-[481px]:w-[100%] w-[106%]" : "lg:grid-cols-[2fr_1fr] max-[1025px]:grid-cols-1"} grid cursor-pointer`}>
+                        <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "lg:rounded-l-3xl max-[1025px]:rounded-t-3xl lg:shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)] max-[1025px]:shadow-[0px_15px_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-top max-[481px]:rounded-b-[0px] lg:h-[473px] max-[1025px]:h-[221px] max-[481px]:h-[150px]`} />
                         {mainImage ?
                         <></>
                         :
@@ -89,7 +89,7 @@ export default function Slider({ mainImage="" }:SliderProps) {
                     </Link>
                     <div className="lg:hidden h-19 rounded-b-3xl max-[1025px]:flex items-center justify-between bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center px-5">
                         <h1 className="text-2xl max-[481px]:text-xl">{data[currentIndex].title}</h1>
-                        <button className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm">
+                        <button className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm w-24">
                             {data[currentIndex].price} ₽
                         </button>
                     </div>
@@ -97,7 +97,7 @@ export default function Slider({ mainImage="" }:SliderProps) {
                         {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[10px] w-[40px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
                     </div>
                 </div>
-                <div className={`rotate-180 cursor-pointer select-none ${mainImage ? "relative right-3" : ""}`} onClick={()=>setCurrentIndex(state=>state+1 === data.length ? 0 : state+1)}>
+                <div className={`rotate-180 cursor-pointer select-none ${mainImage ? "relative min-[481px]:right-3" : ""}`} onClick={()=>setCurrentIndex(state=>state+1 === data.length ? 0 : state+1)}>
                     <Icon type="arrow" />
                 </div>
             </div>
