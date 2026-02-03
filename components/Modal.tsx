@@ -14,12 +14,11 @@ const Modal: FC<ModalProps> = ({ open, onClose, children }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-hidden h-[100vh]"
       onClick={onClose}
       aria-modal
       role="dialog"
     >
-      {/* сам контент без обёрток */}
       <div onClick={(e) => e.stopPropagation()}>
         {children}
       </div>

@@ -16,6 +16,7 @@ import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
 import { replaceWords, truncateString, validateSteamUsername } from "@/utils";
 import useData from "@/hooks/useData";
 import Skeleton from "react-loading-skeleton";
+import Modal from "./Modal";
 
 type Box = {
     id: number;
@@ -162,6 +163,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     const [backup, setBackup] = useState("")
     const [isUserTerms, setIsUserTerms] = useState(false)
     const [isPrivacy, setIsPrivacy] = useState(false)
+    const [isOpenForm, setIsOpenForm] = useState(false)
     const coinArray = boxes[currentIndex]?.coin?.split(" ") || [""]
     const getPureName = (prod: string) => Array.isArray(prefix) ? replaceWords(prod.replaceAll(":", ""), new Map(prefix.map(pre=>[pre, ""]))) : prod.replaceAll(":", "").replaceAll(prefix, "")
     const productPrice = products.find(prod=>prod.name === product)?.price
@@ -264,11 +266,26 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
 
     return (
         <div className="w-full flex flex-col gap-4">
-            <div className={`w-full h-50 rounded-2xl bg-left bg-no-repeat bg-contain`} style={{ backgroundImage: `url('/images/${cover}')` }} />
-
-            <div className="grid grid-cols-[60%_40%] w-full h-fit">
+            <div className={`w-full h-50 rounded-2xl bg-left bg-no-repeat bg-contain max-[481px]:bg-cover max-[481px]:w-[100%] max-[481px]:h-30`} style={{ backgroundImage: `url('/images/${cover}')` }} />
+            {type === "all" ?
+                <div className="hidden max-[481px]:block">
+                    <div className="grid grid-cols-2 gap-5 justify-between">
+                        <div className={`relative w-full`}>
+                            <div className={`absolute transition-all duration-100 w-12 h-9 rounded-full bg-(--green) blur-md -top-1 ${isTopup ? "hidden" : ""}`} />
+                            <button onClick={()=>setIsTopup(false)} style={{ backgroundImage: isTopup ? "url('/images/gift-btn-unactive.png')" : "url('/images/gift-btn-active.png')" }} className={`w-full relative z-1 ${isTopup ? "bg-right text-[#6D6D6D]" : "bg-left"} bg-no-repeat bg-cover !font-(family-name:--manrope-regular) text-[13px] h-[44px] bg-(--black) rounded-full px-4 py-2`}>Подарочная карта</button>
+                        </div>
+                        <div className={`relative w-full`}>
+                            <div className={`absolute transition-all duration-100 w-12 h-9 rounded-full bg-(--blue) blur-md right-0 -top-1 ${isTopup ? "" : "hidden"}`} />
+                            <button onClick={()=>setIsTopup(true)} style={{ backgroundImage: isTopup ? "url('/images/topup-btn-active.png')" : "url('/images/topup-btn-unactive.png')" }} className={`w-full relative z-1 ${isTopup ? "bg-right" : "bg-left text-[#6D6D6D]"} bg-no-repeat bg-cover !font-(family-name:--manrope-regular) text-[13px] h-[44px] bg-(--black) rounded-full px-4 py-2`}>Прямое пополнение</button>
+                        </div>
+                    </div>
+                </div>
+                :
+                <></>
+            }
+            <div className="grid grid-cols-[60%_40%] max-[481px]:grid-cols-1 w-full h-fit">
                 {!isTopup ?
-                <div className="grid grid-cols-2 w-full h-fit gap-6">
+                <div className="grid grid-cols-2 max-[481px]:grid-cols-1 w-full h-fit gap-6">
                     {productsData ?
                     boxes.map((box, i)=>
                     <Card
@@ -281,6 +298,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     altPrice={(productsData[i]?.priceInRub || box.price) * 0.8}
                     coin={box.coin}
                     disabled={!productsData[i]?.inStock}
+                    callback={()=>setIsOpenForm(true)}
                     />)
                     :
                     boxes.map((_, i)=>
@@ -380,7 +398,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     <UniqueCard title={uniqueCard.title} text={uniqueCard.text[Number(isTopup)]} image={uniqueCard.image} />
                 </div>
                 }
-                <div className="w-full h-full overflow-hidden flex flex-col pl-6">
+                <div className="w-full h-full overflow-hidden flex flex-col pl-6 max-[481px]:hidden">
                     <form onSubmit={(e)=>e.preventDefault()} className="w-full min-h-[768px] h-full flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) min-[1399px]:!px-7 px-10 pt-8 rounded-3xl border-1 border-(--border) overflow-hidden">
                      {type === "all" ?
                         <div className="flex gap-5 justify-between">
@@ -445,6 +463,68 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     </form>
                 </div>
             </div>
+            <Modal open={isOpenForm} onClose={()=>setIsOpenForm(!isOpenForm)}>
+                <form onSubmit={(e)=>e.preventDefault()} className="w-[90%] h-185 flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-5 pb-5 rounded-3xl border-1 border-(--border) overflow-hidden mx-5">
+                    <div className="w-full grid justify-items-end relative top-5">
+                        <svg width="19" height="19" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>setIsOpenForm(!isOpenForm)}>
+                        <g clip-path="url(#clip0_1965_4933)">
+                        <path d="M15.7863 1.21484L1.21484 15.7863M1.21484 1.21484L15.7863 15.7863" stroke="#EEEEEE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_1965_4933">
+                        <rect width="19" height="19" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                    </div>
+                    <span className={`text-xl`}>Товар</span>
+                    <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex]?.name || "") : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[2]?.image || ""} />
+                    <div className="flex gap-3 w-full h-20 mt-2">
+                        <PaymentSystems
+                        systems={[
+                            {
+                                title: "SBP",
+                                percent: 8,
+                                image: <Icon type="sbp" width={80} height={50} />
+                            },
+                            {
+                                title: "CRYPTOCURRENCY",
+                                percent: 5,
+                                image: <Icon type="crypto" width={90} height={60} />
+                            }
+                        ]}
+                        system={system}
+                        setSystem={setSystem}
+                        />
+                    </div>
+                    {!isTopup &&
+                    <>
+                    <span className="text-xl mt-2">E-mail</span>
+                    <Input isWarning={!!email && !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
+                    </>}
+                    <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full min-h-18 btn !rounded-3xl text-xl">
+                        <span>
+                            Купить {truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex]?.name || "") : ((Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]), 28)}<br />{isTopup && productsData ? (productPrice || productsData[currentIndex]?.priceInRub) : (productsData ? productsData[currentIndex]?.priceInRub : boxes[currentIndex]?.price) * count} ₽
+                        </span>
+                    </button>
+                    <div className="mt-4 flex flex-col gap-2">
+                        <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
+                            <span className="!font-(family-name:--manrope-regular) text-[14px]">
+                                Я согласен с условиями <Link href={"/user-agreement.pdf"} className="underline">Пользовательского соглашения</Link>.
+                            </span>
+                        </Checkbox>
+                        <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
+                            <span className="!font-(family-name:--manrope-regular) text-[14px]">
+                                Я согласен с условиями <Link href={"/policy-of-confidentiality.pdf"} className="underline">Политики конфиденциальности</Link>.
+                            </span>
+                        </Checkbox>
+                    </div>
+                    <span className="text-xl mt-2">Инструкция</span>
+                    <ol className={`!font-(family-name:--manrope-regular) ml-5 ${(pathname === "/pubg" || pathname === "/freefire") && isTopup ? "text-[14px]" : "text-[14px]"}`}>
+                        {instructions[Number(isTopup)].map((item, i)=><li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
+                    </ol>
+                </form>
+            </Modal>
         </div>
     )
 }

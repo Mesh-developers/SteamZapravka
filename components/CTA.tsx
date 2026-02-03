@@ -20,7 +20,7 @@ export default function CTA() {
     }, []);
     return (
         <section className="w-[100%] lg:h-96 md:h-75 bg-transparent flex items-start">
-            {!isMobile && siteType === "telegram" && <Image width={840} height={900} src="/images/mika_services.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[0%] top-13" />}
+            {!isMobile && siteType === "telegram" && <Image width={840} height={900} src="/images/mika_services.png" loading="eager" quality={100} alt="astronaut" className="absolute -left-[5%] top-13" />}
             <div className={`w-full flex flex-col ${siteType === "game" ? "" : "items-end"} gap-6`}>
                 {siteType === "game" ?
                 <>
@@ -38,7 +38,7 @@ export default function CTA() {
                 </>
                 :
                 <>
-                    <h1 className="font-(family-name:--bounded-regular) lg:w-full lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[481px]:text-center">
+                    <h1 className="font-(family-name:--bounded-regular) lg:w-fit lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[481px]:text-center">
                         Доступ к <span className="text-(--blue)">сервисам</span><br/>
                         звёзд на максимум!
                     </h1>
@@ -53,7 +53,7 @@ export default function CTA() {
                 </>
                 }
             </div>
-            {!isMobile && siteType === "game" && <Image width={840} height={900} src="/images/mika_game.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[42%] top-13" />}
+            {!isMobile && siteType === "game" && <Image width={840} height={900} src="/images/mika_game.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[47%] top-13" />}
             {isMobile ? <Image width={561} height={682} src={"/images/steam_mobile.png"} alt="steam mobile" className="-left-25 -top-20 relative max-[481px]:-top-10 max-[481px]:-left-35 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[394px]:hidden" /> : <></>}
         </section>
     )
