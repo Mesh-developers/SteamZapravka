@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useSiteType } from "./SiteTypeContext";
 
 interface SwitcherProps {
@@ -9,9 +10,10 @@ interface SwitcherProps {
 
 export default function Switcher({ leftText = "OFF", rightText = "ON" }: SwitcherProps) {
   const {siteType: on, toggleType: setOn} = useSiteType();
+  const navigator = useRouter()
 
   return (
-    <div className="relative inline-flex items-center cursor-pointer select-none">
+    <div className="relative inline-flex items-center cursor-pointer select-none" onClick={()=>navigator.push("/")}>
       {/* track + wave + текст */}
       <span
         className={`

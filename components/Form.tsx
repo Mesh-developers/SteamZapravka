@@ -137,7 +137,7 @@ function CardSkeleton({ isTopup = false }: { isTopup: boolean }) {
 
 function UniqueCard({ image, title, text, length=0 }:Omit<UniqueCard, "text"> & { length?: number, text: string }) {
     return (
-        <div style={{ backgroundImage: `url('/images/${image}')` }} className={`flex flex-col ${length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover gap-6 border-1 border-(--border) overflow-hidden rounded-2xl h-60 text-white pl-8 pr-5 pt-10`}>
+        <div style={{ backgroundImage: `url('/images/${image}')` }} className={`flex flex-col ${length % 2 === 0 ? "col-span-2" : "col-span-1" } bg-no-repeat bg-center bg-cover max-[481px]:pb-5 max-[481px]:h-fit gap-6 border-1 border-(--border) overflow-hidden rounded-2xl h-60 text-white pl-8 pr-5 pt-10`}>
             <h3 className="text-xl">{title}</h3>
             <p className="text-[14px]">{text}</p>
         </div>
@@ -343,7 +343,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             :
                             <>
                             <div className="flex flex-col gap-1 relative z-1">
-                                <span className="text-lg">{isService ? "E-mail"  : (isLegends ? "UID от аккаунта" : "ID от аккаунта") }</span>
+                                <span className="text-lg">{isService ? "E-mail"  : (isLegends ? "UID от аккаунта" : "ID от аккаунта")}</span>
                                 <Input placeholder={isService ? "Ваш E-mail" : (isLegends ? "Ваш UID" : "Ваш ID")} value={isService ? email : id} setValue={isService ? setEmail : setId} isWarning={isService ? email === "" : id === ""} filterHandler={!isService && !isLegends ? (str)=>validateSteamUsername(str) : undefined} />
                             </div>
                             {isLegends ?
@@ -358,8 +358,8 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 <span className="text-lg">Регион</span>
                                 <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
                             </div>
-                            <div className="flex flex-col gap-1 relative">
-                                <span className="text-lg">Выберите товар из полного списка</span>
+                            <div className="flex flex-col gap-1 relative max-[481px]:col-span-2">
+                                <span className="text-lg max-[481px]:text-[17px]">Выберите товар из полного списка</span>
                                 <Select
                                 placeholder="Выберите товар"
                                 value={truncateString(product, 30)}
@@ -371,10 +371,25 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             </>
                             }
                         </div>
-                        <div className="flex flex-col gap-1 z-1">
+                        <div className="flex flex-col gap-1 z-1 max-[481px]:-mt-10">
                             <span className="text-lg">Быстрый выбор</span>
-                            <div className="flex gap-7 w-full justify-between">
-                                {productsData ?
+                            <div className="flex gap-7 max-[481px]:gap-3 w-full justify-between">
+                                {
+                                products.slice(0, 3).map((prod, i)=>
+                                <Card
+                                key={i}
+                                index={i}
+                                isTopup={isTopup}
+                                currentIndex={currentIndex}
+                                setCurrentIndex={setCurrentIndex}
+                                price={0}
+                                image={products[i].image || boxes[i]?.image}
+                                coin={getPureName(prod.name)}
+                                disabled={!prod.inStock || false}
+                                callback={()=>setProduct("")}
+                                />)
+                                }
+                                {/* {productsData ?
                                 productsData.sort((a, b) => a.priceInRub - b.priceInRub).slice(0, 3).map((prod, i)=>
                                 <Card
                                 key={i}
@@ -391,10 +406,58 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 :
                                 products.slice(0, 3).map((_, i)=>
                                 <CardSkeleton key={i} isTopup={isTopup} />)
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>
+                    <form onSubmit={(e)=>e.preventDefault()} className="w-[100%] h-fit max-[481px]:flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-5 py-5 rounded-3xl border-1 border-(--border) overflow-hidden hidden">
+                        <span className={`text-xl`}>Товар</span>
+                        <InputNumber withoutCounter count={count} setCount={setCount} value={truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex]?.name || "") : boxes[currentIndex]?.coin, 28)} image={products.find(prod=>prod.name === product)?.image || products[currentIndex]?.image || boxes[currentIndex]?.image || boxes[boxes.length]?.image || products[2]?.image || ""} />
+                        <div className="flex gap-3 w-full h-20 mt-2">
+                            <PaymentSystems
+                            systems={[
+                                {
+                                    title: "SBP",
+                                    percent: 8,
+                                    image: <Icon type="sbp" width={80} height={50} />
+                                },
+                                {
+                                    title: "CRYPTOCURRENCY",
+                                    percent: 5,
+                                    image: <Icon type="crypto" width={90} height={60} />
+                                }
+                            ]}
+                            system={system}
+                            setSystem={setSystem}
+                            />
+                        </div>
+                        {!isTopup &&
+                        <>
+                        <span className="text-xl mt-2">E-mail</span>
+                        <Input isWarning={!!email && !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
+                        </>}
+                        <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full min-h-18 btn !rounded-3xl text-xl">
+                            <span>
+                                Купить {truncateString(isTopup && productsData ? getPureName(product || productsData[currentIndex]?.name || "") : ((Number(coinArray[coinArray.length-2]) ? "" : coinArray[coinArray.length-2] + " ") + coinArray[coinArray.length-1]), 28)}<br />{isTopup && productsData ? (productPrice || productsData[currentIndex]?.priceInRub) : (productsData ? productsData[currentIndex]?.priceInRub : boxes[currentIndex]?.price) * count} ₽
+                            </span>
+                        </button>
+                        <div className="mt-4 flex flex-col gap-2">
+                            <Checkbox checked={isUserTerms} setChecked={setIsUserTerms}>
+                                <span className="!font-(family-name:--manrope-regular) text-[14px]">
+                                    Я согласен с условиями <Link href={"/user-agreement.pdf"} className="underline">Пользовательского соглашения</Link>.
+                                </span>
+                            </Checkbox>
+                            <Checkbox checked={isPrivacy} setChecked={setIsPrivacy}>
+                                <span className="!font-(family-name:--manrope-regular) text-[14px]">
+                                    Я согласен с условиями <Link href={"/policy-of-confidentiality.pdf"} className="underline">Политики конфиденциальности</Link>.
+                                </span>
+                            </Checkbox>
+                        </div>
+                        <span className="text-xl mt-2">Инструкция</span>
+                        <ol className={`!font-(family-name:--manrope-regular) ml-5 ${(pathname === "/pubg" || pathname === "/freefire") && isTopup ? "text-[14px]" : "text-[14px]"}`}>
+                            {instructions[Number(isTopup)].map((item, i)=><li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
+                        </ol>
+                    </form>
                     <UniqueCard title={uniqueCard.title} text={uniqueCard.text[Number(isTopup)]} image={uniqueCard.image} />
                 </div>
                 }

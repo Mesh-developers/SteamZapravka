@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 export function truncateString(str: string, maxLength: number) {
   if (String(str).length <= maxLength) return str;
   return str.slice(0, maxLength).trim() + '...';
@@ -45,4 +46,12 @@ export function validateZeroStart(text: string): boolean {
     return false;
   }
   return true;
+}
+
+// @ts-ignore
+export function getDataOrLoader(data: any, postfix="") {
+  if (isNaN(data) || data === undefined || data === "" || data === 0)
+    return <span className="loader mt-2"></span>
+  else
+    return data + postfix
 }

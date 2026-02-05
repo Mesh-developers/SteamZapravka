@@ -13,7 +13,7 @@ import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
 import useDebounce from "@/hooks/useDebounce"
 import Image from "next/image"
-import { removeAtSymbol, validateZeroStart } from "@/utils"
+import { removeAtSymbol, validateZeroStart, getDataOrLoader } from "@/utils"
 
 export default function Balance() {
     const [resMessage, setResMessage] = useState("")
@@ -44,6 +44,7 @@ export default function Balance() {
                 steamLogin: login,
                 couponCode: promocode
             }
+            setIsLoading(true)
             const req = await fetch("https://api.steamzapravka.io/steam/topup", {
                 method: "POST",
                 headers: {
@@ -51,7 +52,6 @@ export default function Balance() {
                 },
                 body: JSON.stringify(body)
             })
-            setIsLoading(true)
 
             if (req.status === 200) {
                 const res: TopupResponse = await req.json()
@@ -74,6 +74,7 @@ export default function Balance() {
                     paymentMethod: system
                 }
 
+                setIsLoading(true)
                 const req = await fetch("https://api.steamzapravka.io/stars", {
                     method: "POST",
                     headers: {
@@ -81,8 +82,6 @@ export default function Balance() {
                     },
                     body: JSON.stringify(body)
                 })
-
-                setIsLoading(true)
 
                 if (req.status === 200) {
                     const res: TopupTelegramResponse = await req.json()
@@ -130,6 +129,9 @@ export default function Balance() {
             }
         }
         getExchange()
+        if (siteType === "game")
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setSystem("SBP")
     }, [siteType])
 
 
@@ -221,11 +223,11 @@ export default function Balance() {
                 <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest } className={`bg-radial border-1 border-transparent ${siteType === "game" ? "from-[#45C47E] hover:border-(--green)" : "from-[#0698D6] hover:border-(--blue)"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
                     {siteType === "game" ?
                     <>
-                    Пополнить баланс <br/> {price} ₽
+                    Пополнить баланс <br/> {getDataOrLoader(price, " ₽")}
                     </>
                     :
                     <>
-                    Купить звёзды <br/> {system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex])} ₽
+                    Купить звёзды <br/> {getDataOrLoader(system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex]), " ₽")}
                     </>
                     }
                 </button>
@@ -299,11 +301,11 @@ export default function Balance() {
                     <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest} className={`min-[481px]:mt-0 leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
                         {siteType === "game" ?
                         <>
-                        Пополнить баланс <br/> {price} ₽
+                        Пополнить баланс <br/> {getDataOrLoader(price, " ₽")}
                         </>
                         :
                         <>
-                        Купить звёзды <br/> {system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex])} ₽
+                        Купить звёзды <br/> {getDataOrLoader(system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex]), " ₽")}
                         </>
                         }
                     </button>

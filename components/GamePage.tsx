@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Icon from "./Icon";
-import { truncateString } from "@/utils"
+import { getDataOrLoader, truncateString } from "@/utils"
 import Image from "next/image";
 import PaymentSystems from "./PaymentSystems";
 import Input from "./Input";
@@ -15,6 +15,7 @@ import { PaymentSystem, VouchersResponse } from "@/typings";
 import useData from "@/hooks/useData";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { redirect, RedirectType, usePathname } from "next/navigation";
+import Modal from "./Modal";
 
 type GallaryGameProps = {
     currentIndex: number;
@@ -88,6 +89,7 @@ type GamePageProps = {
 
 export default function GamePage({ mainImage, images, video, description, minimal, recommended, platforms, price, editions }:GamePageProps) {
     const pathname = usePathname()
+    const [isLoading, setIsLoading] = useState(false)
     const [isReadMore, setIsReadMore] = useState<undefined|boolean>(false)
     const [isMobile, setIsMobile] = useState<undefined|boolean>(false)
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
@@ -129,6 +131,7 @@ export default function GamePage({ mainImage, images, video, description, minima
 
     const buy = async () => {
         if (isPrivacy && isUserTerms && editionsData) {
+            setIsLoading(true)
             const res = await fetch("https://api.steamzapravka.io/vouchers", {
                 method: "POST",
                 headers: {
@@ -152,6 +155,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                         href: data.paymentUrl,
                         email
                     })
+                    setIsLoading(false)
                     redirect(data.paymentUrl, RedirectType.push)
                 }
             }
@@ -217,7 +221,7 @@ export default function GamePage({ mainImage, images, video, description, minima
                         </div>
                         <button onClick={buy} className="!font-(family-name:--manrope-medium) w-full h-20 btn !rounded-[25px] text-3xl">
                             {edition ?
-                            <span>Купить за {(editionsData && editionsData[currentEditionIndex].priceInRub) || price} ₽</span>
+                            <span>Купить за {getDataOrLoader((editionsData && editionsData[currentEditionIndex].priceInRub) || price, " ₽")}</span>
                             :
                             <span>Купить</span>
                             }
@@ -286,6 +290,9 @@ export default function GamePage({ mainImage, images, video, description, minima
             <div className="mt-5" />
             <Slider mainImage={mainImage} />
             <div className="mt-15" />
+            <Modal open={isLoading} onClose={()=>{}}>
+            <span className="loader"></span>
+            </Modal>
         </div>
     )
 }
