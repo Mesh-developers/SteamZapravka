@@ -2,13 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useSiteType } from "./SiteTypeContext";
+import Image from "next/image";
 
 interface SwitcherProps {
   leftText?: string;   // то, что показываем когда ВЫКЛ
   rightText?: string;  // то, что показываем когда ВКЛ
+  leftImage?: string;
+  rightImage?: string;
+  isMobile: boolean
 };
 
-export default function Switcher({ leftText = "OFF", rightText = "ON" }: SwitcherProps) {
+export default function Switcher({ leftText = "OFF", rightText = "ON", leftImage="", rightImage="", isMobile }: SwitcherProps) {
   const {siteType: on, toggleType: setOn} = useSiteType();
   const navigator = useRouter()
 
@@ -29,7 +33,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
           <span
           onClick={() => setOn("game")}
             className={`
-              relative transition-all duration-300 ease-out border-1 border-solid rounded-s-4xl rounded-e-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-l from-[#2D2D2D] to-[#141414]
+              relative transition-all duration-300 ease-out border-1 border-solid rounded-s-4xl overflow-hidden flex items-center justify-center px-20 max-[481px]:px-0 bg-linear-to-l from-[#2D2D2D] to-[#141414]
               ${on === "telegram" ? "border-black" : "border-white"}
             `}
           >
@@ -60,7 +64,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
             </svg>
             </div>
             <span className="z-10 relative">
-                {leftText}
+                {!isMobile ? leftText : <Image width={70} height={60} src={"/images/" + leftImage} alt={leftImage} className="!w-[20px] !h-[15px]" quality={100} />}
             </span>
           </span>
 
@@ -68,7 +72,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
           <span
             onClick={() => setOn("telegram")}
             className={`
-              relative overflow-hidden transition-all duration-300 ease-out border-1 border-solid rounded-e-4xl rounded-s-lg overflow-hidden flex items-center justify-center px-20 bg-linear-to-r from-[#2D2D2D] to-[#141414]
+              relative overflow-hidden transition-all duration-300 ease-out border-1 border-solid rounded-e-4xl overflow-hidden flex items-center justify-center px-20 max-[481px]:px-0 bg-linear-to-r from-[#2D2D2D] to-[#141414]
               ${on === "telegram" ? "border-white" : "border-black"}
             `}
           >
@@ -99,7 +103,7 @@ export default function Switcher({ leftText = "OFF", rightText = "ON" }: Switche
             </svg>
             </div>
             <span className="z-10 relative">
-                {rightText}
+                {!isMobile ? rightText : <Image width={100} height={90} src={"/images/" + rightImage} alt={rightImage} className="!w-[20px] !h-[15px]" quality={100} />}
             </span>
           </span>
         </span>
