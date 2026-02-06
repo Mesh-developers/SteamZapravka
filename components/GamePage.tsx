@@ -161,6 +161,9 @@ export default function GamePage({ mainImage, images, video, description, minima
                     setIsLoading(false)
                     redirect(data.paymentUrl, RedirectType.push)
                 }
+            } else {
+                setIsLoading(false)
+                setResMessage((await res.json()).message)
             }
         } else if (!isPrivacy || !isUserTerms) {
             setResMessage(TERMS_ERROR_TEXT)
