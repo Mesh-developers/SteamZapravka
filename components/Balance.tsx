@@ -14,6 +14,7 @@ import Modal from "./Modal"
 import useDebounce from "@/hooks/useDebounce"
 import Image from "next/image"
 import { removeAtSymbol, validateZeroStart, getDataOrLoader } from "@/utils"
+import { TERMS_ERROR_TEXT } from "@/constants"
 
 export default function Balance() {
     const [resMessage, setResMessage] = useState("")
@@ -23,7 +24,7 @@ export default function Balance() {
     const [price, setPrice] = useState(1000)
     const prices = [150, 500, 1000, 2000]
     const [starsIndex, setStarsIndex] = useState(2)
-    const stars = [100, 500, 1000, 2500]
+    const [stars, setStars] = useState([100, 500, 1000, 2500])
     const [system, setSystem] = useState<PaymentSystem>("SBP")
     const [isAgree, setIsAgree] = useState(false)
     const [isUserTerms, setIsUserTerms] = useState(false)
@@ -35,6 +36,15 @@ export default function Balance() {
     const debouncedPromocode = useDebounce(promocode, 1000)
     const [promocodeResult, setPromocodeResult] = useState<PromocodeResponse>()
     const [loginResult, setLoginResult] = useState<LoginResponse>()
+
+    useEffect(()=>{
+        if (system === "SBP" && JSON.stringify(stars) !== JSON.stringify([100, 500, 1000, 2500])) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setStars([100, 500, 1000, 2500])
+        } else if (system === "CRYPTOCURRENCY" && JSON.stringify(stars) !== JSON.stringify([250, 500, 1000, 2500])) {
+            setStars([250, 500, 1000, 2500])
+        }
+    }, [system])
 
     const topupRequest = async () => {
         if (isAgree || (isUserTerms && isPrivacy)) {
@@ -59,7 +69,10 @@ export default function Balance() {
                 redirect(res.sbpPaymentUrl, RedirectType.push)
             } else if (req.status === 400) {
                 setResMessage((await req.json()).message)
+                setIsLoading(false)
             }
+        } else if (!isAgree || !isUserTerms || !isPrivacy) {
+            setResMessage(TERMS_ERROR_TEXT)
         }
     }
 
@@ -90,7 +103,10 @@ export default function Balance() {
                 }
             } else {
                 setResMessage("Cумма оплаты для СБП: 100 – 20 000 ₽.\nСумма для Crypto: 200 – 20 000 ₽")
+                setIsLoading(false)
             }
+        } else if (!isAgree || !isUserTerms || !isPrivacy) {
+            setResMessage(TERMS_ERROR_TEXT)
         }
     }
 

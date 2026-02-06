@@ -10,7 +10,11 @@ export default function CTA() {
     const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const checkScreenSize = () => {
-            setIsMobile(window.outerWidth <= 768);
+            if (window.outerWidth <= 768) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
         };
 
         checkScreenSize();

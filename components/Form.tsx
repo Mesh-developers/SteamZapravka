@@ -1,6 +1,6 @@
 "use client"
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import InputNumber from "./InputNumber";
 import PaymentSystems from "./PaymentSystems";
 import Icon from "./Icon";
@@ -12,7 +12,7 @@ import Image from "next/image";
 import { PaymentSystem, VouchersResponse } from "@/typings";
 import { redirect, RedirectType, usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { initialOrder, ORDER_STORAGE_KEY } from "@/constants";
+import { initialOrder, ORDER_STORAGE_KEY, TERMS_ERROR_TEXT } from "@/constants";
 import { replaceWords, truncateString, validateSteamUsername } from "@/utils";
 import useData from "@/hooks/useData";
 import Skeleton from "react-loading-skeleton";
@@ -149,6 +149,8 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     const isRoblox = pathname === "/roblox"
     const isLegends = pathname === "/mobile-legends"
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
+    const [resMessage, setResMessage] = useState("")
+    const [isMobile, setIsMobile] = useState(false)
     const [isTopup, setIsTopup] = useState(type === "topup")
     const [count, setCount] = useState(1)
     const [currentIndex, setCurrentIndex] = useState(1)
@@ -173,6 +175,21 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
     (data)=>isTopup ? data.filter(d=>d.inStock) : data,
     isService || !isTopup)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            if(window.outerWidth <= 480) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false)
+            }
+        };
+
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
 
     const buyBox = async () =>{
         if (isPrivacy && isUserTerms && productsData) {
@@ -202,6 +219,8 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     redirect(data.paymentUrl, RedirectType.push)
                 }
             }
+        } else if (!isPrivacy || !isUserTerms) {
+            setResMessage(TERMS_ERROR_TEXT)
         }
     }
 
@@ -298,7 +317,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     altPrice={(productsData[i]?.priceInRub || box.price) * 0.8}
                     coin={box.coin}
                     disabled={!productsData[i]?.inStock}
-                    callback={()=>setIsOpenForm(true)}
+                    callback={()=>{if (isMobile) setIsOpenForm(true)}}
                     />)
                     :
                     boxes.map((_, i)=>
@@ -587,6 +606,11 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         {instructions[Number(isTopup)].map((item, i)=><li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
                     </ol>
                 </form>
+            </Modal>
+            <Modal open={!!resMessage} onClose={()=>setResMessage("")}>
+                <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2 whitespace-pre">
+                    {resMessage}
+                </div>
             </Modal>
         </div>
     )

@@ -9,7 +9,7 @@ import Input from "./Input";
 import Select from "./Select";
 import Checkbox from "./Checkbox";
 import Link from "next/link";
-import { initialOrder, ORDER_STORAGE_KEY, Platforms } from "@/constants";
+import { initialOrder, ORDER_STORAGE_KEY, Platforms, TERMS_ERROR_TEXT } from "@/constants";
 import Slider from "./Slider";
 import { PaymentSystem, VouchersResponse } from "@/typings";
 import useData from "@/hooks/useData";
@@ -90,6 +90,7 @@ type GamePageProps = {
 export default function GamePage({ mainImage, images, video, description, minimal, recommended, platforms, price, editions }:GamePageProps) {
     const pathname = usePathname()
     const [isLoading, setIsLoading] = useState(false)
+    const [resMessage, setResMessage] = useState("")
     const [isReadMore, setIsReadMore] = useState<undefined|boolean>(false)
     const [isMobile, setIsMobile] = useState<undefined|boolean>(false)
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
@@ -116,8 +117,10 @@ export default function GamePage({ mainImage, images, video, description, minima
     useEffect(()=>{
         window.addEventListener('keydown', handleKeyDown);
         const checkScreenSize = () => {
-            if(window.outerWidth <= 480) {
+            if (window.outerWidth <= 480) {
                 setIsMobile(true);
+            } else {
+                setIsMobile(false);
             }
         };
 
@@ -159,6 +162,8 @@ export default function GamePage({ mainImage, images, video, description, minima
                     redirect(data.paymentUrl, RedirectType.push)
                 }
             }
+        } else if (!isPrivacy || !isUserTerms) {
+            setResMessage(TERMS_ERROR_TEXT)
         }
     }
 
@@ -291,7 +296,12 @@ export default function GamePage({ mainImage, images, video, description, minima
             <Slider mainImage={mainImage} />
             <div className="mt-15" />
             <Modal open={isLoading} onClose={()=>{}}>
-            <span className="loader"></span>
+                <span className="loader"></span>
+            </Modal>
+            <Modal open={!!resMessage} onClose={()=>setResMessage("")}>
+                <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2 whitespace-pre">
+                    {resMessage}
+                </div>
             </Modal>
         </div>
     )
