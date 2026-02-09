@@ -78,7 +78,7 @@ export default function Gallery() {
         <section className="w-full h-95 max-[481px]:h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl lg:p-8 p-4 flex flex-col gap-8">
             <div className="flex gap-2 items-center">
                 <Icon type="grid" />
-                <h1 className="lg:text-4xl text-2xl">Все игры</h1>
+                <h1 className="lg:text-4xl text-2xl">{siteType === "game" ? "Все игры" : "Все сервисы"}</h1>
             </div>
             <div className="flex gap-4 justify-between items-center h-full">
                 <div className="cursor-pointer select-none" onClick={()=>setCurrent(state=>state-1 < 0 ? paths.length-cardCount : state-cardCount)}>

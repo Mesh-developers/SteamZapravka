@@ -4,18 +4,42 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import { useSiteType } from "./SiteTypeContext";
 import Modal from "./Modal";
+import { useArrayContext } from "./FAQArrayContext";
 
-function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: { question: string; answer: string; index: number; show: boolean; setShow: Dispatch<SetStateAction<boolean>>; open: boolean; setOpen: Dispatch<SetStateAction<boolean[]>> }) {
+type DetailsRowProps = {
+  question: string;
+  answer: string;
+  index: number;
+  show: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean[]>>;
+  isBackLight: boolean;
+}
+
+function DetailsRow({ question, answer, index, show, setShow, open, setOpen, isBackLight }: DetailsRowProps) {
   const { siteType } = useSiteType()
+  const [isLight, setIsLight] = useState(true)
   useEffect(() => {
     const el = document.getElementById('telegram_tutorial');
-
     if (!el) return;
     const handler = ()=>{ setShow(true) }
     el.addEventListener('click', handler);
-
     return () => el.removeEventListener('click', handler);
+
   }, [open, show]);
+
+  useEffect(()=>{
+    if (isLight) {
+      setTimeout(()=>setIsLight(false), 200)
+    }
+  }, [isLight])
+
+  useEffect(()=>{
+    if (isBackLight) {
+      setTimeout(()=>setIsLight(true), 1300)
+    }
+  }, [isBackLight])
 
   return (
     <details
@@ -23,7 +47,7 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: {
 
     >
       {/* вопрос + иконка */}
-      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""}`}>
+      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""} ${isLight && isBackLight ? `${siteType === "game" ? "bg-(--green)" : "bg-(--blue)"}` : "bg-transparent"}`}>
         <h2 className="lg:text-lg max-[1025px]:text-base text-(--white) select-none self-center flex flex-col max-[481px]:w-60">
           {question}
           {open ? <p className="relative flex-1 text-[12px] text-(--white) max-[481px]:flex w-60 hidden" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
@@ -61,6 +85,7 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen }: {
 }
 
 export default function FAQ() {
+    const { array: firstTwoArr } = useArrayContext()
     const { siteType } = useSiteType()
     const [show, setShow] = useState(false);
 
@@ -75,24 +100,24 @@ export default function FAQ() {
                     Если вы введёте неверный логин, средства будут зачислены другому пользователю.<br><br>
               <a href="https://store.steampowered.com/login/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
             </p>
-            <div id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
+            <button id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
               <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
               <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
-            </div>
+            </button>
             `
             :`<p>
-                    1. Откройте Telegram <br>
-                    2. Перейдите в настройки <br>
-                    3. Откройте раздел "Мой профиль" <br>
-                    4. Посмотрите поле "Имя пользователя" <br><br>
+              1. Откройте Telegram <br>
+              2. Перейдите в настройки <br>
+              3. Откройте раздел "Мой профиль" <br>
+              4. Посмотрите поле "Имя пользователя" <br><br>
 
-                    Если у вас не задано имя пользователя, придумайте и добавьте его в настройках. Без него мы не сможем отправить вам звёзды.
-                  </p>
-                    <div id='telegram_tutorial' class="cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
-                      <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
-                      <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
-                    </div>
-                    `
+              Если у вас не задано имя пользователя, придумайте и добавьте его в настройках. Без него мы не сможем отправить вам звёзды.
+            </p>
+            <button id='telegram_tutorial' class="cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
+              <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
+              <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
+            </button>
+            `
         },
         {
             question: "Как быстро приходят звёзды?",
@@ -137,12 +162,23 @@ export default function FAQ() {
       queueMicrotask(()=>setOpen(state=>state.map((_, i)=>i===0 ? true : false )))
     }, [])
 
+    useEffect(()=>{
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOpen(state=>{
+        const buf = [...state]
+        buf[0] = firstTwoArr[0]
+        buf[1] = firstTwoArr[1]
+
+        return buf
+      })
+    }, [firstTwoArr])
+
     return (
       <div className="lg:h-240 max-[1025px]:h-270 max-[481px]:h-fit">
         <section id="faq" className="w-full max-[481px]:w-[90%] h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
             <h1 className="lg:text-4xl max-[1025px]:text-2xl max-[481px]:text-xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
-                <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} />
+                <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} isBackLight={firstTwoArr[i]} />
             ))}
             <Modal open={show} onClose={()=>setShow(false)}>
               <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2">

@@ -13,7 +13,7 @@ import { PaymentSystem, VouchersResponse } from "@/typings";
 import { redirect, RedirectType, usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { initialOrder, ORDER_STORAGE_KEY, TERMS_ERROR_TEXT } from "@/constants";
-import { replaceWords, truncateString, validateSteamUsername } from "@/utils";
+import { getRegionOnLatin, replaceWords, truncateString, validateSteamUsername } from "@/utils";
 import useData from "@/hooks/useData";
 import Skeleton from "react-loading-skeleton";
 import Modal from "./Modal";
@@ -229,7 +229,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
             const body = {
                 productId: productsData[currentIndex].productId,
                 accountId: id,
-                region: region === "Любой" ? "Any" : region,
+                region: getRegionOnLatin(region),
                 paymentMethod: system
             }
             const {region: reg, accountId, ...robloxBody} = body
@@ -344,11 +344,11 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             </div>
                             <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Пароль</span>
-                                <Input placeholder="Ваш пароль" value={password} setValue={setPassword} />
+                                <Input placeholder="Ваш пароль" value={password} setValue={setPassword} type="password" />
                             </div>
                             <div className="flex flex-col gap-1 relative z-1">
-                                <span className="text-lg">Nikname в игре</span>
-                                <Input placeholder="Ваш nikname" value={nick} setValue={setNick} />
+                                <span className="text-lg">Nickname в игре</span>
+                                <Input placeholder="Ваш nickname" value={nick} setValue={setNick} />
                             </div>
                             <div className="flex flex-col gap-1 relative z-1">
                                 <span className="text-lg">Backup code</span>
@@ -393,22 +393,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         <div className="flex flex-col gap-1 z-1 max-[481px]:-mt-10">
                             <span className="text-lg">Быстрый выбор</span>
                             <div className="flex gap-7 max-[481px]:gap-3 w-full justify-between">
-                                {
-                                products.slice(0, 3).map((prod, i)=>
-                                <Card
-                                key={i}
-                                index={i}
-                                isTopup={isTopup}
-                                currentIndex={currentIndex}
-                                setCurrentIndex={setCurrentIndex}
-                                price={0}
-                                image={products[i].image || boxes[i]?.image}
-                                coin={getPureName(prod.name)}
-                                disabled={!prod.inStock || false}
-                                callback={()=>setProduct("")}
-                                />)
-                                }
-                                {/* {productsData ?
+                                {productsData ?
                                 productsData.sort((a, b) => a.priceInRub - b.priceInRub).slice(0, 3).map((prod, i)=>
                                 <Card
                                 key={i}
@@ -425,7 +410,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                                 :
                                 products.slice(0, 3).map((_, i)=>
                                 <CardSkeleton key={i} isTopup={isTopup} />)
-                                } */}
+                                }
                             </div>
                         </div>
                     </div>

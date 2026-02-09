@@ -55,7 +55,7 @@ export const arcRaiders: GameInfo = {
 }
 
 export const warhammer: GameInfo = {
-    title: "Warhammer",
+    title: "Warhammer 40,000: Space Marine 2",
     mainImage: "warhammer_slider.webp",
     link: "/warhammer",
     images: [

@@ -2,6 +2,7 @@
 import { ChangeEvent, Dispatch, HTMLInputTypeAttribute, ReactNode, SetStateAction } from "react"
 import Icon from "./Icon";
 import Link from "next/link";
+import { useArrayContext } from "./FAQArrayContext";
 
 interface InputProps {
     type?: HTMLInputTypeAttribute;
@@ -18,7 +19,7 @@ interface InputProps {
 }
 
 export default function Input({ type, hint, placeholder, value, setValue, renderHint, filterHandler, isWarning=false, isSuccess=false, hintWrap=false, disabled=false }:InputProps) {
-
+    const { updateFirstTwoValues } = useArrayContext()
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         if (filterHandler) {
@@ -56,7 +57,7 @@ export default function Input({ type, hint, placeholder, value, setValue, render
             (!hintWrap ?
             <span className="justify-self-end lg:mr-5 mr-2 text-[#686868] text-[10px]">{hint}</span>
             :
-            <Link href="#faq" className="justify-self-end lg:mr-5 mr-2 cursor-pointer rounded-full bg-[#8E8E8E] px-2 py-2.5 flex justify-between items-center text-[8px] text-black h-4 gap-1 w-fit"><Icon type="question" size={12} />{hint}</Link>
+            <Link href="#faq" className="justify-self-end lg:mr-5 mr-2 cursor-pointer rounded-full bg-[#8E8E8E] px-2 py-2.5 flex justify-between items-center text-[8px] text-black h-4 gap-1 w-fit" onClick={()=>updateFirstTwoValues(true, false)}><Icon type="question" size={12} />{hint}</Link>
             )}
         </div>
     )

@@ -55,3 +55,18 @@ export function getDataOrLoader(data: any, postfix="") {
   else
     return data + postfix
 }
+
+export function getRegionOnLatin(region: string) {
+  switch (region) {
+    case "Любой":
+      return "Any"
+    case "Европа":
+      return "Europe"
+    case "США":
+      return "America"
+    case "Азия":
+      return "Asia"
+    default:
+      return region
+  }
+}

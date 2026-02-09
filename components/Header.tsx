@@ -14,8 +14,10 @@ export default function Header() {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            if(window.outerWidth <= 768) {
+            if (window.outerWidth <= 768) {
                 setSize([32, 90]);
+            } else {
+                setSize([82, 174]);
             }
 
             if(window.outerWidth <= 480) {
@@ -41,8 +43,8 @@ export default function Header() {
             </div>
             <Link href="/"><Icon type="logo" height={size[0]} width={size[1]} /></Link>
             <div className="flex lg:gap-10 gap-3 font-light lg:text-base text-sm">
-                <a href="#steamdrop">О НАС</a>
-                <a href="#faq">FAQ</a>
+                <Link href="/#steamdrop">О НАС</Link>
+                <Link href="/#faq">FAQ</Link>
             </div>
             <div className="lg:flex items-center gap-2 hidden">
                 <a href="#">

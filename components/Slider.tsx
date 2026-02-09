@@ -56,7 +56,7 @@ export default function Slider({ mainImage="" }:SliderProps) {
                         :
                         <div className="bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center pt-5 rounded-r-3xl lg:flex flex-col border-1 border-[#0A141D] gap-7 lg:h-full max-[1025px]:h-[221px] max-[1025px]:hidden">
                             <div className="flex justify-between mr-3">
-                                <h1 className="lg:text-2xl max-[1025px]:text-xl ml-5">{data[currentIndex].title}</h1>
+                                <h1 className="lg:text-xl max-[1025px]:text-lg ml-5">{data[currentIndex].title}</h1>
                             </div>
                             <div className="w-[94%] grid grid-cols-[40%_60%] h-40 lg:grid-rows-[99px_99px] max-[1025px]:grid-rows-[63px_63px] gap-4 h-fit" onMouseLeave={()=>setCurrentImage(data[currentIndex].mainImage)}>
                                 {data[currentIndex].images.map((path, i)=><div key={i} onMouseEnter={()=>setCurrentImage(path)} style={{ backgroundImage: `url('/images/${path}')` }} className={`w-full h-full bg-cover bg-no-repeat bg-center ${i % 2 === 0 ? "lg:rounded-r-2xl max-[1025px]:rounded-r-lg" : "lg:rounded-2xl max-[1025px]:rounded-lg"}`} />)}
@@ -81,16 +81,16 @@ export default function Slider({ mainImage="" }:SliderProps) {
                                     {data[currentIndex].platforms.map((platform, i)=><Icon key={i} type={platform} />)}
                                 </div>
                                 <button className="btn text-sm px-5 py-2">
-                                    {data[currentIndex].price} ₽
+                                    Купить
                                 </button>
                             </div>
                         </div>
                         }
                     </Link>
                     <div className="lg:hidden h-19 rounded-b-3xl max-[1025px]:flex items-center justify-between bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center px-5">
-                        <h1 className="text-2xl max-[481px]:text-xl">{data[currentIndex].title}</h1>
+                        <h1 className="text-xl max-[481px]:text-sm">{data[currentIndex].title}</h1>
                         <button className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm w-24">
-                            {data[currentIndex].price} ₽
+                            Купить
                         </button>
                     </div>
                     <div className="w-full flex justify-center items-center gap-4 lg:mt-0 max-[1025px]:mt-2">

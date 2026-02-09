@@ -91,7 +91,7 @@
   }
 
 .btn {
-  @apply shadow-lg/30 bg-radial from-[#45C47E] from-0% to-[#2D8451] rounded-xl;
+  @apply shadow-lg/30 bg-radial from-[#45C47E] from-0% to-[#2D8451] rounded-xl border-1 border-transparent;
 }
 
 .btn:hover {

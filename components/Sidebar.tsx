@@ -175,6 +175,18 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
     ref={sidebarRef}
     className={`sidebar fixed select-none z-500 top-0 left-0 h-full w-94 bg-[#171D25] shadow-2xl transition-all duration-200 ease-in-out overflow-y-auto ${open ? 'translate-x-0' : '-translate-x-full'}`}
     >
+        <div className="w-full max-[481px]:grid justify-items-end relative top-5 hidden pr-5">
+            <svg width="19" height="19" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>setOpen(!open)}>
+            <g clip-path="url(#clip0_1965_4933)">
+            <path d="M15.7863 1.21484L1.21484 15.7863M1.21484 1.21484L15.7863 15.7863" stroke="#EEEEEE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_1965_4933">
+            <rect width="19" height="19" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+        </div>
         <div className="p-6">
           {sections.map((section, i)=>
             <ul className="space-y-5 list-none mb-5" key={i}>

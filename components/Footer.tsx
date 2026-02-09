@@ -10,6 +10,8 @@ export default function Footer() {
         const checkScreenSize = () => {
             if(window.outerWidth <= 768) {
                 setSize([25, 80]);
+            } else {
+                setSize([82, 174])
             }
         };
 
