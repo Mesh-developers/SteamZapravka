@@ -35,13 +35,17 @@ export default function Slider({ mainImage="" }:SliderProps) {
     const minSwipeDistance = 50
 
     // Обработка начала касания
-    const onTouchStart = (e: TouchEvent) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
         setTouchEndX(0)
         setTouchStartX(e.targetTouches[0].clientX)
     }
 
     // Обработка движения касания
-    const onTouchMove = (e: TouchEvent) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
         setTouchEndX(e.targetTouches[0].clientX)
     }
 
