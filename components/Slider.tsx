@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Icon from "./Icon"
 import { arcRaiders, warhammer, farmingSimulator, GameInfo, monsterHunter } from "@/constants"
 import Link from "next/link"
@@ -12,6 +12,10 @@ type SliderProps = {
 export default function Slider({ mainImage="" }:SliderProps) {
     const [currentImage, setCurrentImage] = useState(mainImage||"arc_raiders_slider.png")
     const [currentIndex, setCurrentIndex] = useState(0)
+    const [touchStartX, setTouchStartX] = useState(0)
+    const [touchEndX, setTouchEndX] = useState(0)
+    const sliderRef = useRef<HTMLDivElement>(null)
+
     const data: GameInfo[] = [
         {
            ...arcRaiders
@@ -26,6 +30,39 @@ export default function Slider({ mainImage="" }:SliderProps) {
             ...monsterHunter
         }
     ].filter((val)=>val.mainImage !== mainImage)
+
+    // Минимальная дистанция свайпа
+    const minSwipeDistance = 50
+
+    // Обработка начала касания
+    const onTouchStart = (e: TouchEvent) => {
+        setTouchEndX(0)
+        setTouchStartX(e.targetTouches[0].clientX)
+    }
+
+    // Обработка движения касания
+    const onTouchMove = (e: TouchEvent) => {
+        setTouchEndX(e.targetTouches[0].clientX)
+    }
+
+    // Обработка окончания касания
+    const onTouchEnd = () => {
+        if (!touchStartX || !touchEndX) return
+
+        const distance = touchStartX - touchEndX
+        const isLeftSwipe = distance > minSwipeDistance
+        const isRightSwipe = distance < -minSwipeDistance
+
+        if (isLeftSwipe) {
+            // Свайп влево - следующий слайд
+            setCurrentIndex(state => state + 1 < data.length ? state + 1 : 0)
+        }
+
+        if (isRightSwipe) {
+            // Свайп вправо - предыдущий слайд
+            setCurrentIndex(state => state - 1 < 0 ? data.length - 1 : state - 1)
+        }
+    }
 
     useEffect(()=>{
         if (data[currentIndex].mainImage !== currentImage)
@@ -44,12 +81,12 @@ export default function Slider({ mainImage="" }:SliderProps) {
 
     return (
         <section className="w-full lg:h-130 max-[1025px]:h-80 max-[481px]:h-fit flex">
-            <div className="self-start w-full flex items-center gap-4">
-                <div className={`cursor-pointer select-none ${mainImage ? "relative z-1 min-[481px]:left-3" : ""}`} onClick={()=>setCurrentIndex(state=>state-1 < 0 ? data.length-1 : state-1)}>
+            <Link href={data[currentIndex].link} className="self-start w-full flex items-center gap-4">
+                <div className={`cursor-pointer select-none max-[481px]:hidden ${mainImage ? "relative z-1 min-[481px]:left-3" : ""}`} onClick={()=>setCurrentIndex(state=>state-1 < 0 ? data.length-1 : state-1)}>
                     <Icon type="arrow" />
                 </div>
-                <div className="w-full flex flex-col lg:gap-4 max-[1025px]:gap-0">
-                    <Link href={data[currentIndex].link} className={`${mainImage ? "grid-cols-1 relative -left-10 max-[481px]:static max-[481px]:w-[100%] w-[106%]" : "lg:grid-cols-[2fr_1fr] max-[1025px]:grid-cols-1"} grid cursor-pointer`}>
+                <div className="w-full flex flex-col lg:gap-4 max-[1025px]:gap-0" ref={sliderRef} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+                    <div className={`${mainImage ? "grid-cols-1 relative -left-10 max-[481px]:static max-[481px]:w-[100%] w-[106%]" : "lg:grid-cols-[2fr_1fr] max-[1025px]:grid-cols-1"} grid cursor-pointer`}>
                         <div style={{ backgroundImage: `url('/images/${currentImage}')` }} className={`${mainImage ? "rounded-3xl shadow-[inset_60px_0_100px_-5px_rgba(0,0,0,0.5),inset_-60px_0_100px_-5px_rgba(0,0,0,0.5)] h-[530px]" : "lg:rounded-l-3xl max-[1025px]:rounded-t-3xl lg:shadow-[15px_0_20px_-3px_rgba(0,0,0,0.6)] max-[1025px]:shadow-[0px_15px_20px_-3px_rgba(0,0,0,0.6)]"} relative bg-cover bg-no-repeat bg-top max-[481px]:rounded-b-[0px] lg:h-[473px] max-[1025px]:h-[221px] max-[481px]:h-[150px]`} />
                         {mainImage ?
                         <></>
@@ -80,27 +117,27 @@ export default function Slider({ mainImage="" }:SliderProps) {
                                 <div className="flex gap-2 ml-5">
                                     {data[currentIndex].platforms.map((platform, i)=><Icon key={i} type={platform} />)}
                                 </div>
-                                <button className="btn text-sm px-5 py-2">
+                                <Link href={data[currentIndex].link} className="btn text-sm px-5 py-2">
                                     Купить
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         }
-                    </Link>
+                    </div>
                     <div className="lg:hidden h-19 rounded-b-3xl max-[1025px]:flex items-center justify-between bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center px-5">
                         <h1 className="text-xl max-[481px]:text-sm">{data[currentIndex].title}</h1>
-                        <button className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm w-24">
+                        <Link href={data[currentIndex].link} className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm w-24">
                             Купить
-                        </button>
+                        </Link>
                     </div>
                     <div className="w-full flex justify-center items-center gap-4 lg:mt-0 max-[1025px]:mt-2">
                         {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[10px] w-[40px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
                     </div>
                 </div>
-                <div className={`rotate-180 cursor-pointer select-none ${mainImage ? "relative min-[481px]:right-3" : ""}`} onClick={()=>setCurrentIndex(state=>state+1 === data.length ? 0 : state+1)}>
+                <div className={`rotate-180 cursor-pointer select-none max-[481px]:hidden ${mainImage ? "relative min-[481px]:right-3" : ""}`} onClick={()=>setCurrentIndex(state=>state+1 === data.length ? 0 : state+1)}>
                     <Icon type="arrow" />
                 </div>
-            </div>
+            </Link>
         </section>
     )
 }

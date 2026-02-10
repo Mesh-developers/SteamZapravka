@@ -218,6 +218,10 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     })
                     redirect(data.paymentUrl, RedirectType.push)
                 }
+            } else {
+                const mes = (await res.json()).message
+                if (mes)
+                    setResMessage(mes)
             }
         } else if (!isPrivacy || !isUserTerms) {
             setResMessage(TERMS_ERROR_TEXT)
@@ -278,6 +282,10 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         email
                     })
                     redirect(data.paymentUrl, RedirectType.push)
+                } else {
+                    const mes = (await res.json()).message
+                    if (mes)
+                        setResMessage(mes)
                 }
             }
         }

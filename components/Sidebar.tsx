@@ -177,7 +177,7 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
     >
         <div className="w-full max-[481px]:grid justify-items-end relative top-5 hidden pr-5">
             <svg width="19" height="19" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>setOpen(!open)}>
-            <g clip-path="url(#clip0_1965_4933)">
+            <g clipPath="url(#clip0_1965_4933)">
             <path d="M15.7863 1.21484L1.21484 15.7863M1.21484 1.21484L15.7863 15.7863" stroke="#EEEEEE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </g>
             <defs>

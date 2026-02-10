@@ -38,11 +38,11 @@ export default function Header() {
             <div className="lg:w-fit md:w-20">
                 <BurgerMenu open={open} setOpen={setOpen} />
             </div>
-            <div className="">
+            <div className="max-[481px]:order-last">
                 <Switcher isMobile={isMobile} leftText="Игры" rightText="Сервисы" leftImage="gamepad_white.png" rightImage="clound_white.png" />
             </div>
             <Link href="/"><Icon type="logo" height={size[0]} width={size[1]} /></Link>
-            <div className="flex lg:gap-10 gap-3 font-light lg:text-base text-sm">
+            <div className="flex lg:gap-10 gap-3 font-light lg:text-base text-sm max-[481px]:hidden">
                 <Link href="/#steamdrop">О НАС</Link>
                 <Link href="/#faq">FAQ</Link>
             </div>
