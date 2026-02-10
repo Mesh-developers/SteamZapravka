@@ -166,6 +166,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 140px;
   height: fit-content;
+  color: var(--white);
 }
 
 input::-webkit-outer-spin-button,

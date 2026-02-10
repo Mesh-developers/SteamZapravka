@@ -25,7 +25,7 @@ export default function CTA() {
     return (
         <section className="w-[100%] lg:h-96 md:h-75 bg-transparent flex items-start">
             {!isMobile && siteType === "telegram" && <Image width={840} height={900} src="/images/mika_services.png" loading="eager" quality={100} alt="astronaut" className="absolute -left-[5%] top-13" />}
-            {isMobile && siteType === "telegram" ? <Image width={561} height={682} src={"/images/telegram_mobile.png"} alt="telegram mobile" className="-left-3 -top-20 relative max-[481px]:-top-10 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[394px]:hidden !h-100 max-[481px]:!h-78" /> : <></>}
+            {isMobile && siteType === "telegram" ? <Image width={561} height={682} src={"/images/telegram_mobile.png"} alt="telegram mobile" className="-left-3 -top-20 relative max-[481px]:-top-10 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[481px]:hidden !h-100 max-[481px]:!h-78" /> : <></>}
             <div className={`w-full flex flex-col ${siteType === "game" ? "" : "items-end max-[769px]:!w-118"} gap-6`}>
                 {siteType === "game" ?
                 <>
@@ -59,7 +59,7 @@ export default function CTA() {
                 }
             </div>
             {!isMobile && siteType === "game" && <Image width={840} height={900} src="/images/mika_game.png" loading="eager" quality={100} alt="astronaut" className="absolute left-[47%] top-13" />}
-            {isMobile && siteType === "game" ? <Image width={561} height={682} src={"/images/steam_mobile.png"} alt="steam mobile" className="-left-25 -top-20 relative max-[481px]:-top-10 max-[481px]:-left-35 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[394px]:hidden" /> : <></>}
+            {isMobile && siteType === "game" ? <Image width={561} height={682} src={"/images/steam_mobile.png"} alt="steam mobile" className="-left-25 -top-20 relative max-[481px]:-top-10 max-[481px]:-left-35 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[481px]:hidden" /> : <></>}
         </section>
     )
 }

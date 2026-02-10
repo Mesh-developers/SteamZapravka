@@ -10,24 +10,14 @@ type DetailsRowProps = {
   question: string;
   answer: string;
   index: number;
-  show: boolean;
-  setShow: Dispatch<SetStateAction<boolean>>;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean[]>>;
   isBackLight: boolean;
 }
 
-function DetailsRow({ question, answer, index, show, setShow, open, setOpen, isBackLight }: DetailsRowProps) {
+function DetailsRow({ question, answer, index, open, setOpen, isBackLight }: DetailsRowProps) {
   const { siteType } = useSiteType()
   const [isLight, setIsLight] = useState(true)
-  useEffect(() => {
-    const el = document.getElementById('telegram_tutorial');
-    if (!el) return;
-    const handler = ()=>{ setShow(true) }
-    el.addEventListener('click', handler);
-    return () => el.removeEventListener('click', handler);
-
-  }, [open, show]);
 
   useEffect(()=>{
     if (isLight) {
@@ -44,10 +34,10 @@ function DetailsRow({ question, answer, index, show, setShow, open, setOpen, isB
   return (
     <details
       className="flex items-start gap-4 text-white outline-none border-b-1 border-[#222B3D] pb-4"
-
+      onClick={(e)=>e.stopPropagation()}
     >
       {/* вопрос + иконка */}
-      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""} ${isLight && isBackLight ? `${siteType === "game" ? "bg-(--green)" : "bg-(--blue)"}` : "bg-transparent"}`}>
+      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""} ${isLight && isBackLight ? `${siteType === "game" ? "bg-(--green)" : "bg-(--blue)"}` : "bg-transparent"}`} onClick={(e)=>e.stopPropagation()}>
         <h2 className="lg:text-lg max-[1025px]:text-base text-(--white) select-none self-center flex flex-col max-[481px]:w-60">
           {question}
           {open ? <p className="relative flex-1 text-[12px] text-(--white) max-[481px]:flex w-60 hidden" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
@@ -89,23 +79,10 @@ export default function FAQ() {
     const { siteType } = useSiteType()
     const [show, setShow] = useState(false);
 
-    const items = [
+    const items = siteType === "telegram" ? [
         {
-            question: siteType === "game" ? "Где найти STEAM логин?" : "Где найти имя пользователя в Telegram?",
-            answer: siteType === "game" ?
-            `
-            <p>
-              Важно! Логин — это имя, которое вы
-                    используете для входа в Steam.
-                    Если вы введёте неверный логин, средства будут зачислены другому пользователю.<br><br>
-              <a href="https://store.steampowered.com/login/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
-            </p>
-            <button id='telegram_tutorial' class="cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
-              <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
-              <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
-            </button>
-            `
-            :`<p>
+          question: "Где найти имя пользователя в Telegram?",
+          answer: `<p>
               1. Откройте Telegram <br>
               2. Перейдите в настройки <br>
               3. Откройте раздел "Мой профиль" <br>
@@ -113,10 +90,10 @@ export default function FAQ() {
 
               Если у вас не задано имя пользователя, придумайте и добавьте его в настройках. Без него мы не сможем отправить вам звёзды.
             </p>
-            <button id='telegram_tutorial' class="cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
-              <img src='/images/youtube.png' class='lg:w-[50px] max-[1025px]:w-[30px]' />
+            <span id='tutorial' class="z-5 relative cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
+              <img src='/images/youtube.png' class='select-none lg:w-[50px] max-[1025px]:w-[30px]' />
               <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
-            </button>
+            </span>
             `
         },
         {
@@ -156,6 +133,106 @@ export default function FAQ() {
             answer: "Цена на звёзды иногда меняется из-за колебаний курса или обновлений условий. Если вы увидели разницу — это значит, что цена изменилась с момента вашего входа на сайт. Вы можете продолжить оплату по новой цене или обновить страницу, чтобы увидеть актуальное предложение."
         },
     ]
+    :
+    [
+        {
+            question: "Где найти STEAM логин?",
+            answer: `
+            <p>
+              Важно! Логин — это имя, которое вы
+                    используете для входа в Steam.
+                    Если вы введёте неверный логин, средства будут зачислены другому пользователю.<br><br>
+              <a href="https://store.steampowered.com/login/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
+            </p>
+            <span id='tutorial' class="z-5 relative cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
+              <img src='/images/youtube.png' class='select-none lg:w-[50px] max-[1025px]:w-[30px]' />
+              <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
+            </span>
+            `
+        },
+        {
+            question: "Важно. Требования к аккаунту",
+            answer: `
+            <p>
+            Существует перечень требований к аккаунту, при соблюдении которых возможно
+            пополнение баланса без ограничений. <br><br>
+
+            Страна вашего аккаунта должна быть одной из стран СНГ. Поддерживаются Казахстан,
+            Узбекистан, Кыргызстан, Россия и другие страны СНГ. <br><br>
+
+            Если аккаунт зарегистрирован в Китае, Турции или других странах вне СНГ, пополнение
+            будет недоступно.
+            </p>
+            `
+        },
+        {
+            question: "Прочитайте этот гайд при первом пополнении нового аккаунта Steam",
+            answer: `
+            <p>
+            Если вы пополняете Steam впервые, валюта аккаунта может смениться на доллары, евро
+            или другую валюту, а регион аккаунта будет изменен автоматически. <br><br>
+            Чтобы сохранить текущий регион и валюту аккаунта, следуйте инструкции ниже.
+            </p>
+            `
+        },
+        {
+            question: "Как правильно пополнить Steam, если аккаунт новый",
+            answer: `
+            <p>
+              <ol>
+                <li>Зайдите в профиль Steam и выберите пункт <b>«Активировать подарочную карту».</b></li>
+                <li>Введите любой тестовый код, например <b>Steam-Zapravka-00000</b>, и нажмите <b>«Активировать»</b>.</li>
+                <li>Добавьте бесплатную игру в библиотеку через телефон, используя мобильное приложение или браузер.</li>
+                <li>Проверьте валюту аккаунта и убедитесь, что отображаются ₽ или <b>₸</b>.</li>
+                <li>После этого пополняйте баланс через <b>Steam Zapravka</b>.</li>
+              </ol><br><br>
+              <span>
+              <b>Важно:</b> если пополнить баланс без выполнения этих действий, Steam может
+              автоматически изменить регион и валюту. Вернуть правильный регион позже сложно и
+              обычно возможно только через поддержку Steam.
+              </span>
+            </p>
+            `
+        },
+        {
+          question: "У меня новый аккаунт Steam или аккаунт без пополнений",
+          answer: `
+          Если у вас новый аккаунт Steam или баланс ранее никогда не пополнялся, обязательно
+          ознакомьтесь с инструкцией перед первым пополнением.<br><br>
+          При первом пополнении нового аккаунта Steam валюта и регион аккаунта могут измениться
+          автоматически.<br><br>
+          В таком случае цены на внутренние товары Steam будут отображаться в другой валюте,
+          например в долларах или евро, а не в валюте вашего региона. Учитывайте это перед
+          пополнением.
+          `
+        },
+        {
+          question: "Пришла сумма меньше, чем в калькуляторе. Что делать ",
+          answer: `
+          Для пополнения баланса производится конвертация средств между валютами.<br><br>
+          Из-за курсовой разницы итоговая сумма может отличаться от рассчитанной примерно на
+          <b>1–5%</b>. Это нормально и не является ошибкой.
+          `
+        },
+        {
+          question: "Деньги не пришли на баланс Steam",
+          answer: `
+          Если вы корректно указали логин Steam, обратите внимание, что логин отличается от
+          никнейма. <br><br>
+          В большинстве случаев баланс зачисляется мгновенно. <br><br>
+          Если средства не поступили в течение <b>10 минут</b>, пожалуйста, обратитесь в техническую
+          поддержку через виджет в правом нижнем углу экрана.
+          `
+        },
+        {
+          question: "Что такое логин Steam",
+          answer: `
+          Логин Steam это имя, которое вы вводите при авторизации в аккаунт. <br><br>
+          Он уникален и не совпадает с никнеймом, который отображается в профиле. <br><br>
+          Не путайте логин и никнейм, так как у разных пользователей никнеймы могут совпадать.
+          `
+        }
+    ]
 
     const [open, setOpen] = useState<boolean[]>(new Array(items.length).fill(false));
     useEffect(()=>{
@@ -173,12 +250,73 @@ export default function FAQ() {
       })
     }, [firstTwoArr])
 
+      useEffect(() => {
+  let isHandlerAttached = false;
+  const handler = () => setShow(true)
+
+  const attachHandler = () => {
+    const el = document.getElementById('tutorial');
+
+    if (!el) return false;
+
+    // Проверяем по data-атрибуту
+    if (el.dataset.clickHandlerAttached === 'true') {
+      return true;
+    }
+
+    // Привязываем обработчик
+    el.addEventListener('click', handler);
+    el.dataset.clickHandlerAttached = 'true';
+    isHandlerAttached = true;
+
+    return true;
+  };
+
+  setTimeout(() => {
+    if (!attachHandler()) {
+      // Если элемент не найден, используем MutationObserver
+      const observer = new MutationObserver(() => {
+        attachHandler();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      // Очистка
+      return () => {
+        if (isHandlerAttached) {
+          const el = document.getElementById('tutorial');
+          if (el) {
+            el.removeEventListener('click', handler);
+            delete el.dataset.clickHandlerAttached;
+          }
+        }
+        observer.disconnect();
+      };
+    }
+  }, 1000);
+
+  // Очистка
+  return () => {
+    if (isHandlerAttached) {
+      const el = document.getElementById('tutorial');
+      if (el) {
+        el.removeEventListener('click', handler);
+        delete el.dataset.clickHandlerAttached;
+      }
+    }
+  };
+
+  }, [open, show]);
+
     return (
-      <div className="lg:h-240 max-[1025px]:h-270 max-[481px]:h-fit">
-        <section id="faq" className="w-full max-[481px]:w-[90%] h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
+      <div className="lg:h-220 max-[1025px]:h-230 max-[481px]:h-fit max-[481px]:w-[99%]">
+        <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
             <h1 className="lg:text-4xl max-[1025px]:text-2xl max-[481px]:text-xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
-                <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} show={show} setShow={setShow} question={question} answer={answer} isBackLight={firstTwoArr[i]} />
+                <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} question={question} answer={answer} isBackLight={firstTwoArr[i]} />
             ))}
             <Modal open={show} onClose={()=>setShow(false)}>
               <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2">

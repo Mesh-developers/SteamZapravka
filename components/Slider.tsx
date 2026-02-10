@@ -117,18 +117,18 @@ export default function Slider({ mainImage="" }:SliderProps) {
                                 <div className="flex gap-2 ml-5">
                                     {data[currentIndex].platforms.map((platform, i)=><Icon key={i} type={platform} />)}
                                 </div>
-                                <Link href={data[currentIndex].link} className="btn text-sm px-5 py-2">
+                                <button className="btn text-sm px-5 py-2">
                                     Купить
-                                </Link>
+                                </button>
                             </div>
                         </div>
                         }
                     </div>
                     <div className="lg:hidden h-19 rounded-b-3xl max-[1025px]:flex items-center justify-between bg-[url('/images/slider_back.png')] bg-cover bg-no-repeat bg-center px-5">
                         <h1 className="text-xl max-[481px]:text-sm">{data[currentIndex].title}</h1>
-                        <Link href={data[currentIndex].link} className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm w-24">
+                        <button className="btn !rounded-md text-lg px-5 py-1 max-[481px]:text-sm w-24">
                             Купить
-                        </Link>
+                        </button>
                     </div>
                     <div className="w-full flex justify-center items-center gap-4 lg:mt-0 max-[1025px]:mt-2">
                         {data.map((_, i)=><div onClick={()=>setCurrentIndex(i)} key={i} className={`cursor-pointer h-[10px] w-[40px] rounded-sm ${i === currentIndex ? "bg-(--white)" : "bg-(--border)"}`} />)}
