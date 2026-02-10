@@ -23,13 +23,13 @@ export default function CTA() {
         return () => window.removeEventListener('resize', checkScreenSize);
     }, []);
     return (
-        <section className="w-[100%] lg:h-96 md:h-75 bg-transparent flex items-start">
+        <section className="w-[100%] lg:h-96 md:h-75 max-[481px]:h-10 bg-transparent flex items-start">
             {!isMobile && siteType === "telegram" && <Image width={840} height={900} src="/images/mika_services.png" loading="eager" quality={100} alt="astronaut" className="absolute -left-[5%] top-13" />}
             {isMobile && siteType === "telegram" ? <Image width={561} height={682} src={"/images/telegram_mobile.png"} alt="telegram mobile" className="-left-3 -top-20 relative max-[481px]:-top-10 max-[481px]:w-[400px] max-[481px]:h-[280px] max-[481px]:hidden !h-100 max-[481px]:!h-78" /> : <></>}
             <div className={`w-full flex flex-col ${siteType === "game" ? "" : "items-end max-[769px]:!w-118"} gap-6`}>
                 {siteType === "game" ?
                 <>
-                    <h1 className="font-(family-name:--bounded-regular) lg:w-full lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-100 max-[394px]:w-[100%]">
+                    <h1 className="font-(family-name:--bounded-regular) lg:w-full lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-100 max-[394px]:w-[100%] max-[481px]:text-center max-[481px]:text-2xl">
                         Заправь свой <span className="text-(--green)">STEAM</span> <br/>
                         баланс на максимум!
                     </h1>
@@ -37,13 +37,13 @@ export default function CTA() {
                         Мгновенное пополнение, низкая комиссия <br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
-                    <Link href="#balance" className="w-96 h-20 font-(family-name:--manrope-semibold) btn !rounded-2xl text-xl flex items-center justify-center max-[481px]:w-60 max-[481px]:h-15">
+                    <Link href="#balance" className="w-96 h-20 font-(family-name:--manrope-semibold) btn !rounded-2xl text-xl flex items-center justify-center max-[481px]:w-60 max-[481px]:h-15 max-[481px]:hidden">
                         Пополнить
                     </Link>
                 </>
                 :
                 <>
-                    <h1 className="font-(family-name:--bounded-regular) lg:w-fit lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[769px]:text-right">
+                    <h1 className="font-(family-name:--bounded-regular) lg:w-fit lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[769px]:text-right max-[481px]:text-center max-[481px]:text-2xl">
                         Доступ к <span className="text-(--blue)">сервисам</span><br/>
                         звёзд на максимум!
                     </h1>
@@ -51,7 +51,7 @@ export default function CTA() {
                         Мгновенное пополнение, низкая комиссия<br/>
                         и 100% гарантия зачисления на ваш счет
                     </h2>
-                    <Link href="#balance" className="w-96 h-20 font-(family-name:--manrope-semibold) btn hover:!border-(--blue) !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl text-center flex items-center justify-center max-[481px]:w-60 max-[481px]:h-15">
+                    <Link href="#balance" className="w-96 h-20 font-(family-name:--manrope-semibold) btn hover:!border-(--blue) !from-[#0698D6] !to-[#035070] !rounded-2xl text-xl text-center flex items-center justify-center max-[481px]:w-60 max-[481px]:h-15 max-[481px]:hidden">
                         Купить <br />
                         Telegram Stars
                     </Link>

@@ -400,7 +400,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         </div>
                         <div className="flex flex-col gap-1 z-1 max-[481px]:-mt-10">
                             <span className="text-lg">Быстрый выбор</span>
-                            <div className="flex gap-7 max-[481px]:gap-3 w-full justify-between">
+                            <div className="flex gap-7 max-[481px]:gap-3 max-[481px]:flex-col w-full justify-between">
                                 {productsData ?
                                 productsData.sort((a, b) => a.priceInRub - b.priceInRub).slice(0, 3).map((prod, i)=>
                                 <Card
@@ -446,7 +446,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         {!isTopup &&
                         <>
                         <span className="text-xl mt-2">E-mail</span>
-                        <Input isWarning={!!email && !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
+                        <Input isWarning={!email || !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
                         </>}
                         <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full min-h-18 btn !rounded-3xl text-xl">
                             <span>
@@ -512,7 +512,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         {!isTopup &&
                         <>
                         <span className="text-lg mt-2">E-mail</span>
-                        <Input isWarning={!!email && !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
+                        <Input isWarning={!email || !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
                         </>}
                         <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full h-25 btn !rounded-3xl text-xl">
                             <span>
@@ -575,7 +575,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     {!isTopup &&
                     <>
                     <span className="text-xl mt-2">E-mail</span>
-                    <Input isWarning={!!email && !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
+                    <Input isWarning={!email || !emailRegex.test(email)} type="email" placeholder="Ваш E-mail" value={email} setValue={setEmail} />
                     </>}
                     <button onClick={()=>isTopup ? buyProduct() : buyBox()} className="!font-(family-name:--manrope-medium) mt-5 w-full min-h-18 btn !rounded-3xl text-xl">
                         <span>

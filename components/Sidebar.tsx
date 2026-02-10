@@ -5,6 +5,8 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import Image from "next/image";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useSiteType } from "./SiteTypeContext";
+import { useRouter } from "next/navigation";
 
 const sections = [
     {
@@ -105,6 +107,11 @@ const sections = [
           image: "nintendo_icon.png",
           href: "/nintendo"
         },
+        {
+          title: 'TG Stars',
+          image: "tg_icon.png",
+          href: "/#balance"
+        },
       ]
     }
 ];
@@ -115,9 +122,10 @@ type LinkItemProps = {
   title: string;
   href: string;
   toggleFavourites: ()=>void;
+  onClose: ()=>void;
 }
 
-function LinkItem({ isFavourite, image, title, href, toggleFavourites }:LinkItemProps) {
+function LinkItem({ isFavourite, image, title, href, toggleFavourites, onClose }:LinkItemProps) {
   return (
     <li className="flex items-center gap-4 cursor-pointer">
       <div onClick={toggleFavourites}>
@@ -131,7 +139,7 @@ function LinkItem({ isFavourite, image, title, href, toggleFavourites }:LinkItem
         </svg>
         }
       </div>
-      <Link href={href} className="flex items-center gap-4">
+      <Link href={href} className="flex items-center gap-4" onClick={onClose}>
         <Image quality={100} width={25} height={25} src={"/images/" + image} alt="cover" loading="eager" className="object-cover !w-[25px] !h-[25px] rounded-[6px]" />
         <span className="font-(family-name:--manrope-semibold)">{title}</span>
       </Link>
@@ -145,6 +153,7 @@ type SidebarProps = {
 }
 
 export default function Sidebar({ open, setOpen }:SidebarProps) {
+  const { toggleType } = useSiteType()
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [sectionOpen, setSectionOpen] = useState(new Array<boolean>(sections.length).fill(false))
   const [favourites, setFavourites] =  useLocalStorage<string[]>(FAVOURITES_STORAGE_KEY, [])
@@ -193,7 +202,7 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
               {favourites.map((favourite, j)=>{
                 const favouriteItem = section.items.find((item)=>item.title === favourite)
                 if (favouriteItem) {
-                  return <LinkItem key={j} image={favouriteItem.image} title={favouriteItem.title} href={favouriteItem.href} isFavourite toggleFavourites={()=>setFavourites(state=>state.filter(fav=>fav !== favourite))}  />
+                  return <LinkItem key={j} onClose={()=>setOpen(false)} image={favouriteItem.image} title={favouriteItem.title} href={favouriteItem.href} isFavourite toggleFavourites={()=>setFavourites(state=>state.filter(fav=>fav !== favourite))}  />
                 } else {
                   return <div key={j}></div>
                 }
@@ -217,6 +226,7 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
                 {section.items.map((item, itemIndex) => favourites.find(fav=>fav === item.title) ? <div key={itemIndex}></div> : (
                     <LinkItem
                     key={itemIndex}
+                    onClose={()=>{setOpen(false); if (itemIndex === (section.items.length - 1) && section.title === "Сервисы") { toggleType("telegram") } }}
                     href={item.href}
                     title={item.title}
                     image={item.image}

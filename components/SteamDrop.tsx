@@ -2,9 +2,9 @@ import { ReactNode, useEffect, useState } from "react"
 import Icon from "./Icon"
 import { useSiteType } from "./SiteTypeContext"
 
-function LinkItem({children, link}:{ children: ReactNode, link: string }) {
+function LinkItem({children, link, index}:{ children: ReactNode, link: string, index: number }) {
     return (
-        <a href={link} target="_blank" className="relative lg:max-w-[126px] lg:max-w-[126px] lg:min-w-[126px] lg:w-[126px] lg:h-[126px] w-[82px] h-[82px] flex items-center justify-center rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D]" style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12" }}>
+        <a href={link} target="_blank" className={`relative lg:max-w-[126px] lg:max-w-[126px] lg:min-w-[126px] lg:w-[126px] lg:h-[126px] w-[82px] h-[82px] flex items-center justify-center rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D] ${index === 0 ? "max-[481px]:!inset-shadow-[0_0_18px_#33E9E9]" : ""} ${index === 2 ? "max-[481px]:order-last max-[481px]:!inset-shadow-[0_0_18px_#8120B7]" : ""}`} style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12" }}>
             {children}
         </a>
     )
@@ -52,7 +52,7 @@ export default function SteamDrop() {
         "https://dtf.ru/id3087606"
     ]
     return (
-        <section id="steamdrop" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-2xl lg:px-8 px-3 py-4 grid min-[481]:grid-cols-2 grid-cols-1">
+        <section id="steamdrop" className="w-full h-fit border-1 border-(--border) bg-(--section-back) max-[481px]:bg-transparent max-[481px]:border-0 rounded-2xl lg:px-8 px-3 py-4 grid min-[481]:grid-cols-2 grid-cols-1">
             <div className="flex flex-col gap-6">
                 <h1 className="lg:text-4xl text-2xl max-[481px]:text-[23px] font-(family-name:--manrope-semibold) min-[481px]:text-start text-center">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
                 <h2 className="lg:text-xl text-base min-[481px]:block hidden">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
@@ -60,7 +60,7 @@ export default function SteamDrop() {
                 комиссиях и специальных акциях — мгновенно в ленте!</span>
             </div>
             <div className="w-full max-[481px]:mt-2 grid lg:grid-cols-[repeat(4,126px)] min-[481px]:grid-cols-4 min-[320px]:grid-cols-3 lg:grid-rows-2 auto-rows-min lg:gap-x-3 gap-x-6 gap-y-4 justify-end justify-items-end lg:content-start content-center">
-                {medias.filter((_, i)=>(isMobile && i !== 3 && i !== 4) || !isMobile).map((item, i)=><LinkItem key={i} link={links[i]}>{item}</LinkItem>)}
+                {medias.filter((_, i)=>(isMobile && i !== 3 && i !== 4) || !isMobile).map((item, i)=><LinkItem key={i} index={i} link={links[i]}>{item}</LinkItem>)}
             </div>
             <h2 className="text-sm text-center max-[481px]:block hidden mt-2">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
         </section>
