@@ -173,7 +173,7 @@ export default function Sidebar({ open, setOpen }:SidebarProps) {
   return (
     <div
     ref={sidebarRef}
-    className={`sidebar fixed select-none z-500 top-0 left-0 h-full w-94 bg-[#171D25] shadow-2xl transition-all duration-200 ease-in-out overflow-y-auto ${open ? 'translate-x-0' : '-translate-x-full'}`}
+    className={`sidebar fixed select-none z-500 top-0 left-0 h-full w-[30%] max-[481px]:w-[100%] bg-[#171D25] shadow-2xl transition-all duration-200 ease-in-out overflow-y-auto ${open ? 'translate-x-0' : '-translate-x-full'}`}
     >
         <div className="w-full max-[481px]:grid justify-items-end relative top-5 hidden pr-5">
             <svg width="19" height="19" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>setOpen(!open)}>
