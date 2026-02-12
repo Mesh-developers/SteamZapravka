@@ -38,17 +38,18 @@ export default function Balance() {
     const [exchangeTelegram, setExchangeTelegram] = useState<ExchangeTelegramResponse>();
     const debouncedLogin = useDebounce(login, 1000)
     const debouncedPromocode = useDebounce(promocode, 1000)
+    const debouncedСurrentStars = useDebounce(currentStars, 1000)
     const [promocodeResult, setPromocodeResult] = useState<PromocodeResponse>()
     const [loginResult, setLoginResult] = useState<LoginResponse>()
 
     const discountApply = (val: number, isSteam=false) => {
         if (isSteam) {
-            return promocodeResult?.discountPercentage ? Number(`1.${(8 - promocodeResult?.discountPercentage)}`) * val : val * 1.8
+            return promocodeResult?.discountPercentage ? ((100 + (8 - promocodeResult?.discountPercentage)) / 100) * val : val * 1.08
         }
         return promocodeResult?.discountPercentage ? (val * (100 - promocodeResult?.discountPercentage) / 100).toFixed(0) : val
     }
 
-    const getStarsPrice = async (starsCounts: number[]) => {
+    const getStarsPrice = async (starsCounts: number[], isShowMes=true) => {
         const res = await fetch("https://api.steamzapravka.io/stars/price", {
             method: "POST",
             headers: {
@@ -62,7 +63,7 @@ export default function Balance() {
         if (res.status === 200) {
             const data: ExchangeTelegramResponse = await res.json()
             return data
-        } else {
+        } else if (isShowMes) {
             setResMessage((await res.json()).message)
         }
     }
@@ -72,9 +73,9 @@ export default function Balance() {
     }, [starsIndex])
 
     useEffect(()=>{
-        if (!stars.includes(currentStars)) {
+        if (!stars.includes(debouncedСurrentStars)) {
             (async ()=>{
-                const data = await getStarsPrice([currentStars])
+                const data = await getStarsPrice([debouncedСurrentStars], false)
                 if (data) {
                     setCurrentStarsPrice([data.priceRubSbp[0], data.priceRubCrypto[0]])
                 }
@@ -82,7 +83,7 @@ export default function Balance() {
         } else {
             setCurrentStarsPrice(undefined)
         }
-    }, [currentStars])
+    }, [debouncedСurrentStars])
 
     useEffect(()=>{
         if (system === "SBP" && JSON.stringify(stars) !== JSON.stringify([100, 500, 1000, 2500])) {
