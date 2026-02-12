@@ -43,7 +43,7 @@ export default function CTA() {
                 </>
                 :
                 <>
-                    <h1 className="font-(family-name:--bounded-regular) lg:w-fit lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[769px]:text-right max-[481px]:text-center max-[481px]:text-2xl">
+                    <h1 className="font-(family-name:--bounded-regular) lg:w-fit lg:text-6xl max-[769px]:text-4xl max-[769px]:w-140 max-[481px]:w-fit max-[394px]:w-[100%] max-[769px]:text-right max-[481px]:text-center max-[481px]:self-center max-[481px]:text-2xl">
                         Доступ к <span className="text-(--blue)">сервисам</span><br/>
                         звёзд на максимум!
                     </h1>

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-type SiteType = 'game' | 'telegram';
+export type SiteType = 'game' | 'telegram';
 
 interface SiteTypeCtx {
   siteType: SiteType;

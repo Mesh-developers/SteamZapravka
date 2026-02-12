@@ -47,19 +47,19 @@ export default function Header() {
                 <Link href="/#faq">FAQ</Link>
             </div>
             <div className="lg:flex items-center gap-2 hidden">
-                <a href="#">
+                <a href="https://www.instagram.com/steamzapravka/" target="_blank">
                     <Icon type="instagram" size={17} strokeWidth={8} />
                 </a>
                 <a href="https://t.me/steamzapravka" target="_blank">
                     <Icon type="telegram" size={18} />
                 </a>
-                <a href="#">
+                <a href="https://www.youtube.com/channel/UCuLsh9PorQzjZRkyqx_w39w" target="_blank">
                     <Icon type="youtube" size={18} />
                 </a>
                 <a href="https://www.tiktok.com/@steam_zapravka" target="_blank">
                     <Icon type="tiktok" size={18} />
                 </a>
-                <a href="#">
+                <a href="https://discord.gg/jDR3ErZw" target="_blank">
                     <Icon type="discord" size={19} />
                 </a>
                 <a href="https://dtf.ru/id3087606" target="_blank">

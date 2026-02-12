@@ -2,9 +2,19 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
-import { useSiteType } from "./SiteTypeContext";
+import { SiteType, useSiteType } from "./SiteTypeContext";
 import Modal from "./Modal";
 import { useArrayContext } from "./FAQArrayContext";
+
+
+function TutorialButton({ setShow, siteType }:{ setShow: Dispatch<SetStateAction<boolean>>; siteType: SiteType }) {
+  return (
+    <span onClick={()=>setShow(true)} className={`z-5 relative cursor-pointer rounded-2xl top-2 w-[120px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-48 max-[481px]:top-19 max-[1025px]:h-15 flex flex-col self-center justify-center items-center ${siteType === "game" ? "bg-[#27837E]" : "bg-[#0698D6] max-[481px]:!top-15 max-[481px]:!left-40"}`}>
+      <img src='/images/youtube.png' className='select-none lg:w-[50px] max-[1025px]:w-[30px]' />
+      <span className='select-none max-[481px]:text-[10px]'>Инструкция</span>
+    </span>
+  )
+}
 
 type DetailsRowProps = {
   question: string;
@@ -12,10 +22,11 @@ type DetailsRowProps = {
   index: number;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean[]>>;
+  setShow: Dispatch<SetStateAction<boolean>>;
   isBackLight: boolean;
 }
 
-function DetailsRow({ question, answer, index, open, setOpen, isBackLight }: DetailsRowProps) {
+function DetailsRow({ question, answer, index, open, setOpen, setShow, isBackLight }: DetailsRowProps) {
   const { siteType } = useSiteType()
   const [isLight, setIsLight] = useState(true)
 
@@ -34,15 +45,15 @@ function DetailsRow({ question, answer, index, open, setOpen, isBackLight }: Det
   return (
     <details
       className="flex items-start gap-4 text-white outline-none border-b-1 border-[#222B3D] pb-4"
-      onClick={(e)=>e.stopPropagation()}
+      onClick={(e)=>e.preventDefault()}
     >
       {/* вопрос + иконка */}
-      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""} ${isLight && isBackLight ? `${siteType === "game" ? "bg-(--green)" : "bg-(--blue)"}` : "bg-transparent"}`} onClick={(e)=>e.stopPropagation()}>
+      <summary className={`flex-1 list-none grid grid-cols-[2fr_2fr_0.5fr] justify-between gap-10 ${open ? "max-[481px]:grid-cols-[2fr_1fr]" : ""} ${isLight && isBackLight ? `${siteType === "game" ? "bg-(--green)" : "bg-(--blue)"}` : "bg-transparent"}`} onClick={(e)=>e.preventDefault()}>
         <h2 className="lg:text-lg max-[1025px]:text-base text-(--white) select-none self-center flex flex-col max-[481px]:w-60">
           {question}
-          {open ? <p className="relative flex-1 text-[12px] text-(--white) max-[481px]:flex w-60 hidden" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
+          {open ? <div className="max-[481px]:flex w-60 flex-col hidden relative flex-1"><p className=" text-[12px] text-(--white)" dangerouslySetInnerHTML={{ __html: answer}} /> {index === 0 ? <TutorialButton setShow={setShow} siteType={siteType} /> : <></>}</div> : <div/>}
         </h2>
-        {open ? <p className="relative flex-1 lg:text-sm max-[1025px]:text-[9px] text-(--white) flex max-[481px]:hidden" dangerouslySetInnerHTML={{ __html: answer}}/> : <div/>}
+        {open ? <div className="max-[481px]:hidden"><p className="relative flex-1 lg:text-sm max-[1025px]:text-[9px] text-(--white) flex" dangerouslySetInnerHTML={{ __html: answer}} /> {index === 0 ? <TutorialButton setShow={setShow} siteType={siteType} /> : <></>}</div> : <div/>}
         {/* плюс → крестик */}
         <div
           className={`
@@ -90,10 +101,6 @@ export default function FAQ() {
 
               Если у вас не задано имя пользователя, придумайте и добавьте его в настройках. Без него мы не сможем отправить вам звёзды.
             </p>
-            <span id='tutorial' class="z-5 relative cursor-pointer rounded-2xl max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 lg:!w-[270px] lg:h-20 max-[1025px]:!w-[230px] max-[1025px]:h-15 gap-2 self-center flex flex-col justify-center items-center bg-[#0698D6]">
-              <img src='/images/youtube.png' class='select-none lg:w-[50px] max-[1025px]:w-[30px]' />
-              <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
-            </span>
             `
         },
         {
@@ -142,12 +149,8 @@ export default function FAQ() {
               Важно! Логин — это имя, которое вы
                     используете для входа в Steam.
                     Если вы введёте неверный логин, средства будут зачислены другому пользователю.<br><br>
-              <a href="https://store.steampowered.com/login/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
+              <a href="https://store.steampowered.com/account/" target="_blank" class="underline">STEAM Логин можно взять тут</a>
             </p>
-            <span id='tutorial' class="z-5 relative cursor-pointer rounded-2xl lg:!w-[270px] lg:h-20 max-[481px]:absolute max-[481px]:!w-[75px] max-[481px]:left-40 max-[481px]:top-13 max-[1025px]:!w-[230px] max-[1025px]:h-15 flex flex-col self-center justify-center items-center bg-[#27837E]">
-              <img src='/images/youtube.png' class='select-none lg:w-[50px] max-[1025px]:w-[30px]' />
-              <span class='select-none max-[481px]:text-[10px]'>Инструкция</span>
-            </span>
             `
         },
         {
@@ -250,73 +253,12 @@ export default function FAQ() {
       })
     }, [firstTwoArr])
 
-      useEffect(() => {
-  let isHandlerAttached = false;
-  const handler = () => setShow(true)
-
-  const attachHandler = () => {
-    const el = document.getElementById('tutorial');
-
-    if (!el) return false;
-
-    // Проверяем по data-атрибуту
-    if (el.dataset.clickHandlerAttached === 'true') {
-      return true;
-    }
-
-    // Привязываем обработчик
-    el.addEventListener('click', handler);
-    el.dataset.clickHandlerAttached = 'true';
-    isHandlerAttached = true;
-
-    return true;
-  };
-
-  setTimeout(() => {
-    if (!attachHandler()) {
-      // Если элемент не найден, используем MutationObserver
-      const observer = new MutationObserver(() => {
-        attachHandler();
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-
-      // Очистка
-      return () => {
-        if (isHandlerAttached) {
-          const el = document.getElementById('tutorial');
-          if (el) {
-            el.removeEventListener('click', handler);
-            delete el.dataset.clickHandlerAttached;
-          }
-        }
-        observer.disconnect();
-      };
-    }
-  }, 1000);
-
-  // Очистка
-  return () => {
-    if (isHandlerAttached) {
-      const el = document.getElementById('tutorial');
-      if (el) {
-        el.removeEventListener('click', handler);
-        delete el.dataset.clickHandlerAttached;
-      }
-    }
-  };
-
-  }, [open, show]);
-
     return (
       <div className="lg:h-230 max-[1025px]:h-230 max-[481px]:h-fit max-[481px]:w-[99%]">
         <section id="faq" className="w-full h-fit border-1 border-(--border) bg-(--section-back) rounded-3xl px-8 py-8 max-[481px]:px-4 max-[481px]:py-5 flex flex-col gap-4">
             <h1 className="lg:text-4xl max-[1025px]:text-2xl max-[481px]:text-xl">Часто задаваемые вопросы</h1>
             {items.map(({ question, answer }, i) => (
-                <DetailsRow key={question} index={i} open={open[i]} setOpen={setOpen} question={question} answer={answer} isBackLight={firstTwoArr[i]} />
+                <DetailsRow key={question} index={i} setShow={setShow} open={open[i]} setOpen={setOpen} question={question} answer={answer} isBackLight={firstTwoArr[i]} />
             ))}
             <Modal open={show} onClose={()=>setShow(false)}>
               <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2">

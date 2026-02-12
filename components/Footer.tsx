@@ -32,7 +32,7 @@ export default function Footer() {
                 <div className="flex flex-col lg:gap-4 max-[769px]:gap-2 items-start">
                     <h4 className="lg:text-xl max-[769px]:text-xs max-[481px]:text-[10px]">Помощь и обратная связь</h4>
                     <a href="mailto:support@steamzapravka.io" target="_blank" className="flex items-center gap-1 lg:text-sm max-[769px]:text-[9px]"><span className="mt-1"><Icon type="mail" size={12} /></span> support@steamzapravka.io</a>
-                    <a href="https://t.me/steamzapravka" target="_blank" className="flex items-center gap-1 lg:text-sm max-[769px]:text-[9px]"><Icon type="telegram" size={12} /> @steam_zapravka</a>
+                    <a href="https://t.me/+A0zqiKCT6os2ZWJk" target="_blank" className="flex items-center gap-1 lg:text-sm max-[769px]:text-[9px]"><Icon type="telegram" size={12} /> @steam_zapravka</a>
                 </div>
             </div>
         </footer>

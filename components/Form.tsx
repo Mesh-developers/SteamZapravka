@@ -538,7 +538,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     </form>
                 </div>
             </div>
-            <Modal open={isOpenForm} onClose={()=>setIsOpenForm(!isOpenForm)}>
+            <Modal open={isOpenForm} onClose={()=>setIsOpenForm(!isOpenForm)} isCloseMark={false}>
                 <form onSubmit={(e)=>e.preventDefault()} className="w-[90%] h-185 flex flex-col gap-2 bg-(--section-back) font-(family-name:--bounded-regular) px-5 pb-5 rounded-3xl border-1 border-(--border) overflow-hidden mx-5">
                     <div className="w-full grid justify-items-end relative top-5">
                         <svg width="19" height="19" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>setIsOpenForm(!isOpenForm)}>

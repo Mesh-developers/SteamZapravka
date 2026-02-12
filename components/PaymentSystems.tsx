@@ -23,7 +23,7 @@ export default function PaymentSystems({ system, setSystem, systems }:PaymentSys
         return (
         <button
         key={i}
-        className={`relative w-full min-h-[42px] lg:h-full md:h-[42px] flex items-center place-content-center bg-(--black) rounded-2xl col-span-2 ${system === sys.title ? "shadow-[3px_-3px_3px_-1px_#46F9D7,-3px_-3px_3px_-1px_#46F9D7,3px_3px_3px_-1px_#15B5ED,-3px_3px_3px_-1px_#15B5ED]" : (isDisabled ? "brightness-50" : "opacity-80")}`}
+        className={`relative w-full min-h-[42px] max-[481px]:min-h-[60px] lg:h-full md:h-[42px] flex items-center place-content-center bg-(--black) rounded-2xl col-span-2 ${system === sys.title ? "shadow-[3px_-3px_3px_-1px_#46F9D7,-3px_-3px_3px_-1px_#46F9D7,3px_3px_3px_-1px_#15B5ED,-3px_3px_3px_-1px_#15B5ED]" : (isDisabled ? "brightness-50" : "")}`}
         onClick={()=>setSystem(sys.title)}
         disabled={isDisabled}
         >

@@ -84,7 +84,7 @@ export default function Gallery() {
                 <div className="cursor-pointer select-none max-[481px]:hidden" onClick={()=>setCurrent(state=>state-1 < 0 ? paths.length-cardCount : state-cardCount)}>
                     <Icon type="arrow" />
                 </div>
-                <div className="flex lg:gap-2 max-[768px]:gap-5 max-[481px]:gap-3 w-full h-full justify-between max-[481px]:overflow-x-scroll scrollbar-hide">
+                <div className="flex lg:gap-2 max-[768px]:gap-5 w-full h-full justify-between max-[481px]:overflow-x-scroll scrollbar-hide">
                     {paths.slice(0 + current, cardCount + current).map((path, i)=>
                     <Link
                     key={i}

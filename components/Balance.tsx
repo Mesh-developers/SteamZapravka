@@ -24,7 +24,7 @@ export default function Balance() {
     const [promocode, setPromocode] = useState("")
     const [price, setPrice] = useState(1000)
     const prices = [150, 500, 1000, 2000]
-    const [starsIndex, setStarsIndex] = useState(2)
+    const [starsIndex, setStarsIndex] = useState(1)
     const [stars, setStars] = useState([100, 500, 1000, 2500])
     const [system, setSystem] = useState<PaymentSystem>("SBP")
     const [isAgree, setIsAgree] = useState(false)
@@ -38,6 +38,10 @@ export default function Balance() {
     const debouncedPromocode = useDebounce(promocode, 1000)
     const [promocodeResult, setPromocodeResult] = useState<PromocodeResponse>()
     const [loginResult, setLoginResult] = useState<LoginResponse>()
+
+    const discountApply = (val: number) => {
+        return promocodeResult?.discountPercentage ? (val * promocodeResult?.discountPercentage / 100).toFixed(2) : val
+    }
 
     useEffect(()=>{
         if (system === "SBP" && JSON.stringify(stars) !== JSON.stringify([100, 500, 1000, 2500])) {
@@ -215,7 +219,7 @@ export default function Balance() {
             </div>
             <div className="grid grid-cols-[60%_19%_18%] grid-rows-[160px] h-full gap-x-5 gap-y-10">
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
-                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
+                    <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                     <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} filterHandler={validateZeroStart} />
                     <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
                     <Chips value={siteType === "game" ? price : stars[starsIndex]} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={siteType === "telegram" ? setStarsIndex : undefined} />
@@ -241,11 +245,11 @@ export default function Balance() {
                 <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest } className={`bg-radial border-1 border-transparent ${siteType === "game" ? "from-[#45C47E] hover:border-(--green)" : "from-[#0698D6] hover:border-(--blue)"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-xl`}>
                     {siteType === "game" ?
                     <>
-                    Пополнить баланс <br/> {getDataOrLoader(price, " ₽")}
+                    Пополнить баланс <br/> {getDataOrLoader(discountApply(price) , " ₽")}
                     </>
                     :
                     <>
-                    Купить звёзды <br/> {getDataOrLoader(system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex]), " ₽")}
+                    Купить звёзды <br/> {getDataOrLoader(system === "SBP" ? discountApply(Number(exchangeTelegram?.priceRubSbp[starsIndex])) : discountApply(Number(exchangeTelegram?.priceRubCrypto[starsIndex])), " ₽")}
                     </>
                     }
                 </button>
@@ -291,7 +295,7 @@ export default function Balance() {
                 </div>
                 <div className="flex flex-col gap-2 w-full">
                     <div className="bg-linear-to-r from-[#33475D] to-[#355477] flex flex-col rounded-2xl w-full min-[481px]:h-[263px] h-[278px] p-1 gap-3">
-                        <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш @Username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
+                        <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                         <div className="flex flex-col gap-2">
                             <Input type="number" disabled={siteType === "telegram"} value={siteType === "game" ? price : (system === "SBP" ? String(exchangeTelegram?.priceRubSbp[starsIndex]) : String(exchangeTelegram?.priceRubCrypto[starsIndex]))} setValue={setPrice} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : "~12.24 TON / 1728.42 ₽"} filterHandler={validateZeroStart} />
                             <Chips value={siteType === "game" ? price : stars[starsIndex]} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={siteType === "telegram" ? setStarsIndex : undefined} />
@@ -305,12 +309,12 @@ export default function Balance() {
                                 {
                                     title: "SBP",
                                     percent: 8,
-                                    image: <Icon type="sbp" width={50} height={50} />
+                                    image: <div className="absolute"><Icon type="sbp" width={70} height={70} /></div>
                                 },
                                 {
                                     title: "CRYPTOCURRENCY",
                                     percent: 5,
-                                    image: <Icon type="crypto" width={60} height={60} />
+                                    image: <div className="absolute"><Icon type="crypto" width={70} height={70} /></div>
                                 },
                             ]}
                             />
@@ -319,11 +323,11 @@ export default function Balance() {
                     <button onClick={siteType === "game" ? topupRequest : topupTelegramRequest} className={`min-[481px]:mt-0 leading-7 py-2 bg-radial ${siteType === "game" ? "from-[#45C47E]" : "from-[#0698D6]"} from-0% ${siteType === "game" ? "to-[#2D8451]" : "to-[#035070]"} rounded-2xl font-medium text-lg`}>
                         {siteType === "game" ?
                         <>
-                        Пополнить баланс <br/> {getDataOrLoader(price, " ₽")}
+                        Пополнить баланс <br/> {getDataOrLoader(discountApply(price), " ₽")}
                         </>
                         :
                         <>
-                        Купить звёзды <br/> {getDataOrLoader(system === "SBP" ? Number(exchangeTelegram?.priceRubSbp[starsIndex]) : Number(exchangeTelegram?.priceRubCrypto[starsIndex]), " ₽")}
+                        Купить звёзды <br/> {getDataOrLoader(system === "SBP" ? discountApply(Number(exchangeTelegram?.priceRubSbp[starsIndex])) : discountApply(Number(exchangeTelegram?.priceRubCrypto[starsIndex])), " ₽")}
                         </>
                         }
                     </button>

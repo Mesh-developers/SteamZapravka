@@ -42,19 +42,19 @@ export default function SteamDrop() {
         <Icon key={7} type="dtf2" size={iconSize} />,
     ]
     const links = [
-        "#",
+        "https://www.youtube.com/channel/UCuLsh9PorQzjZRkyqx_w39w",
         "https://t.me/steamzapravka",
         "https://www.tiktok.com/@steam_zapravka",
         "https://t.me/steamzapravka",
         "https://t.me/steamzapravka",
-        "#",
-        "#",
+        "https://www.instagram.com/steamzapravka/",
+        "https://discord.gg/jDR3ErZw",
         "https://dtf.ru/id3087606"
     ]
     return (
         <section id="steamdrop" className="w-full h-fit border-1 border-(--border) bg-(--section-back) max-[481px]:bg-transparent max-[481px]:border-0 rounded-2xl lg:px-8 px-3 py-4 grid min-[481]:grid-cols-2 grid-cols-1">
             <div className="flex flex-col gap-6">
-                <h1 className="lg:text-4xl text-2xl max-[481px]:text-[23px] font-(family-name:--manrope-semibold) min-[481px]:text-start text-center">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
+                <h1 className="lg:text-4xl text-2xl max-[481px]:text-[23px] font-(family-name:--manrope-medium) min-[481px]:text-start text-center">Не пропусти лучший шанс <br/>{siteType === "game" ? <>заполучить <span className="text-(--green)">STEAM-ДРОП!</span></> : <>дотянуться до <span className="text-(--blue)">TG STARS!</span></> }</h1>
                 <h2 className="lg:text-xl text-base min-[481px]:block hidden">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
                 <span className="lg:text-base md:text-xs lg:w-130 md:w-85 lg:whitespace-wrap tracking-wide min-[481]:block hidden">Преврати пополнение кошелька в твой постоянный профит. Мы разыгрываем ценные призы, Steam-гифты и промокоды только для наших подписчиков. Все новости о самых низких
                 комиссиях и специальных акциях — мгновенно в ленте!</span>
