@@ -32,25 +32,41 @@ export default function SteamDrop() {
         return () => window.removeEventListener('resize', checkScreenSize);
     }, []);
     const medias = [
-        <Icon key={0} type="youtube2" size={iconSize} />,
-        <Icon key={1} type="telegram2" size={iconSize} />,
-        <Icon key={2} type="tiktok" size={iconSize} strokeWidth={0.5} />,
-        <span key={3} className="absolute z-2 w-full h-full flex items-center justify-center bg-[rgba(51,_233,_198,_0.1)] rounded-xl border-2 border-white lg:text-xl md:text-sm" style={{ boxShadow: "inset 0 0 10px #33E9E9" }}>#FREE</span>,
-        <span key={4} className="absolute z-2 w-full h-full flex items-center justify-center bg-[rgba(18,141,255,0.1)] rounded-xl border-2 border-white lg:text-xl md:text-sm" style={{ boxShadow: "inset 0 0 10px #0026ffff" }}>#DROPS</span>,
-        <Icon key={5} type="instagram" size={iconSize} strokeWidth={4} />,
-        <Icon key={6} type="discord2" size={iconSize} />,
-        <Icon key={7} type="dtf2" size={iconSize} />,
+        {
+            icon: <Icon key={0} type="youtube2" size={iconSize} />,
+            link: "https://www.youtube.com/channel/UCuLsh9PorQzjZRkyqx_w39w"
+        },
+        {
+            icon: <Icon key={1} type="telegram2" size={iconSize} />,
+            link: "https://t.me/steamzapravka"
+        },
+        {
+            icon: <Icon key={2} type="tiktok" size={iconSize} strokeWidth={0.5} />,
+            link: "https://www.tiktok.com/@steam_zapravka"
+        },
+        {
+            icon: <span key={3} className="absolute z-2 w-full h-full flex items-center justify-center bg-[rgba(51,_233,_198,_0.1)] rounded-xl border-2 border-white lg:text-xl md:text-sm" style={{ boxShadow: "inset 0 0 10px #33E9E9" }}>#FREE</span>,
+            link: "https://t.me/steamzapravka"
+        },
+        {
+            icon: <span key={4} className="absolute z-2 w-full h-full flex items-center justify-center bg-[rgba(18,141,255,0.1)] rounded-xl border-2 border-white lg:text-xl md:text-sm" style={{ boxShadow: "inset 0 0 10px #0026ffff" }}>#DROPS</span>,
+            link: "https://t.me/steamzapravka"
+        },
+        {
+            icon: <Icon key={5} type="instagram" size={iconSize} strokeWidth={4} />,
+            link: "https://www.instagram.com/steamzapravka/"
+        },
+        {
+            icon: <Icon key={6} type="discord2" size={iconSize} />,
+            link: "https://discord.gg/jDR3ErZw"
+        },
+        {
+            icon: <Icon key={7} type="dtf2" size={iconSize} />,
+            link: "https://dtf.ru/id3087606"
+        },
+
     ]
-    const links = [
-        "https://www.youtube.com/channel/UCuLsh9PorQzjZRkyqx_w39w",
-        "https://t.me/steamzapravka",
-        "https://www.tiktok.com/@steam_zapravka",
-        "https://t.me/steamzapravka",
-        "https://t.me/steamzapravka",
-        "https://www.instagram.com/steamzapravka/",
-        "https://discord.gg/jDR3ErZw",
-        "https://dtf.ru/id3087606"
-    ]
+
     return (
         <section id="steamdrop" className="w-full h-fit border-1 border-(--border) bg-(--section-back) max-[481px]:bg-transparent max-[481px]:border-0 rounded-2xl lg:px-8 px-3 py-4 grid min-[481]:grid-cols-2 grid-cols-1">
             <div className="flex flex-col gap-6">
@@ -60,7 +76,7 @@ export default function SteamDrop() {
                 комиссиях и специальных акциях — мгновенно в ленте!</span>
             </div>
             <div className="w-full max-[481px]:mt-2 grid lg:grid-cols-[repeat(4,126px)] min-[481px]:grid-cols-4 min-[320px]:grid-cols-3 lg:grid-rows-2 auto-rows-min lg:gap-x-3 gap-x-6 gap-y-4 justify-end justify-items-end lg:content-start content-center">
-                {medias.filter((_, i)=>(isMobile && i !== 3 && i !== 4) || !isMobile).map((item, i)=><LinkItem key={i} index={i} link={links[i]}>{item}</LinkItem>)}
+                {medias.filter((_, i)=>(isMobile && i !== 3 && i !== 4) || !isMobile).map((item, i)=><LinkItem key={i} index={i} link={item.link}>{item.icon}</LinkItem>)}
             </div>
             <h2 className="text-sm text-center max-[481px]:block hidden mt-2">Подпишись, чтобы забирать <span className={`text-(${siteType === "game" ? "--blue" : "--green"})`}>бонусы первым!</span></h2>
         </section>
