@@ -44,9 +44,9 @@ export default function Balance() {
 
     const discountApply = (val: number, isSteam=false) => {
         if (isSteam) {
-            return promocodeResult?.discountPercentage ? ((100 + (8 - promocodeResult?.discountPercentage)) / 100) * val : val * 1.08
+            return Math.round(promocodeResult?.discountPercentage ? ((100 + (8 - promocodeResult?.discountPercentage)) / 100) * val : val * 1.08)
         }
-        return promocodeResult?.discountPercentage ? (val * (100 - promocodeResult?.discountPercentage) / 100).toFixed(0) : val
+        return Math.round(promocodeResult?.discountPercentage ? (val * (100 - promocodeResult?.discountPercentage) / 100) : val)
     }
 
     const getStarsPrice = async (starsCounts: number[], isShowMes=true) => {
