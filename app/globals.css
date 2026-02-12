@@ -98,6 +98,10 @@
   border: 1px solid var(--green);
 }
 
+.btn:active {
+  opacity: .7;
+}
+
 .thumb {
   @apply absolute top-1/2 -translate-y-1/2 w-5 h-4 rounded-full bg-[#2D2D2D];
   transform: translateX(-50%);

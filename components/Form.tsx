@@ -146,6 +146,7 @@ function UniqueCard({ image, title, text, length=0 }:Omit<UniqueCard, "text"> & 
 
 export default function Form({ cover, boxes, uniqueCard, instructions, type, products, prefix, isService }:FormProps) {
     const pathname = usePathname()
+    const [isLoading, setIsLoading] = useState(false)
     const isRoblox = pathname === "/roblox"
     const isLegends = pathname === "/mobile-legends"
     const [, setOrder] = useLocalStorage(ORDER_STORAGE_KEY, initialOrder)
@@ -193,6 +194,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
 
     const buyBox = async () =>{
         if (isPrivacy && isUserTerms && productsData) {
+            setIsLoading(true)
             const res = await fetch("https://api.steamzapravka.io/vouchers", {
                 method: "POST",
                 headers: {
@@ -216,14 +218,17 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         href: data.paymentUrl,
                         email
                     })
+                    setIsLoading(false)
                     redirect(data.paymentUrl, RedirectType.push)
                 }
             } else {
+                setIsLoading(false)
                 const mes = (await res.json()).message
                 if (mes)
                     setResMessage(mes)
             }
         } else if (!isPrivacy || !isUserTerms) {
+            setIsLoading(false)
             setResMessage(TERMS_ERROR_TEXT)
         }
     }
@@ -237,6 +242,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 paymentMethod: system
             }
             const {region: reg, accountId, ...robloxBody} = body
+            setIsLoading(true)
             const res = await fetch(isRoblox ? "https://api.steamzapravka.io/topup/roblox " : (isService ? "https://api.steamzapravka.io/vouchers" : "https://api.steamzapravka.io/topup"), {
                 method: "POST",
                 headers: {
@@ -281,8 +287,10 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                         href: data.paymentUrl,
                         email
                     })
+                    setIsLoading(false)
                     redirect(data.paymentUrl, RedirectType.push)
                 } else {
+                    setIsLoading(false)
                     const mes = (await res.json()).message
                     if (mes)
                         setResMessage(mes)
@@ -604,6 +612,9 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                 <div className="bg-(--section-back) w-fit h-fit p-10 rounded-2xl border-1 border-(--border) flex flex-col gap-2 whitespace-pre">
                     {resMessage}
                 </div>
+            </Modal>
+            <Modal open={isLoading} onClose={()=>{}} isCloseMark={false}>
+                <span className="loader"></span>
             </Modal>
         </div>
     )

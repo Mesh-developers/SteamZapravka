@@ -61,6 +61,8 @@ export default function Gallery() {
         const checkScreenSize = () => {
             if (window.outerWidth <= 768) {
                 setCardCount(3)
+            } else if (window.outerWidth > 768) {
+                setCardCount(6)
             }
 
             if (window.outerWidth <= 480) {

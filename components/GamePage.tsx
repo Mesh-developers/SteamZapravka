@@ -298,7 +298,7 @@ export default function GamePage({ mainImage, images, video, description, minima
             <div className="mt-5" />
             <Slider mainImage={mainImage} />
             <div className="mt-15" />
-            <Modal open={isLoading} onClose={()=>{}}>
+            <Modal open={isLoading} onClose={()=>{}} isCloseMark={false}>
                 <span className="loader"></span>
             </Modal>
             <Modal open={!!resMessage} onClose={()=>setResMessage("")}>

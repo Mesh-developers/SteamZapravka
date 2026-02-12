@@ -19,7 +19,7 @@ export default function PaymentSystems({ system, setSystem, systems }:PaymentSys
     const { siteType } = useSiteType()
     const pathname = usePathname()
     return systems.map((sys, i)=>{
-        const isDisabled = (siteType !== "telegram" && pathname === "/") && sys.title === "CRYPTOCURRENCY"
+        const isDisabled = (siteType === "game" && pathname === "/" && sys.title === "CRYPTOCURRENCY") || pathname !== "/"
         return (
         <button
         key={i}
