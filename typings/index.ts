@@ -12,6 +12,11 @@ export type ExchangeTelegramResponse = {
     priceRubSbp: number[];
 }
 
+export type ExchangeTelegramResponseOnly = {
+    priceRubCrypto: number;
+    priceRubSbp: number;
+}
+
 export type TopupResponse = {
     amount: number;
     currency: "RUB"|"KZT"|"USD";

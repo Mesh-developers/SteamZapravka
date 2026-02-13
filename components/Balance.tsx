@@ -8,13 +8,13 @@ import Icon from "./Icon"
 import Checkbox from "./Checkbox"
 import Link from "next/link"
 import { useSiteType } from "./SiteTypeContext"
-import { ExchangeResponse, ExchangeTelegramResponse, LoginResponse, PaymentSystem, PromocodeResponse, TopupRequest, TopupResponse, TopupTelegramRequest, TopupTelegramResponse } from "@/typings"
+import { ExchangeResponse, ExchangeTelegramResponse, ExchangeTelegramResponseOnly, LoginResponse, PaymentSystem, PromocodeResponse, TopupRequest, TopupResponse, TopupTelegramRequest, TopupTelegramResponse } from "@/typings"
 import { redirect, RedirectType } from "next/navigation"
 import Modal from "./Modal"
 import useDebounce from "@/hooks/useDebounce"
 import Image from "next/image"
 import { removeAtSymbol, validateZeroStart, getDataOrLoader } from "@/utils"
-import { TERMS_ERROR_TEXT } from "@/constants"
+import { STEAM_COMMISSION, TERMS_ERROR_TEXT } from "@/constants"
 import { useArrayContext } from "./FAQArrayContext"
 
 export default function Balance() {
@@ -44,27 +44,40 @@ export default function Balance() {
 
     const discountApply = (val: number, isSteam=false) => {
         if (isSteam) {
-            return Math.round(promocodeResult?.discountPercentage ? ((100 + (8 - promocodeResult?.discountPercentage)) / 100) * val : val * 1.08)
+            return Math.round(promocodeResult?.discountPercentage ? ((100 + (STEAM_COMMISSION - promocodeResult?.discountPercentage)) / 100) * val : val * ((100 + STEAM_COMMISSION) / 100))
         }
         return Math.round(promocodeResult?.discountPercentage ? (val * (100 - promocodeResult?.discountPercentage) / 100) : val)
     }
 
-    const getStarsPrice = async (starsCounts: number[], isShowMes=true) => {
-        const res = await fetch("https://api.steamzapravka.io/stars/price", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                starsAmount: starsCounts
+    const getStarsPrice = async (starsCounts: number[]|number, isShowMes=true, signal?: AbortSignal) => {
+        try {
+            const res = await fetch(Array.isArray(starsCounts) ? "https://api.steamzapravka.io/stars/price" : "https://api.steamzapravka.io/stars/price/custom", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(Array.isArray(starsCounts) ? {
+                    starsAmount: starsCounts
+                } : {
+                    stars: starsCounts
+                }),
+                signal
             })
-        })
 
-        if (res.status === 200) {
-            const data: ExchangeTelegramResponse = await res.json()
-            return data
-        } else if (isShowMes) {
-            setResMessage((await res.json()).message)
+            if (res.status === 200) {
+                if (Array.isArray(starsCounts)) {
+                    const data: ExchangeTelegramResponse = await res.json()
+                    return data
+                } else {
+                    const data: ExchangeTelegramResponseOnly = await res.json()
+                    return data
+                }
+            } else if (isShowMes) {
+                setResMessage((await res.json()).message)
+            }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch(e: any) {
+            console.error(e.message)
         }
     }
 
@@ -73,16 +86,24 @@ export default function Balance() {
     }, [starsIndex])
 
     useEffect(()=>{
-        if (!stars.includes(debouncedСurrentStars)) {
-            (async ()=>{
-                const data = await getStarsPrice([debouncedСurrentStars], false)
+        const abortController = new AbortController();
+        const fetchData = async () => {
+            if (!stars.includes(debouncedСurrentStars)) {
+                const data = await getStarsPrice(debouncedСurrentStars, false, abortController.signal);
                 if (data) {
-                    setCurrentStarsPrice([data.priceRubSbp[0], data.priceRubCrypto[0]])
+                    const d = data as ExchangeTelegramResponseOnly;
+                    setCurrentStarsPrice([d.priceRubSbp, d.priceRubCrypto]);
                 }
-            })()
-        } else {
-            setCurrentStarsPrice(undefined)
-        }
+            } else {
+                setCurrentStarsPrice(undefined);
+            }
+        };
+
+        fetchData();
+
+        return () => {
+            abortController.abort();
+        };
     }, [debouncedСurrentStars])
 
     useEffect(()=>{
@@ -170,7 +191,7 @@ export default function Balance() {
                     }
                 } else if (siteType === "telegram") {
                     const data = await getStarsPrice(stars)
-                    setExchangeTelegram(data)
+                    setExchangeTelegram(data as ExchangeTelegramResponse | undefined)
                 }
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -182,6 +203,8 @@ export default function Balance() {
         if (siteType === "game")
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setSystem("SBP")
+        setPromocode("")
+        setLogin("")
     }, [siteType])
 
 
@@ -228,6 +251,8 @@ export default function Balance() {
                 } else {
                     setPromocodeResult(undefined)
                 }
+            } else {
+                setPromocodeResult(undefined)
             }
         }
         checkPromocode()
@@ -251,7 +276,7 @@ export default function Balance() {
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">
                     <Input placeholder={siteType === "game" ? "Ваш логин Steam" : "Ваш username"} value={login} setValue={setLogin} hintWrap hint="ГДЕ НАЙТИ?" isWarning={siteType === "game" && loginResult && !loginResult.usernameExists} isSuccess={siteType === "game" && loginResult && loginResult.usernameExists} renderHint={siteType === "game" && loginResult && !loginResult.usernameExists ? <span className="text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full !from-[#EA5053] !to-[#842D2F]">НЕВЕРНЫЙ ЛОГИН</span> : undefined} />
                     <Input type="number" value={siteType === "game" ? price : currentStars} setValue={siteType === "game" ? setPrice : setCurrentStars} hint={siteType === "game" ? `~${(price / (exchange?.usdToRub || 0)).toFixed(2)} $ / ${(price / (exchange?.kztToRub || 0)).toFixed(2)} ₸` : ""} filterHandler={validateZeroStart} />
-                    <Input placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
+                    <Input disabled={siteType === "telegram"} placeholder="Промокод" value={promocode} setValue={setPromocode} renderHint={promocodeResult ? <span className={`text-[10px] mr-5 justify-self-end w-fit px-2 py-1 btn !rounded-full ${promocodeResult.discountPercentage === 0 ? "!from-[#EA5053] !to-[#842D2F]" : ""}`}>{promocodeResult.discountPercentage === 0 ? "НЕВЕРНЫЙ КОД" : `СКИДКА ${promocodeResult?.discountPercentage}%`}</span> : undefined} />
                     <Chips value={siteType === "game" ? price : currentStars} values={siteType === "game" ? prices : stars} setValue={setPrice} setIndex={siteType === "telegram" ? setStarsIndex : undefined} />
                 </div>
                 <div className="bg-linear-to-r from-[#33475D] to-[#355477] rounded-2xl px-5 py-5 grid grid-cols-2 grid-rows-2 gap-x-2 gap-y-4">

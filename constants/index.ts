@@ -181,3 +181,5 @@ export const FAVOURITES_STORAGE_KEY = `${APP_PREFIX}_favourites`
 export const initialOrder: OrderData = {id: "00000000000", name: "Какой-то заказ", amount: 0, email: "support@steamzapravka.io", paymentSystem: "SBP", href: "" }
 
 export const TERMS_ERROR_TEXT = "Вы не согласились с условиями площадки!"
+
+export const STEAM_COMMISSION = 8;

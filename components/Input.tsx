@@ -35,7 +35,7 @@ export default function Input({ type, hint, placeholder, value, setValue, render
     };
 
     return (
-        <div className={`w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[42px] lg:min-h-[52px] ${isWarning ? "shadow-[2px_2px_4px_0px_#D40101,-2px_2px_4px_0px_#D40101,2px_-2px_4px_0px_#D44001,-2px_-2px_4px_0px_#D44001]" : ""} ${isSuccess ? "shadow-[2px_2px_4px_0px_#15B5ED,-2px_2px_4px_0px_#15B5ED,2px_-2px_4px_0px_#46F9D7,-2px_-2px_4px_0px_#46F9D7]" : ""}`}>
+        <div className={`w-full bg-(--black) rounded-2xl grid grid-cols-[60%_40%] pl-3 items-center justify-between min-h-[42px] lg:min-h-[52px] ${disabled ? "brightness-60" : ""} ${isWarning ? "shadow-[2px_2px_4px_0px_#D40101,-2px_2px_4px_0px_#D40101,2px_-2px_4px_0px_#D44001,-2px_-2px_4px_0px_#D44001]" : ""} ${isSuccess ? "shadow-[2px_2px_4px_0px_#15B5ED,-2px_2px_4px_0px_#15B5ED,2px_-2px_4px_0px_#46F9D7,-2px_-2px_4px_0px_#46F9D7]" : ""}`}>
             <input
             type={type}
             placeholder={placeholder}
