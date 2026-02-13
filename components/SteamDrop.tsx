@@ -4,7 +4,7 @@ import { useSiteType } from "./SiteTypeContext"
 
 function LinkItem({children, link, index}:{ children: ReactNode, link: string, index: number }) {
     return (
-        <a href={link} target="_blank" className={`relative lg:max-w-[126px] lg:max-w-[126px] lg:min-w-[126px] lg:w-[126px] lg:h-[126px] w-[82px] h-[82px] flex items-center justify-center rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D] ${index === 0 ? "max-[481px]:!inset-shadow-[0_0_18px_#33E9E9]" : ""} ${index === 2 ? "max-[481px]:order-last max-[481px]:!inset-shadow-[0_0_18px_#8120B7]" : ""}`} style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12" }}>
+        <a href={link} target="_blank" className={`relative lg:max-w-[126px] lg:max-w-[126px] lg:min-w-[126px] lg:w-[126px] lg:h-[126px] w-[92px] h-[92px] flex items-center justify-center max-[481px]:rounded-xl rounded-3xl shadow-xl bg-linear-to-b from-[#080C14] to-[#0C111D] ${index === 0 ? "max-[481px]:!inset-shadow-[0_0_18px_#33E9E9]" : ""} ${index === 2 ? "max-[481px]:order-last max-[481px]:!inset-shadow-[0_0_18px_#8120B7]" : ""}`} style={{ boxShadow: "0 0px 6.6px 0 #020305, inset 0 6.31px 6.31px 0 #0C121E, inset 0 -6.31px 6.31px 0 #070B12" }}>
             {children}
         </a>
     )
@@ -16,9 +16,12 @@ export default function SteamDrop() {
     const [isMobile, setIsMobile] = useState(false)
     useEffect(() => {
         const checkScreenSize = () => {
-            if(window.outerWidth <= 768){
-                setIconSize(42)
+            if (window.outerWidth <= 868){
+                setIconSize(50)
+            } else {
+                setIconSize(82)
             }
+
             if (window.outerWidth <= 480) {
                 setIsMobile(true)
             } else {
