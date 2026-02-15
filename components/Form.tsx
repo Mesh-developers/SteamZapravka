@@ -295,6 +295,11 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                     if (mes)
                         setResMessage(mes)
                 }
+            } else {
+                setIsLoading(false)
+                const mes = (await res.json()).message
+                if (mes)
+                    setResMessage(mes)
             }
         }
     }
@@ -391,7 +396,7 @@ export default function Form({ cover, boxes, uniqueCard, instructions, type, pro
                             }
                             <div className="flex flex-col gap-1 relative">
                                 <span className="text-lg">Регион</span>
-                                <Select placeholder="Любой" value={region} setValue={setRegion} options={[...new Set(products.map(prod=>prod.region))]} />
+                                <Select placeholder="Любой" value={region} setValue={setRegion} options={pathname === "/genshin" || pathname === "/honkai" ? ["США", "Европа", "Азия"] : (productsData ? [...new Set(productsData.map(prod=>prod.region))] : [...new Set(products.map(prod=>prod.region))])} />
                             </div>
                             <div className="flex flex-col gap-1 relative max-[481px]:col-span-2">
                                 <span className="text-lg max-[481px]:text-[17px]">Выберите товар из полного списка</span>
